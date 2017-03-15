@@ -7,10 +7,18 @@ public class RachunekBankowy extends ProduktBankowy {
 	String numer;
 	Date dataZalozenia;
 	int idHistorii;
+	long numerRachunku;
 	
+	
+
 	public RachunekBankowy(int id, String nr){
 		this.id = id;
 		this.numer = nr;
+	}
+	
+	public RachunekBankowy(int id, long nr){
+		this.id = id;
+		this.numerRachunku = nr;
 	}
 	
 	public int getId() {
@@ -36,5 +44,12 @@ public class RachunekBankowy extends ProduktBankowy {
 	}
 	public void setIdHistorii(int idHistorii) {
 		this.idHistorii = idHistorii;
+	}
+	public long getNumerRachunku() {
+		return numerRachunku;
+	}
+
+	public void setNumerRachunku(long numerRachunku) {
+		this.numerRachunku = numerRachunku;
 	}
 }

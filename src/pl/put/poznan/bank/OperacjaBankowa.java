@@ -12,7 +12,7 @@ public class OperacjaBankowa {
 	
 	public void wplata(ProduktBankowy konto, double kwota) throws InvalidInputException {
 		if (konto != null && kwota > 0) {
-			konto.setStanKonta(kwota);
+			konto.setStanSrodkow(kwota);
 		} else {
 			throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
 		}
@@ -20,10 +20,10 @@ public class OperacjaBankowa {
 	
 	public void wyplata(ProduktBankowy konto, double kwota) throws InvalidInputException, NotEnoughFundsException {
 		if (konto != null && kwota > 0) {
-			double stanSrodkow = konto.getStanKonta();
+			double stanSrodkow = konto.getStanSrodkow();
 			if (stanSrodkow >= kwota) {
 				stanSrodkow -= kwota;
-				konto.setStanKonta(stanSrodkow);
+				konto.setStanSrodkow(stanSrodkow);
 			} else {
 				throw new NotEnoughFundsException();
 			}
@@ -34,7 +34,7 @@ public class OperacjaBankowa {
 	
 	public void przelew(ProduktBankowy kontoZ, ProduktBankowy kontoDo, double kwota) throws InvalidInputException, NotEnoughFundsException {
 		if (kontoZ != null && kontoDo != null && kwota > 0) {
-			double stanSrodkow = kontoZ.getStanKonta();
+			double stanSrodkow = kontoZ.getStanSrodkow();
 			if (stanSrodkow >= kwota) {
 				stanSrodkow -= kwota;
 			} else {
