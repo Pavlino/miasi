@@ -5,12 +5,18 @@ import java.util.Date;
 import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotEnoughFundsException;
 
-public class OperacjaBankowa {
+public class OperacjaBankowa implements IOperacjaBankowa {
 	private Date data;
 	private String opis;
 	private int typ;
+
+	public OperacjaBankowa(Date data, String opis, int typ) {
+        this.data = data;
+        this.opis = opis;
+        this.typ = typ;
+    }
 	
-	public void wplata(ProduktBankowy konto, double kwota) throws InvalidInputException {
+	public void wplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException {
 		if (konto != null && kwota > 0) {
 			konto.setStanSrodkow(kwota);
 		} else {
@@ -18,7 +24,7 @@ public class OperacjaBankowa {
 		}
 	}
 	
-	public void wyplata(ProduktBankowy konto, double kwota) throws InvalidInputException, NotEnoughFundsException {
+	public void wyplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException, NotEnoughFundsException {
 		if (konto != null && kwota > 0) {
 			double stanSrodkow = konto.getStanSrodkow();
 			if (stanSrodkow >= kwota) {
@@ -32,11 +38,12 @@ public class OperacjaBankowa {
 		}
 	}
 	
-	public void przelew(ProduktBankowy kontoZ, ProduktBankowy kontoDo, double kwota) throws InvalidInputException, NotEnoughFundsException {
+	public void przelew(final ProduktBankowy kontoZ, final ProduktBankowy kontoDo, final double kwota) throws InvalidInputException, NotEnoughFundsException {
 		if (kontoZ != null && kontoDo != null && kwota > 0) {
 			double stanSrodkow = kontoZ.getStanSrodkow();
 			if (stanSrodkow >= kwota) {
-				stanSrodkow -= kwota;
+				this.wyplata(kontoZ, kwota);
+                this.wplata(kontoDo, kwota);
 			} else {
 				throw new NotEnoughFundsException();
 			}
