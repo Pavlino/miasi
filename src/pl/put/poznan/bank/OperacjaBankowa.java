@@ -10,6 +10,12 @@ public class OperacjaBankowa {
 	private String opis;
 	private int typ;
 	
+	public OperacjaBankowa(Date data, String opis, int typ){
+		this.data = data;
+		this.opis = opis;
+		this.typ = typ;
+	}
+	
 	public void wplata(ProduktBankowy konto, double kwota) throws InvalidInputException {
 		if (konto != null && kwota > 0) {
 			konto.setStanSrodkow(kwota);
