@@ -21,6 +21,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
             double stanSrodkow = konto.getStanSrodkow();
             stanSrodkow += kwota;
             konto.setStanSrodkow(stanSrodkow);
+            konto.getHistoria().dodajOperacje(this);
         } else {
             throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
         }
@@ -39,6 +40,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
                 } else {
                     konto.setStanSrodkow(stanSrodkow);
                 }
+                konto.getHistoria().dodajOperacje(this);
 			} else {
 				throw new NotEnoughFundsException();
 			}
@@ -56,6 +58,8 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 			} else {
 				throw new NotEnoughFundsException();
 			}
+            kontoZ.getHistoria().dodajOperacje(this);
+            kontoDo.getHistoria().dodajOperacje(this);
 		} else {
 			throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
 		}
@@ -66,6 +70,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
             double stanOdsetek = konto.getStanOdsetek();
             stanOdsetek += kwotaOdsetek;
             konto.setStanOdsetek(stanOdsetek);
+            konto.getHistoria().dodajOperacje(this);
         }
     }
 

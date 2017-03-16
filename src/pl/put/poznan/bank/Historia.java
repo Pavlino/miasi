@@ -3,8 +3,6 @@ package pl.put.poznan.bank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 
 public class Historia {
 	private ArrayList<OperacjaBankowa> historia;
@@ -32,6 +30,6 @@ public class Historia {
 		historia.add(op);
 		Collections.sort(historia, new CustomComparator());
 	}
-	
+
 	
 }

@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class RachunekBankowy extends ProduktBankowy {
 	private Date dataZalozenia;
-	private int idHistorii;
 	private Debet debet;
 
 	public RachunekBankowy(int id, long nr){
@@ -38,12 +37,6 @@ public class RachunekBankowy extends ProduktBankowy {
 	}
 	public void setDataZalozenia(Date dataZalozenia) {
 		this.dataZalozenia = dataZalozenia;
-	}
-	public int getIdHistorii() {
-		return idHistorii;
-	}
-	public void setIdHistorii(int idHistorii) {
-		this.idHistorii = idHistorii;
 	}
 	public void setDebet(Debet debet) {
 		this.debet = debet;
