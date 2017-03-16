@@ -5,19 +5,20 @@ import pl.put.poznan.utils.InvalidInputException;
 
 import java.util.Date;
 
-public class Lokata extends RachunekBankowy {
-	int id;
+public class Lokata extends ProduktBankowy {
 	Date dataKonca;
 	RachunekBankowy rachunekPowiazany;
     double kwota;
     double odsetki;
 	
-	public Lokata(int id, String nr){
-		super(id, nr);
+	public Lokata(int id, long nr){
+		this.idKlienta = id;
+        this.numerRachunku = nr;
 	}
 
-    public Lokata(int id, String nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) {
-        super(id, nr);
+    public Lokata(int id, long nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) {
+        this.idKlienta = id;
+        this.numerRachunku = nr;
         this.rachunekPowiazany = rachunekPowiazany;
         this.mechanizmOdsetkowy = mechanizmOdsetkowy;
         this.kwota = kwota;
@@ -43,13 +44,7 @@ public class Lokata extends RachunekBankowy {
     public double getStanSrodkow() {
         return this.kwota;
     }
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public Date getDataKonca() {
 		return dataKonca;
 	}

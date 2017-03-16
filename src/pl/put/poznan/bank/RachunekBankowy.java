@@ -3,26 +3,18 @@ package pl.put.poznan.bank;
 import java.util.Date;
 
 public class RachunekBankowy extends ProduktBankowy {
-	int id;
-	String numer;
 	Date dataZalozenia;
 	int idHistorii;
-	long numerRachunku;
 	Debet debet;
 
-	public RachunekBankowy(int id, String nr){
-		this.id = id;
-		this.numer = nr;
-	}
-	
 	public RachunekBankowy(int id, long nr){
-		this.id = id;
+		this.idKlienta = id;
 		this.numerRachunku = nr;
 	}
 
-	public RachunekBankowy(int id, String numer, Debet debet) {
-		this.id = id;
-		this.numer = numer;
+	public RachunekBankowy(int id, long numer, Debet debet) {
+		this.idKlienta = id;
+		this.numerRachunku = numer;
 		this.debet = debet;
 	}
 
@@ -39,18 +31,6 @@ public class RachunekBankowy extends ProduktBankowy {
 		return this.stanSrodkow;
 	}
 
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getNumer() {
-		return numer;
-	}
-	public void setNumer(String nrRachunku) {
-		this.numer = nrRachunku;
-	}
 	public Date getDataZalozenia() {
 		return dataZalozenia;
 	}
@@ -62,9 +42,6 @@ public class RachunekBankowy extends ProduktBankowy {
 	}
 	public void setIdHistorii(int idHistorii) {
 		this.idHistorii = idHistorii;
-	}
-	public long getNumerRachunku() {
-		return numerRachunku;
 	}
 	public void setDebet(Debet debet) {
 		this.debet = debet;

@@ -1,6 +1,7 @@
 package pl.put.poznan.bank;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import pl.put.poznan.utils.InvalidInputException;
@@ -10,7 +11,7 @@ public class Bank {
 	public String nazwa;
 	private Raport raport;
 	private Historia historia;
-	private ArrayList<RachunekBankowy> listaRachunkow;
+	private HashMap<Long, RachunekBankowy> listaRachunkow;
 	private HashMap<Integer, Klient> listaKlientow;
 
 	public Bank(String nazwa, int id){
@@ -18,7 +19,7 @@ public class Bank {
 		this.id = id;
 		this.raport = new Raport();
 		this.historia = new Historia();
-		this.listaRachunkow = new ArrayList<>();
+		this.listaRachunkow = new HashMap<>();
 		this.listaKlientow = new HashMap<>();
 	}
 	
@@ -37,11 +38,12 @@ public class Bank {
 	public void stworzRachunek(int idKlienta) throws InvalidInputException {
 		if (listaKlientow.containsKey(idKlienta)) {
 			if (listaRachunkow.size()==0){
-				listaRachunkow.add(new RachunekBankowy(idKlienta, 1));  // zmienic rachunek na String?
+                long numer = 1;
+				listaRachunkow.put(numer, new RachunekBankowy(idKlienta, numer));  // zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze 1");
 			} else {
-				long numer = listaRachunkow.get(listaRachunkow.size()-1).getNumerRachunku();
-				listaRachunkow.add(new RachunekBankowy(idKlienta, numer+1)); //zmienic rachunek na String?
+                long numer = Collections.max(listaRachunkow.keySet());
+				listaRachunkow.put(numer+1, new RachunekBankowy(idKlienta, numer+1)); //zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze " + numer);
 			}
 		} else {
@@ -49,10 +51,10 @@ public class Bank {
 		}
 	}
 
-	public ArrayList<RachunekBankowy> getListaRachunkow() {
-		return listaRachunkow;
+	public HashMap<Long, RachunekBankowy> getListaRachunkow() {
+		return this.listaRachunkow;
 	}
-	public void setListaProduktow(ArrayList<RachunekBankowy> listaRachunkow) {
+	public void setListaProduktow(HashMap<Long, RachunekBankowy> listaRachunkow) {
 		this.listaRachunkow = listaRachunkow;
 	}
 	public int getId() {
