@@ -9,15 +9,13 @@ import pl.put.poznan.utils.InvalidInputException;
 public class Bank {
 	private int id;
 	public String nazwa;
-	private Raport raport;
 	private Historia historia;
-	private HashMap<Long, RachunekBankowy> listaRachunkow;
+	private HashMap<Long, ProduktBankowy> listaRachunkow;
 	private HashMap<Integer, Klient> listaKlientow;
 
 	public Bank(String nazwa, int id){
 		this.nazwa = nazwa;
 		this.id = id;
-		this.raport = new Raport();
 		this.historia = new Historia();
 		this.listaRachunkow = new HashMap<>();
 		this.listaKlientow = new HashMap<>();
@@ -39,11 +37,11 @@ public class Bank {
 		if (listaKlientow.containsKey(idKlienta)) {
 			if (listaRachunkow.size()==0){
                 long numer = 1;
-				listaRachunkow.put(numer, new RachunekBankowy(idKlienta, numer));  // zmienic rachunek na String?
+				listaRachunkow.put(numer, new RachunekBankowy(idKlienta, numer, this));  // zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze 1");
 			} else {
                 long numer = Collections.max(listaRachunkow.keySet());
-				listaRachunkow.put(numer+1, new RachunekBankowy(idKlienta, numer+1)); //zmienic rachunek na String?
+				listaRachunkow.put(numer+1, new RachunekBankowy(idKlienta, numer+1, this)); //zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze " + numer);
 			}
 		} else {
@@ -51,10 +49,14 @@ public class Bank {
 		}
 	}
 
-	public HashMap<Long, RachunekBankowy> getListaRachunkow() {
+    public Object stworzRaport(IRaport raport, HashMap<Long, ProduktBankowy> listaProduktow) throws InvalidInputException {
+        return raport.generujRaport(listaProduktow);
+    }
+
+	public HashMap<Long, ProduktBankowy> getListaRachunkow() {
 		return this.listaRachunkow;
 	}
-	public void setListaProduktow(HashMap<Long, RachunekBankowy> listaRachunkow) {
+	public void setListaProduktow(HashMap<Long, ProduktBankowy> listaRachunkow) {
 		this.listaRachunkow = listaRachunkow;
 	}
 	public int getId() {
@@ -68,12 +70,6 @@ public class Bank {
 	}
 	public void setNazwa(String nazwa) {
 		this.nazwa = nazwa;
-	}
-	public Raport getRaport() {
-		return raport;
-	}
-	public void setRaport(Raport raport) {
-		this.raport = raport;
 	}
 	public Historia getHistoria() {
 		return historia;
