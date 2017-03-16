@@ -1,35 +1,36 @@
 package pl.put.poznan.bank;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 public class Historia {
-	private ArrayList<OperacjaBankowa> raport;
+	private ArrayList<OperacjaBankowa> historia;
 	
-	public ArrayList<OperacjaBankowa> getRaport() {
-		return raport;
+	public ArrayList<OperacjaBankowa> getHistoria() {
+		return historia;
 	}
 
 	public void setRaport(ArrayList<OperacjaBankowa> raport) {
-		this.raport = raport;
+		this.historia = raport;
 	}
 
 	public Historia(){
-		this.raport = new ArrayList<OperacjaBankowa>();
+		this.historia = new ArrayList<OperacjaBankowa>();
 	}
 	
 	public class CustomComparator implements Comparator<OperacjaBankowa> {
 	    @Override
 	    public int compare(OperacjaBankowa o1, OperacjaBankowa o2) {
-	    	//TODO
-	    	return 0;
-	        //return o1.getDate().compareTo(o2.getDate());
+	        return o1.getData().compareTo(o2.getData());
 	    }
 	}
 	
 	public void dodajOperacje(OperacjaBankowa op){
-		raport.add(op);
+		historia.add(op);
+		Collections.sort(historia, new CustomComparator());
 	}
 	
 	
