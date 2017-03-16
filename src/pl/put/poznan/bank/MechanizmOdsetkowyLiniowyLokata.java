@@ -17,4 +17,12 @@ public class MechanizmOdsetkowyLiniowyLokata implements IMechanizmOdsetkowy {
             throw new InvalidInputException("Podane konto nie istnieje.");
         }
     }
+
+    public double getProcent() {
+        return this.procent;
+    }
+
+    public void setProcent(double procent) {
+        this.procent = procent;
+    }
 }

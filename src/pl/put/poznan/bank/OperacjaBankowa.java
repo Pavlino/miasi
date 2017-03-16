@@ -18,7 +18,9 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 	
 	public void wplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException {
 		if (konto != null && kwota > 0) {
-			konto.setStanSrodkow(kwota);
+            double stanSrodkow = konto.getStanSrodkow();
+            stanSrodkow += kwota;
+			konto.setStanSrodkow(stanSrodkow);
 		} else {
 			throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
 		}
@@ -53,10 +55,18 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 	}
 
     public void naliczOdsetki(final Lokata lokata) throws InvalidInputException {
-        MechanizmOdsetkowyLiniowyLokata mechanizmOdsetkowy = new MechanizmOdsetkowyLiniowyLokata(lokata.getProcent());
+        IMechanizmOdsetkowy mechanizmOdsetkowy = lokata.getMechanizmOdsetkowy();
         Odsetki odsetki = new Odsetki(mechanizmOdsetkowy);
         double wartoscOdsetek = odsetki.naliczOdsetki(lokata);
         this.wplata(lokata, wartoscOdsetek);
+    }
+
+    public void naliczOdsetki(final Kredyt kredyt) throws InvalidInputException {
+
+    }
+
+    public void naliczOdsetki(final RachunekBankowy rachunekBankowy) throws InvalidInputException {
+
     }
 	
 	public Date getData() {

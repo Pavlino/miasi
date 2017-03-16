@@ -54,11 +54,11 @@ public class Bank {
 			System.out.println("Stworzono rachunek o id " + id);
 		}
 	}
-	
+
 	public ArrayList<RachunekBankowy> getListaRachunkow() {
 		return listaRachunkow;
 	}
-	public void setListaProduktów(ArrayList<RachunekBankowy> listaRachunkow) {
+	public void setListaProduktï¿½w(ArrayList<RachunekBankowy> listaRachunkow) {
 		this.listaRachunkow = listaRachunkow;
 	}
 	public int getId() {
