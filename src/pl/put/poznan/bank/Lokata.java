@@ -2,42 +2,39 @@ package pl.put.poznan.bank;
 
 import pl.put.poznan.utils.ITypyOperacjiBankowych;
 import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.NotEnoughFundsException;
 
 import java.util.Date;
 
 public class Lokata extends ProduktBankowy {
-	Date dataKonca;
-	RachunekBankowy rachunekPowiazany;
-    double kwota;
-    double odsetki;
+	private Date dataKonca;
+	private RachunekBankowy rachunekPowiazany;
+    private double kwota;
 	
 	public Lokata(int id, long nr){
 		this.idKlienta = id;
         this.numerRachunku = nr;
 	}
 
-    public Lokata(int id, long nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) {
+    public Lokata(int id, long nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException, NotEnoughFundsException {
         this.idKlienta = id;
         this.numerRachunku = nr;
         this.rachunekPowiazany = rachunekPowiazany;
         this.mechanizmOdsetkowy = mechanizmOdsetkowy;
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Otworzenie lokaty", ITypyOperacjiBankowych.OTWORZENIE_LOKATY);
+        operacjaBankowa.przelew(this.rachunekPowiazany, this, this.kwota);
         this.kwota = kwota;
     }
 
-    public void zerwijLokate() throws InvalidInputException {
+    public void zerwijLokate() throws InvalidInputException, NotEnoughFundsException {
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Zerwanie lokaty", ITypyOperacjiBankowych.ZERWANIE_LOKATY);
-        operacjaBankowa.wplata(this.rachunekPowiazany, this.kwota);
-        this.rachunekPowiazany = null;
+        operacjaBankowa.przelew(this, this.rachunekPowiazany, this.kwota);
+        this.stanOdsetek = 0;
     }
 
-    public void rozwiazLokate() throws InvalidInputException {
+    public void rozwiazLokate() throws InvalidInputException, NotEnoughFundsException {
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Rozwiazanie lokaty", ITypyOperacjiBankowych.ROZWIAZANIE_LOKATY);
-        operacjaBankowa.wplata(this.rachunekPowiazany, this.kwota + this.odsetki);
-    }
-
-    @Override
-    public void setStanSrodkow(double stanSrodkow) {
-        this.odsetki += stanSrodkow - this.kwota;
+        operacjaBankowa.przelew(this, this.rachunekPowiazany, this.kwota + this.stanOdsetek);
     }
 
     @Override
@@ -62,12 +59,6 @@ public class Lokata extends ProduktBankowy {
     }
     public void setKwota(double kwota) {
         this.kwota = kwota;
-    }
-    public double getOdsetki() {
-        return this.odsetki;
-    }
-    public void setOdsetki(double odsetki) {
-        this.odsetki = odsetki;
     }
 
 }

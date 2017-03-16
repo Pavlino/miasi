@@ -29,9 +29,16 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 	public void wyplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException, NotEnoughFundsException {
 		if (konto != null && kwota > 0) {
 			double stanSrodkow = konto.getStanSrodkow();
-			if (stanSrodkow >= kwota) {
+            double stanOdsetek = konto.getStanOdsetek();
+			if (stanSrodkow + stanOdsetek >= kwota) {
 				stanSrodkow -= kwota;
-				konto.setStanSrodkow(stanSrodkow);
+                if (stanSrodkow < 0) {
+                    stanOdsetek += stanSrodkow;
+                    konto.setStanSrodkow(0);
+                    konto.setStanOdsetek(stanOdsetek);
+                } else {
+                    konto.setStanSrodkow(stanSrodkow);
+                }
 			} else {
 				throw new NotEnoughFundsException();
 			}
@@ -54,11 +61,19 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 		}
 	}
 
+    public void wplataOdsetek(final ProduktBankowy konto, final double kwotaOdsetek) {
+        if (konto != null && kwotaOdsetek > 0) {
+            double stanOdsetek = konto.getStanOdsetek();
+            stanOdsetek += kwotaOdsetek;
+            konto.setStanOdsetek(stanOdsetek);
+        }
+    }
+
     public void naliczOdsetki(final ProduktBankowy produktBankowy) throws InvalidInputException {
         IMechanizmOdsetkowy mechanizmOdsetkowy = produktBankowy.getMechanizmOdsetkowy();
         Odsetki odsetki = new Odsetki(mechanizmOdsetkowy);
         double wartoscOdsetek = odsetki.naliczOdsetki(produktBankowy);
-        this.wplata(produktBankowy, wartoscOdsetek);
+        this.wplataOdsetek(produktBankowy, wartoscOdsetek);
     }
 
 	public Date getData() {

@@ -3,19 +3,21 @@ package pl.put.poznan.bank;
 import java.util.Date;
 
 public class RachunekBankowy extends ProduktBankowy {
-	Date dataZalozenia;
-	int idHistorii;
-	Debet debet;
+	private Date dataZalozenia;
+	private int idHistorii;
+	private Debet debet;
 
 	public RachunekBankowy(int id, long nr){
 		this.idKlienta = id;
 		this.numerRachunku = nr;
+		this.stanOdsetek = 0;
 	}
 
 	public RachunekBankowy(int id, long numer, Debet debet) {
 		this.idKlienta = id;
 		this.numerRachunku = numer;
 		this.debet = debet;
+		this.stanOdsetek = 0;
 	}
 
 	public boolean czyPosiadaDebet() {
@@ -26,9 +28,9 @@ public class RachunekBankowy extends ProduktBankowy {
 	public double getStanSrodkow() {
 		if (this.czyPosiadaDebet()) {
 			double pozostalyDebet = this.debet.getMaxKwotaDebetu() - this.debet.getKwotaDebetu();
-			return this.stanSrodkow + pozostalyDebet;
+			return this.stanSrodkow + pozostalyDebet + this.stanOdsetek;
 		}
-		return this.stanSrodkow;
+		return this.stanSrodkow + this.stanOdsetek;
 	}
 
 	public Date getDataZalozenia() {

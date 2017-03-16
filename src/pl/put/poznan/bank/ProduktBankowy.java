@@ -4,6 +4,7 @@ public abstract class ProduktBankowy {
 	int idKlienta;
 	long numerRachunku;
 	double stanSrodkow;
+	double stanOdsetek;
 	IMechanizmOdsetkowy mechanizmOdsetkowy;
 	public int getIdKlienta() {
 		return idKlienta;
@@ -17,6 +18,11 @@ public abstract class ProduktBankowy {
 	public void setStanSrodkow(double stanSrodkow) {
 		this.stanSrodkow = stanSrodkow;
 	}
+    public void setStanOdsetek(double stanOdsetek) {
+        this.stanOdsetek = stanOdsetek; }
+    public double getStanOdsetek() {
+        return this.stanOdsetek;
+    }
 	public long getNumerRachunku() {
 		return numerRachunku;
 	}

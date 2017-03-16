@@ -1,8 +1,5 @@
 package pl.put.poznan.utils;
 
-/**
- * Created by Cinek on 2017-03-15.
- */
 public interface ITypyOperacjiBankowych {
     int WPLATA = 0;
     int WYPLATA = 1;
@@ -12,4 +9,5 @@ public interface ITypyOperacjiBankowych {
     int ODSETKI_KREDYT = 5;
     int ZERWANIE_LOKATY = 6;
     int ROZWIAZANIE_LOKATY = 7;
+    int OTWORZENIE_LOKATY = 8;
 }
