@@ -1,6 +1,7 @@
 package pl.put.poznan.bank;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import pl.put.poznan.utils.InvalidInputException;
 
@@ -10,55 +11,48 @@ public class Bank {
 	private Raport raport;
 	private Historia historia;
 	private ArrayList<RachunekBankowy> listaRachunkow;
-	private ArrayList<Klient> listaKlientow;
+	private HashMap<Integer, Klient> listaKlientow;
 
 	public Bank(String nazwa, int id){
 		this.nazwa = nazwa;
 		this.id = id;
 		this.raport = new Raport();
 		this.historia = new Historia();
-		this.listaRachunkow = new ArrayList<RachunekBankowy>();
-		this.listaKlientow = new ArrayList<Klient>();
+		this.listaRachunkow = new ArrayList<>();
+		this.listaKlientow = new HashMap<>();
 	}
 	
 	public void stworzKlienta(){
 		if(listaKlientow.size()==0){
-			listaKlientow.add(new Klient(1));
+			listaKlientow.put(1, new Klient(1));
 			System.out.println("Stworzono klienta o id 1");
 		}
 		else{
 			int id = listaKlientow.get(listaKlientow.size()-1).getId();
-			listaKlientow.add(new Klient(id+1));
+			listaKlientow.put(id+1, new Klient(id+1));
 			System.out.println("Stworzono klienta o id " + id);
 		}
 	}
 	
-	public void stworzRachunek(int idKlienta) throws InvalidInputException{
-		boolean klient=false;
-		for (Klient aktKlient: listaKlientow) {
-			if(aktKlient.getId()==idKlienta){
-				klient=true;
-				break;
+	public void stworzRachunek(int idKlienta) throws InvalidInputException {
+		if (listaKlientow.containsKey(idKlienta)) {
+			if (listaRachunkow.size()==0){
+				listaRachunkow.add(new RachunekBankowy(idKlienta, 1));  // zmienic rachunek na String?
+				System.out.println("Stworzono rachunek o numerze 1");
+			} else {
+				long numer = listaRachunkow.get(listaRachunkow.size()-1).getNumerRachunku();
+				listaRachunkow.add(new RachunekBankowy(idKlienta, numer+1)); //zmienic rachunek na String?
+				System.out.println("Stworzono rachunek o numerze " + numer);
 			}
-		}
-		if(klient == false){
+		} else {
 			throw new InvalidInputException("Klient o id " + idKlienta + " nie istnieje");
-		}
-		if(listaRachunkow.size()==0){
-			listaRachunkow.add(new RachunekBankowy(idKlienta, 1));  // zmienic rachunek na String?
-			System.out.println("Stworzono rachunek o id 1");
-		}
-		else{
-			long id = listaRachunkow.get(listaRachunkow.size()-1).getId();
-			listaRachunkow.add(new RachunekBankowy(idKlienta, id+1)); //zmienic rachunek na String?
-			System.out.println("Stworzono rachunek o id " + id);
 		}
 	}
 
 	public ArrayList<RachunekBankowy> getListaRachunkow() {
 		return listaRachunkow;
 	}
-	public void setListaProdukt�w(ArrayList<RachunekBankowy> listaRachunkow) {
+	public void setListaProduktow(ArrayList<RachunekBankowy> listaRachunkow) {
 		this.listaRachunkow = listaRachunkow;
 	}
 	public int getId() {

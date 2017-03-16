@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Klient {
 	int id;
-	private ArrayList<RachunekBankowy> listaRachunkow;
+	private ArrayList<ProduktBankowy> listaProduktow;
 
 	public Klient(int id){
 		this.id=id;
-		this.listaRachunkow = new ArrayList<RachunekBankowy>();
+		this.listaProduktow = new ArrayList<ProduktBankowy>();
 	}
 	
 	public int getId() {
@@ -18,4 +18,8 @@ public class Klient {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+    public void dodajProduktBankowy(ProduktBankowy produktBankowy) {
+        this.listaProduktow.add(produktBankowy);
+    }
 }
