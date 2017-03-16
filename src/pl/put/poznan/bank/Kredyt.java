@@ -20,6 +20,7 @@ public class Kredyt extends ProduktBankowy {
         operacjaBankowa.wplata(rachunekPowiazany, kwota);
         this.kwota = kwota;
         this.splacony = false;
+        this.bank = rachunekPowiazany.getBank();
 	}
 
     public void splacKredyt() throws NotEnoughFundsException, InvalidInputException {

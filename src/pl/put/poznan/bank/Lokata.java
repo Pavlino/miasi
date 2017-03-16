@@ -19,6 +19,7 @@ public class Lokata extends ProduktBankowy {
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Otworzenie lokaty", ITypyOperacjiBankowych.OTWORZENIE_LOKATY);
         operacjaBankowa.przelew(this.rachunekPowiazany, this, this.kwota);
         this.kwota = kwota;
+        this.bank = rachunekPowiazany.getBank();
     }
 
     public void zerwijLokate() throws InvalidInputException, NotEnoughFundsException {

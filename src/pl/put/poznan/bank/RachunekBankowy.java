@@ -6,17 +6,19 @@ public class RachunekBankowy extends ProduktBankowy {
 	private Date dataZalozenia;
 	private Debet debet;
 
-	public RachunekBankowy(int id, long nr){
+	public RachunekBankowy(int id, long nr, Bank bank){
 		this.idKlienta = id;
 		this.numerRachunku = nr;
 		this.stanOdsetek = 0;
+        this.bank = bank;
 	}
 
-	public RachunekBankowy(int id, long numer, Debet debet) {
+	public RachunekBankowy(int id, long numer, Debet debet, Bank bank) {
 		this.idKlienta = id;
 		this.numerRachunku = numer;
 		this.debet = debet;
 		this.stanOdsetek = 0;
+        this.bank = bank;
 	}
 
 	public boolean czyPosiadaDebet() {

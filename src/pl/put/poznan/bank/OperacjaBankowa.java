@@ -21,7 +21,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
             double stanSrodkow = konto.getStanSrodkow();
             stanSrodkow += kwota;
             konto.setStanSrodkow(stanSrodkow);
-            konto.getHistoria().dodajOperacje(this);
+            this.dodajDoHistorii(konto);
         } else {
             throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
         }
@@ -40,8 +40,8 @@ public class OperacjaBankowa implements IOperacjaBankowa {
                 } else {
                     konto.setStanSrodkow(stanSrodkow);
                 }
-                konto.getHistoria().dodajOperacje(this);
-			} else {
+                this.dodajDoHistorii(konto);
+            } else {
 				throw new NotEnoughFundsException();
 			}
 		} else {
@@ -58,8 +58,8 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 			} else {
 				throw new NotEnoughFundsException();
 			}
-            kontoZ.getHistoria().dodajOperacje(this);
-            kontoDo.getHistoria().dodajOperacje(this);
+            this.dodajDoHistorii(kontoZ);
+            this.dodajDoHistorii(kontoDo);
 		} else {
 			throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
 		}
@@ -70,7 +70,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
             double stanOdsetek = konto.getStanOdsetek();
             stanOdsetek += kwotaOdsetek;
             konto.setStanOdsetek(stanOdsetek);
-            konto.getHistoria().dodajOperacje(this);
+            this.dodajDoHistorii(konto);
         }
     }
 
@@ -79,6 +79,11 @@ public class OperacjaBankowa implements IOperacjaBankowa {
         Odsetki odsetki = new Odsetki(mechanizmOdsetkowy);
         double wartoscOdsetek = odsetki.naliczOdsetki(produktBankowy);
         this.wplataOdsetek(produktBankowy, wartoscOdsetek);
+    }
+
+    private void dodajDoHistorii(ProduktBankowy produktBankowy) {
+        produktBankowy.getHistoria().dodajOperacje(this);
+        produktBankowy.getBank().getHistoria().dodajOperacje(this);
     }
 
 	public Date getData() {

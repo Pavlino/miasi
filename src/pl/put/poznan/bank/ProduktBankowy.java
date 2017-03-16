@@ -8,6 +8,7 @@ public abstract class ProduktBankowy {
 	double stanOdsetek;
 	IMechanizmOdsetkowy mechanizmOdsetkowy;
     Historia historia;
+    Bank bank;
 
 	public int getIdKlienta() {
 		return idKlienta;
@@ -37,5 +38,11 @@ public abstract class ProduktBankowy {
 	}
     public Historia getHistoria() {
         return this.historia;
+    }
+    public Bank getBank() {
+        return this.bank;
+    }
+    public void setbank(Bank bank) {
+        this.bank = bank;
     }
 }
