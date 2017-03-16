@@ -16,12 +16,13 @@ public class OperacjaBankowa implements IOperacjaBankowa {
         this.typ = typ;
     }
 	
-		if (konto != null && kwota > 0) {
-			konto.setStanSrodkow(kwota);
-		} else {
-			throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
+	public void wplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException {
+			if (konto != null && kwota > 0) {
+				konto.setStanSrodkow(kwota);
+			} else {
+				throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
+			}
 		}
-	}
 	
 	public void wyplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException, NotEnoughFundsException {
 		if (konto != null && kwota > 0) {
