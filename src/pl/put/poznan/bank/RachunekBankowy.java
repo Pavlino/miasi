@@ -8,8 +8,7 @@ public class RachunekBankowy extends ProduktBankowy {
 	Date dataZalozenia;
 	int idHistorii;
 	long numerRachunku;
-	
-	
+	Debet debet;
 
 	public RachunekBankowy(int id, String nr){
 		this.id = id;
@@ -20,7 +19,26 @@ public class RachunekBankowy extends ProduktBankowy {
 		this.id = id;
 		this.numerRachunku = nr;
 	}
-	
+
+	public RachunekBankowy(int id, String numer, Debet debet) {
+		this.id = id;
+		this.numer = numer;
+		this.debet = debet;
+	}
+
+	public boolean czyPosiadaDebet() {
+		return debet != null;
+	}
+
+	@Override
+	public double getStanSrodkow() {
+		if (this.czyPosiadaDebet()) {
+			double pozostalyDebet = this.debet.getMaxKwotaDebetu() - this.debet.getKwotaDebetu();
+			return this.stanSrodkow + pozostalyDebet;
+		}
+		return this.stanSrodkow;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -47,6 +65,12 @@ public class RachunekBankowy extends ProduktBankowy {
 	}
 	public long getNumerRachunku() {
 		return numerRachunku;
+	}
+	public void setDebet(Debet debet) {
+		this.debet = debet;
+	}
+	public Debet getDebet() {
+		return this.debet;
 	}
 
 	public void setNumerRachunku(long numerRachunku) {

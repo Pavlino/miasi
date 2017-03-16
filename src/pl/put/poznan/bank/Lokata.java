@@ -30,7 +30,7 @@ public class Lokata extends RachunekBankowy {
     }
 
     public void rozwiazLokate() throws InvalidInputException {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Wyplata lokaty", ITypyOperacjiBankowych.WYPLATA_LOKATY);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Rozwiazanie lokaty", ITypyOperacjiBankowych.ROZWIAZANIE_LOKATY);
         operacjaBankowa.wplata(this.rachunekPowiazany, this.kwota + this.odsetki);
     }
 

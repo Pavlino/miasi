@@ -54,21 +54,13 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 		}
 	}
 
-    public void naliczOdsetki(final Lokata lokata) throws InvalidInputException {
-        IMechanizmOdsetkowy mechanizmOdsetkowy = lokata.getMechanizmOdsetkowy();
+    public void naliczOdsetki(final ProduktBankowy produktBankowy) throws InvalidInputException {
+        IMechanizmOdsetkowy mechanizmOdsetkowy = produktBankowy.getMechanizmOdsetkowy();
         Odsetki odsetki = new Odsetki(mechanizmOdsetkowy);
-        double wartoscOdsetek = odsetki.naliczOdsetki(lokata);
-        this.wplata(lokata, wartoscOdsetek);
+        double wartoscOdsetek = odsetki.naliczOdsetki(produktBankowy);
+        this.wplata(produktBankowy, wartoscOdsetek);
     }
 
-    public void naliczOdsetki(final Kredyt kredyt) throws InvalidInputException {
-
-    }
-
-    public void naliczOdsetki(final RachunekBankowy rachunekBankowy) throws InvalidInputException {
-
-    }
-	
 	public Date getData() {
 		return data;
 	}

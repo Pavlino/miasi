@@ -11,5 +11,5 @@ public interface ITypyOperacjiBankowych {
     int ODSETKI_LOKATA = 4;
     int ODSETKI_KREDYT = 5;
     int ZERWANIE_LOKATY = 6;
-    int WYPLATA_LOKATY = 7;
+    int ROZWIAZANIE_LOKATY = 7;
 }
