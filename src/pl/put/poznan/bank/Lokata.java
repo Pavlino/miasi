@@ -6,10 +6,16 @@ public class Lokata extends RachunekBankowy {
 	int id;
 	Date dataKonca;
 	int idRachunku;
+    double procent;
 	
 	public Lokata(int id, String nr){
 		super(id, nr);
 	}
+
+    @Override
+    public void setStanSrodkow(double stanSrodkow) {
+        //TODO: podzial na odsetki i wartosc lokaty
+    }
 	
 	public int getId() {
 		return id;
@@ -29,4 +35,10 @@ public class Lokata extends RachunekBankowy {
 	public void setIdRachunku(int idRachunku) {
 		this.idRachunku = idRachunku;
 	}
+    public double getProcent() {
+        return procent;
+    }
+    public void setProcent(double procent) {
+        this.procent = procent;
+    }
 }

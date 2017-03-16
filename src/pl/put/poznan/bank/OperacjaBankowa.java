@@ -51,6 +51,13 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 			throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
 		}
 	}
+
+    public void naliczOdsetki(final Lokata lokata) throws InvalidInputException {
+        MechanizmOdsetkowyLiniowyLokata mechanizmOdsetkowy = new MechanizmOdsetkowyLiniowyLokata(lokata.getProcent());
+        Odsetki odsetki = new Odsetki(mechanizmOdsetkowy);
+        double wartoscOdsetek = odsetki.naliczOdsetki(lokata);
+        this.wplata(lokata, wartoscOdsetek);
+    }
 	
 	public Date getData() {
 		return data;
