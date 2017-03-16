@@ -1,33 +1,36 @@
 package pl.put.poznan.bank;
 
+import pl.put.poznan.utils.ITypyOperacjiBankowych;
+import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.NotEnoughFundsException;
+
+import java.util.Date;
+
 public class Kredyt extends ProduktBankowy {
-	int id;
-	int idRachunku;
-	double kwota; //pozosta³a do sp³acenia
-	boolean splacony;//
+	private RachunekBankowy rachunekPowiazany;
+	private double kwota; // pozostala do splacenia
+	private boolean splacony;//
 	
-	public Kredyt(int id, int rachunek){
-		this.id = id;
-		this.idRachunku = rachunek;
+	public Kredyt(int id, long rachunek, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException {
+		this.idKlienta = id;
+		this.numerRachunku = rachunek;
+        this.rachunekPowiazany = rachunekPowiazany;
+        this.mechanizmOdsetkowy = mechanizmOdsetkowy;
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Zaciagniecie kredytu", ITypyOperacjiBankowych.ZACIAGNIECIE_KREDYTU);
+        operacjaBankowa.wplata(rachunekPowiazany, kwota);
+        this.kwota = kwota;
+        this.splacony = false;
 	}
-	
-	public Kredyt(int id, int rachunek, double kwota){
-		this.id = id;
-		this.idRachunku = rachunek;
-		this.kwota = kwota;
-		splacony = false;
-	}
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getIdRachunku() {
-		return idRachunku;
-	}
-	public void setIdRachunku(int idRachunku) {
-		this.idRachunku = idRachunku;
-	}
+
+    public void splacKredyt() throws NotEnoughFundsException, InvalidInputException {
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Splata kredytu", ITypyOperacjiBankowych.SPLATA_KREDYTU);
+        operacjaBankowa.przelew(rachunekPowiazany, this, this.kwota + this.stanOdsetek);
+        this.splacony = true;
+    }
+
+    @Override
+    public double getStanSrodkow() {
+        return this.kwota;
+    }
+
 }

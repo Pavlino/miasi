@@ -10,4 +10,6 @@ public interface ITypyOperacjiBankowych {
     int ZERWANIE_LOKATY = 6;
     int ROZWIAZANIE_LOKATY = 7;
     int OTWORZENIE_LOKATY = 8;
+    int ZACIAGNIECIE_KREDYTU = 9;
+    int SPLATA_KREDYTU = 10;
 }
