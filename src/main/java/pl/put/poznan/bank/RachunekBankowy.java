@@ -11,6 +11,7 @@ public class RachunekBankowy extends ProduktBankowy {
 		this.numerRachunku = nr;
 		this.stanOdsetek = 0;
         this.bank = bank;
+		this.historia = new Historia();
 	}
 
 	public RachunekBankowy(int id, long numer, Debet debet, Bank bank) {
@@ -19,6 +20,7 @@ public class RachunekBankowy extends ProduktBankowy {
 		this.debet = debet;
 		this.stanOdsetek = 0;
         this.bank = bank;
+		this.historia = new Historia();
 	}
 
 	public boolean czyPosiadaDebet() {
@@ -29,9 +31,33 @@ public class RachunekBankowy extends ProduktBankowy {
 	public double getStanSrodkow() {
 		if (this.czyPosiadaDebet()) {
 			double pozostalyDebet = this.debet.getMaxKwotaDebetu() - this.debet.getKwotaDebetu();
-			return this.stanSrodkow + pozostalyDebet + this.stanOdsetek;
+			return this.stanSrodkow + this.stanOdsetek + pozostalyDebet;
 		}
 		return this.stanSrodkow + this.stanOdsetek;
+	}
+
+	@Override
+	public void setStanSrodkow(double stanSrodkow) {
+		if (this.czyPosiadaDebet()) {
+		    double dostepneSrodki = this.stanSrodkow + this.stanOdsetek + this.debet.getMaxKwotaDebetu() - this.debet.getKwotaDebetu();
+			double kwotaWyplaty = dostepneSrodki - stanSrodkow;
+            double kwotaDebetu = this.stanSrodkow + this.stanOdsetek - kwotaWyplaty;
+			if (kwotaDebetu >= 0) {
+			    if (stanSrodkow - this.stanSrodkow > 0) {
+			        double stanOdsetek = stanSrodkow - this.stanSrodkow;
+                    this.stanSrodkow = 0;
+                    this.stanOdsetek -= stanOdsetek;
+                } else {
+                    this.stanSrodkow -= stanSrodkow;
+                }
+			} else {
+				this.stanSrodkow = 0;
+				this.stanOdsetek = 0;
+				this.debet.setKwotaDebetu(this.debet.getKwotaDebetu() - kwotaDebetu);
+			}
+		} else {
+            this.stanSrodkow = stanSrodkow;
+        }
 	}
 
 	public Date getDataZalozenia() {
