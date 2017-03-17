@@ -17,7 +17,7 @@ public class OperacjaBankowaTest {
     @Before
     public void setUp() throws Exception {
         Bank bank = new Bank("Bank testowy", 1);
-        this.konto = new RachunekBankowy(1, 1, bank);
+        this.konto = new RachunekBankowy(1, "1237129371", bank);
     }
 
     @After

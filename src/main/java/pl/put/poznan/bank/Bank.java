@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.NotDebetException;
 
 public class Bank {
 	private int id;
@@ -48,7 +49,7 @@ public class Bank {
 		}
 	}
 
-    public Object stworzRaport(IRaport raport, HashMap<Long, ProduktBankowy> listaProduktow) throws InvalidInputException {
+    public Object stworzRaport(IRaport raport, HashMap<Long, ProduktBankowy> listaProduktow) throws InvalidInputException, NotDebetException {
         return raport.generujRaport(listaProduktow);
     }
 

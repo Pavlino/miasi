@@ -7,18 +7,27 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.NotDebetException;
 
 public class RaportDebetowy implements IRaport {
+	public ArrayList<ProduktBankowy> getRaportDebetowy() {
+		return raportDebetowy;
+	}
+
+	public void setRaportDebetowy(ArrayList<ProduktBankowy> raportDebetowy) {
+		this.raportDebetowy = raportDebetowy;
+	}
+
 	private ArrayList<ProduktBankowy> raportDebetowy;
 	
 	public RaportDebetowy(){
 		this.raportDebetowy = new ArrayList<ProduktBankowy>();
 	}
 	
-	public ArrayList<ProduktBankowy> generujRaport(HashMap<Long, ProduktBankowy> listaProduktow) {
+	public ArrayList<ProduktBankowy> generujRaport(HashMap<Long, ProduktBankowy> listaProduktow) throws NotDebetException {
         for (ProduktBankowy produktBankowy : listaProduktow.values()) {
             try {
-                this.dodajProdukt(produktBankowy);
+                this.dodajProdukt((RachunekBankowy) produktBankowy);
             } catch (InvalidInputException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -26,19 +35,19 @@ public class RaportDebetowy implements IRaport {
         return this.raportDebetowy;
 	}
 	
-	public void dodajProdukt(ProduktBankowy produkt) throws InvalidInputException{
+	public void dodajProdukt(RachunekBankowy produkt) throws InvalidInputException, NotDebetException {
 		if(produkt != null){
-			Double stanSrodkow = produkt.getStanSrodkow();
-			if(stanSrodkow<0){
+			Double stanSrodkow = produkt.getDebet().getKwotaDebetu();
+			if(stanSrodkow>0){
 				raportDebetowy.add(produkt);
 				System.out.println("Dodano do raportu produkt z debetem");
 			}
 			else{
-				System.out.println("Na tym produkcie nie ma debetu");
+				throw new NotDebetException("Na tym produkcie nie ma debetu");
 			}
 		}
 		else{
-			throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
+			throw new InvalidInputException("Produkt nie istnieje");
 		}
 	}
 
