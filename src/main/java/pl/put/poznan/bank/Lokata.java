@@ -11,7 +11,7 @@ public class Lokata extends ProduktBankowy {
 	private RachunekBankowy rachunekPowiazany;
     private double kwota;
 
-    public Lokata(int id, long nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException, NotEnoughFundsException {
+    public Lokata(int id, String nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException, NotEnoughFundsException {
         this.idKlienta = id;
         this.numerRachunku = nr;
         this.rachunekPowiazany = rachunekPowiazany;

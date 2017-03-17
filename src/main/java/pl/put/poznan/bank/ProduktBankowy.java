@@ -3,7 +3,7 @@ package pl.put.poznan.bank;
 public abstract class ProduktBankowy {
 
     int idKlienta;
-	long numerRachunku;
+	String numerRachunku;
 	double stanSrodkow;
 	double stanOdsetek;
 	IMechanizmOdsetkowy mechanizmOdsetkowy;
@@ -27,7 +27,7 @@ public abstract class ProduktBankowy {
     public double getStanOdsetek() {
         return this.stanOdsetek;
     }
-	public long getNumerRachunku() {
+	public String getNumerRachunku() {
 		return numerRachunku;
 	}
 	public IMechanizmOdsetkowy getMechanizmOdsetkowy() {
