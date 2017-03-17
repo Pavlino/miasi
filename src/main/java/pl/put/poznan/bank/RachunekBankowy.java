@@ -6,7 +6,7 @@ public class RachunekBankowy extends ProduktBankowy {
 	private Date dataZalozenia;
 	private Debet debet;
 
-	public RachunekBankowy(int id, long nr, Bank bank){
+	public RachunekBankowy(int id, String nr, Bank bank){
 		this.idKlienta = id;
 		this.numerRachunku = nr;
 		this.stanOdsetek = 0;
@@ -14,7 +14,7 @@ public class RachunekBankowy extends ProduktBankowy {
 		this.historia = new Historia();
 	}
 
-	public RachunekBankowy(int id, long numer, Debet debet, Bank bank) {
+	public RachunekBankowy(int id, String numer, Debet debet, Bank bank) {
 		this.idKlienta = id;
 		this.numerRachunku = numer;
 		this.debet = debet;
@@ -73,7 +73,7 @@ public class RachunekBankowy extends ProduktBankowy {
 		return this.debet;
 	}
 
-	public void setNumerRachunku(long numerRachunku) {
+	public void setNumerRachunku(String numerRachunku) {
 		this.numerRachunku = numerRachunku;
 	}
 }

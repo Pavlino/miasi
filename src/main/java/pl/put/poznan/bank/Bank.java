@@ -1,6 +1,5 @@
 package pl.put.poznan.bank;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -10,7 +9,7 @@ public class Bank {
 	private int id;
 	public String nazwa;
 	private Historia historia;
-	private HashMap<Long, ProduktBankowy> listaRachunkow;
+	private HashMap<String, ProduktBankowy> listaRachunkow;
 	private HashMap<Integer, Klient> listaKlientow;
 
 	public Bank(String nazwa, int id){
@@ -36,12 +35,12 @@ public class Bank {
 	public void stworzRachunek(int idKlienta) throws InvalidInputException {
 		if (listaKlientow.containsKey(idKlienta)) {
 			if (listaRachunkow.size()==0){
-                long numer = 1;
+                String numer = "0001";
 				listaRachunkow.put(numer, new RachunekBankowy(idKlienta, numer, this));  // zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze 1");
 			} else {
-                long numer = Collections.max(listaRachunkow.keySet());
-				listaRachunkow.put(numer+1, new RachunekBankowy(idKlienta, numer+1, this)); //zmienic rachunek na String?
+                String numer = Collections.max(listaRachunkow.keySet());
+				listaRachunkow.put("00001", new RachunekBankowy(idKlienta, "0001", this)); //zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze " + numer);
 			}
 		} else {
@@ -53,10 +52,10 @@ public class Bank {
         return raport.generujRaport(listaProduktow);
     }
 
-	public HashMap<Long, ProduktBankowy> getListaRachunkow() {
+	public HashMap<String, ProduktBankowy> getListaRachunkow() {
 		return this.listaRachunkow;
 	}
-	public void setListaProduktow(HashMap<Long, ProduktBankowy> listaRachunkow) {
+	public void setListaProduktow(HashMap<String, ProduktBankowy> listaRachunkow) {
 		this.listaRachunkow = listaRachunkow;
 	}
 	public int getId() {

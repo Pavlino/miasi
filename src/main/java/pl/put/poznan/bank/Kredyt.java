@@ -11,7 +11,7 @@ public class Kredyt extends ProduktBankowy {
 	private double kwota; // pozostala do splacenia
 	private boolean splacony;//
 	
-	public Kredyt(int id, long rachunek, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException {
+	public Kredyt(int id, String rachunek, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException {
 		this.idKlienta = id;
 		this.numerRachunku = rachunek;
         this.rachunekPowiazany = rachunekPowiazany;
