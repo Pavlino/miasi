@@ -58,7 +58,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 		}
 	}
 
-    public void wplataOdsetek(final ProduktBankowy konto, final double kwotaOdsetek) {
+    public void wplataOdsetek(final ProduktBankowy konto, final double kwotaOdsetek) throws InvalidInputException {
         if (konto != null && kwotaOdsetek > 0) {
             double stanKonta = konto.getSrodki();
             stanKonta += kwotaOdsetek;
@@ -74,7 +74,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
         this.wplataOdsetek(produktBankowy, wartoscOdsetek);
     }
 
-    private void dodajDoHistorii(ProduktBankowy produktBankowy) {
+    private void dodajDoHistorii(ProduktBankowy produktBankowy) throws InvalidInputException {
         produktBankowy.getHistoria().dodajOperacje(this);
         produktBankowy.getBank().getHistoria().dodajOperacje(this);
     }
