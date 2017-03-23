@@ -21,19 +21,20 @@ public class Bank {
 		this.listaKlientow = new HashMap<>();
 	}
 	
-	public void stworzKlienta(){
+	public Klient stworzKlienta(){
         int id = 1;
 		if(listaKlientow.size() > 0){
-            id = listaKlientow.get(listaKlientow.size()-1).getId() + 1;
+            id = listaKlientow.size() + 1;
         }
         listaKlientow.put(id, new Klient(id, this));
         System.out.println("Stworzono klienta o id " + id);
+        return new Klient(id, this);
 	}
 	
 	public RachunekBankowy stworzRachunek(Klient klient) throws InvalidInputException {
 		if (listaKlientow.containsKey(klient.getId())) {
             int numer = 1;
-			if (listaRachunkow.size()==0){
+			if (listaRachunkow.size() > 0){
                 numer = new Integer(Collections.max(listaRachunkow.keySet())) + 1;
             }
             RachunekBankowy rachunekBankowy = new RachunekBankowy(klient, Integer.toString(numer), this);
@@ -48,7 +49,7 @@ public class Bank {
     public Lokata stworzLokate(Klient klient, RachunekBankowy rachunekBankowy, double kwota, Calendar data, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
         if (listaKlientow.containsKey(klient.getId())) {
             int numer = 1;
-            if (listaRachunkow.size()==0){
+            if (listaRachunkow.size() > 0){
                 numer = new Integer(Collections.max(listaRachunkow.keySet())) + 1;
             }
             Lokata lokata = new Lokata(klient, Integer.toString(numer), rachunekBankowy, mechanizmOdsetkowy);
@@ -64,7 +65,7 @@ public class Bank {
     public Kredyt stworzKredyt(Klient klient, RachunekBankowy rachunekBankowy, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
         if (listaKlientow.containsKey(klient.getId())) {
             int numer = 1;
-            if (listaRachunkow.size()==0){
+            if (listaRachunkow.size() > 0){
                 numer = new Integer(Collections.max(listaRachunkow.keySet())) + 1;
             }
             Kredyt kredyt = new Kredyt(klient, Integer.toString(numer), rachunekBankowy, mechanizmOdsetkowy);

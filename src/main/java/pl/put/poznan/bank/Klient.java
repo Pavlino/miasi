@@ -47,7 +47,7 @@ public class Klient {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) this.listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
             Lokata lokata = this.bank.stworzLokate(this, rachunekBankowy, kwota, new GregorianCalendar(2017, 10, 10), mechanizmOdsetkowy);
-            this.listaProduktow.put(rachunekBankowy.getNumerRachunku(), rachunekBankowy);
+            this.listaProduktow.put(lokata.getNumerRachunku(), lokata);
         } else {
             throw new InvalidInputException("Rachunek nie istnieje.");
         }
@@ -56,15 +56,17 @@ public class Klient {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) this.listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
             Kredyt kredyt = this.bank.stworzKredyt(this, rachunekBankowy, kwota, mechanizmOdsetkowy);
-            this.listaProduktow.put(rachunekBankowy.getNumerRachunku(), rachunekBankowy);
+            this.listaProduktow.put(kredyt.getNumerRachunku(), kredyt);
         } else {
             throw new InvalidInputException("Rachunek nie istnieje.");
         }
     }
 
-
-
     public void dodajProduktBankowy(ProduktBankowy produktBankowy) {
         this.listaProduktow.put(produktBankowy.getNumerRachunku(), produktBankowy);
+    }
+
+    public HashMap<String, ProduktBankowy> getListaProduktow() {
+        return this.listaProduktow;
     }
 }
