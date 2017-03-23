@@ -11,17 +11,20 @@ public class Kredyt extends ProduktBankowy {
 	private boolean splacony;
     private double odsetki;
 	
-	public Kredyt(Klient klient, String rachunek, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException {
+	public Kredyt(Klient klient, String rachunek, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException {
 		this.klient = klient;
 		this.numerRachunku = rachunek;
         this.rachunekPowiazany = rachunekPowiazany;
         this.mechanizmOdsetkowy = mechanizmOdsetkowy;
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Zaciagniecie kredytu", ITypyOperacjiBankowych.ZACIAGNIECIE_KREDYTU);
-        operacjaBankowa.wplata(rachunekPowiazany, kwota);
-        this.srodki = kwota;
         this.splacony = false;
         this.bank = rachunekPowiazany.getBank();
 	}
+
+    public void zaciagnijKredyt(double kwota) throws InvalidInputException {
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Zaciagniecie kredytu", ITypyOperacjiBankowych.ZACIAGNIECIE_KREDYTU);
+        operacjaBankowa.wplata(rachunekPowiazany, kwota);
+        this.srodki = kwota;
+    }
 
     public void splacKredyt() throws NotEnoughFundsException, InvalidInputException {
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Splata kredytu", ITypyOperacjiBankowych.SPLATA_KREDYTU);

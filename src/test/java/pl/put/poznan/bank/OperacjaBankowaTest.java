@@ -18,6 +18,7 @@ public class OperacjaBankowaTest {
     public void setUp() throws Exception {
         Bank bank = new Bank("Bank testowy", 1);
         this.konto = new RachunekBankowy(1, "1237129371", bank);
+        this.konto.setSrodki(100);
     }
 
     @After
@@ -29,7 +30,7 @@ public class OperacjaBankowaTest {
     public void testWplataKwotaDodatnia() throws Exception {
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
         operacjaBankowa.wplata(this.konto, 100);
-        assertEquals("Wynik wplaty: ", 100, konto.getStanSrodkow(), 0.001);
+        assertEquals("Wynik wplaty: ", 200, konto.getSrodki(), 0.001);
     }
 
     @Test(expected = InvalidInputException.class)
@@ -46,25 +47,18 @@ public class OperacjaBankowaTest {
 
     @Test
     public void testWyplataKwotaDodatnia() throws Exception {
-        this.konto.setStanSrodkow(100);
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wyplata", ITypyOperacjiBankowych.WYPLATA);
-        operacjaBankowa.wyplata(this.konto, 100);
-        assertEquals("Wynik wyplaty: ", 0, this.konto.getStanSrodkow(), 0.001);
+        operacjaBankowa.wyplata(this.konto, 50);
+        assertEquals("Wynik wyplaty: ", 50, this.konto.getSrodki(), 0.001);
     }
 
     @Test
     public void testWyplataDebet() throws Exception {
-        this.konto.setStanSrodkow(100);
         Debet debet = new Debet(1000, 0);
         this.konto.setDebet(debet);
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wyplata", ITypyOperacjiBankowych.WYPLATA);
         operacjaBankowa.wyplata(this.konto, 200);
-        assertEquals("Wynik wyplaty: ", 900, this.konto.getStanSrodkow(), 0.001);
-    }
-
-    @Test
-    public void testPrzelew() throws Exception {
-
+        assertEquals("Wynik wyplaty: ", 900, this.konto.getSrodki(), 0.001);
     }
 
     @Test

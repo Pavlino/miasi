@@ -23,29 +23,29 @@ public class Bank {
 	
 	public void stworzKlienta(){
 		if(listaKlientow.size()==0){
-			listaKlientow.put(1, new Klient(1));
+			listaKlientow.put(1, new Klient(1, this));
 			System.out.println("Stworzono klienta o id 1");
 		}
 		else{
 			int id = listaKlientow.get(listaKlientow.size()-1).getId();
-			listaKlientow.put(id+1, new Klient(id+1));
+			listaKlientow.put(id+1, new Klient(id+1, this));
 			System.out.println("Stworzono klienta o id " + id);
 		}
 	}
 	
-	public void stworzRachunek(int idKlienta) throws InvalidInputException {
-		if (listaKlientow.containsKey(idKlienta)) {
+	public void stworzRachunek(Klient klient) throws InvalidInputException {
+		if (listaKlientow.containsKey(klient.getId())) {
 			if (listaRachunkow.size()==0){
                 String numer = "0001";
-				listaRachunkow.put(numer, new RachunekBankowy(idKlienta, numer, this));  // zmienic rachunek na String?
+				listaRachunkow.put(numer, new RachunekBankowy(klient, numer, this));  // zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze 1");
 			} else {
                 String numer = Collections.max(listaRachunkow.keySet());
-				listaRachunkow.put("00001", new RachunekBankowy(idKlienta, "0001", this)); //zmienic rachunek na String?
+				listaRachunkow.put("00001", new RachunekBankowy(klient, "0001", this)); //zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze " + numer);
 			}
 		} else {
-			throw new InvalidInputException("Klient o id " + idKlienta + " nie istnieje");
+			throw new InvalidInputException("Klient o id " + klient.getId() + " nie istnieje");
 		}
 	}
 

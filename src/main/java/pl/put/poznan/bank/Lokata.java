@@ -11,11 +11,14 @@ public class Lokata extends ProduktBankowy {
 	private RachunekBankowy rachunekPowiazany;
     private double odsetki;
 
-    public Lokata(Klient klient, String nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException, NotEnoughFundsException {
+    public Lokata(Klient klient, String nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
         this.klient = klient;
         this.numerRachunku = nr;
         this.rachunekPowiazany = rachunekPowiazany;
         this.mechanizmOdsetkowy = mechanizmOdsetkowy;
+    }
+
+    public void otworzLokate(double kwota) throws InvalidInputException, NotEnoughFundsException {
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Otworzenie lokaty", ITypyOperacjiBankowych.OTWORZENIE_LOKATY);
         operacjaBankowa.przelew(this.rachunekPowiazany, this, kwota);
         this.bank = rachunekPowiazany.getBank();
