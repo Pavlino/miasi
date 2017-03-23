@@ -7,6 +7,9 @@ public class MechanizmOdsetkowyLiniowy implements IMechanizmOdsetkowy {
     private double procent;
 
     public MechanizmOdsetkowyLiniowy(double procent) {
+        if (procent > 1) {
+            procent /= 100;
+        }
         this.procent = procent;
     }
 

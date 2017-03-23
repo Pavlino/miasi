@@ -13,11 +13,14 @@ import static org.junit.Assert.*;
 public class OperacjaBankowaTest {
 
     RachunekBankowy konto;
+    Bank bank;
+    Klient klient;
 
     @Before
     public void setUp() throws Exception {
-        Bank bank = new Bank("Bank testowy", 1);
-        this.konto = new RachunekBankowy(1, "1237129371", bank);
+        this.bank = new Bank("Bank testowy", 1);
+        this.klient = new Klient(1, this.bank);
+        this.konto = new RachunekBankowy(this.klient, "1237129371", this.bank);
         this.konto.setSrodki(100);
     }
 
@@ -62,12 +65,54 @@ public class OperacjaBankowaTest {
     }
 
     @Test
-    public void testWplataOdsetek() throws Exception {
-
+    public void testPrzelew() throws Exception {
+        Klient klientPrzelew = new Klient(2, this.bank);
+        RachunekBankowy kontoPrzelew = new RachunekBankowy(klientPrzelew, "123", this.bank);
+        kontoPrzelew.setSrodki(100);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowy przelew", ITypyOperacjiBankowych.PRZELEW);
+        operacjaBankowa.przelew(this.konto, kontoPrzelew, 50);
+        assertEquals("Wynik przelewu nadawca: ", 50, this.konto.getSrodki(), 0.001);
+        assertEquals("Wynik przelewu odbiorca: ", 150, kontoPrzelew.getSrodki(), 0.001);
     }
 
     @Test
-    public void testNaliczOdsetki() throws Exception {
+    public void testNaliczOdsetkiRachunek() throws Exception {
+        MechanizmOdsetkowyLiniowy mechanizmOdsetkowyLiniowy = new MechanizmOdsetkowyLiniowy(0.1);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        this.konto.setMechanizmOdsetkowy(mechanizmOdsetkowyLiniowy);
+        operacjaBankowa.naliczOdsetki(this.konto);
+        assertEquals("Wynik odsetek: ", 110, this.konto.getSrodki(), 0.001);
+    }
 
+    @Test
+    public void testNaliczOdsetkiKredyt() throws Exception {
+        MechanizmOdsetkowyLiniowy mechanizmOdsetkowyLiniowy = new MechanizmOdsetkowyLiniowy(0.1);
+        Kredyt kredyt = new Kredyt(this.klient, "123", this.konto, mechanizmOdsetkowyLiniowy);
+        kredyt.zaciagnijKredyt(50);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        kredyt.setMechanizmOdsetkowy(mechanizmOdsetkowyLiniowy);
+        operacjaBankowa.naliczOdsetki(kredyt);
+        operacjaBankowa.naliczOdsetki(kredyt);
+        assertEquals("Wynik odsetek: ", 10, kredyt.getOdsetki(), 0.001);
+    }
+
+    @Test
+    public void testNaliczOdsetkiLokata() throws Exception {
+        MechanizmOdsetkowyLiniowy mechanizmOdsetkowyLiniowy = new MechanizmOdsetkowyLiniowy(0.1);
+        Lokata lokata = new Lokata(this.klient, "123", this.konto, mechanizmOdsetkowyLiniowy);
+        lokata.otworzLokate(50);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        lokata.setMechanizmOdsetkowy(mechanizmOdsetkowyLiniowy);
+        operacjaBankowa.naliczOdsetki(lokata);
+        operacjaBankowa.naliczOdsetki(lokata);
+        assertEquals("Wynik odsetek: ", 10, lokata.getOdsetki(), 0.001);
+    }
+
+    @Test
+    public void testDodajDoHistorii() throws Exception {
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
+        operacjaBankowa.wplata(this.konto, 100);
+        assertEquals("Rozmiar historii: ", 1, this.konto.getHistoria().getHistoria().size());
+        assertEquals("Typ wpisu: ", ITypyOperacjiBankowych.WPLATA, this.konto.getHistoria().getHistoria().get(0).getTyp());
     }
 }

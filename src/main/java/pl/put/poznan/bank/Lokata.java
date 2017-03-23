@@ -16,6 +16,8 @@ public class Lokata extends ProduktBankowy {
         this.numerRachunku = nr;
         this.rachunekPowiazany = rachunekPowiazany;
         this.mechanizmOdsetkowy = mechanizmOdsetkowy;
+        this.bank = rachunekPowiazany.getBank();
+        this.historia = new Historia();
     }
 
     public void otworzLokate(double kwota) throws InvalidInputException, NotEnoughFundsException {
@@ -37,7 +39,11 @@ public class Lokata extends ProduktBankowy {
 
     @Override
     public void setOdsetki(double odsetki) {
-        this.odsetki += odsetki;
+        this.odsetki += odsetki - this.srodki;
+    }
+
+    public double getOdsetki() {
+        return this.odsetki;
     }
 
 	public Date getDataKonca() {

@@ -18,6 +18,7 @@ public class Kredyt extends ProduktBankowy {
         this.mechanizmOdsetkowy = mechanizmOdsetkowy;
         this.splacony = false;
         this.bank = rachunekPowiazany.getBank();
+        this.historia = new Historia();
 	}
 
     public void zaciagnijKredyt(double kwota) throws InvalidInputException {
@@ -34,7 +35,11 @@ public class Kredyt extends ProduktBankowy {
 
     @Override
     public void setOdsetki(double odsetki) {
-        this.odsetki += odsetki;
+        this.odsetki += odsetki - this.srodki;
+    }
+
+    public double getOdsetki() {
+        return this.odsetki;
     }
 
 }
