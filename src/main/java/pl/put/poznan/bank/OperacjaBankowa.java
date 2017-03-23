@@ -1,16 +1,16 @@
 package pl.put.poznan.bank;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotEnoughFundsException;
 
 public class OperacjaBankowa implements IOperacjaBankowa {
-	private Date data;
+	private Calendar data;
 	private String opis;
 	private int typ;
 
-	public OperacjaBankowa(Date data, String opis, int typ) {
+	public OperacjaBankowa(Calendar data, String opis, int typ) {
         this.data = data;
         this.opis = opis;
         this.typ = typ;
@@ -79,10 +79,10 @@ public class OperacjaBankowa implements IOperacjaBankowa {
         produktBankowy.getBank().getHistoria().dodajOperacje(this);
     }
 
-	public Date getData() {
+	public Calendar getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(Calendar data) {
 		this.data = data;
 	}
 	public String getOpis() {

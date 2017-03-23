@@ -7,6 +7,7 @@ import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotEnoughFundsException;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;
 
@@ -43,7 +44,7 @@ public class KredytTest {
     @Test(expected = NotEnoughFundsException.class)
     public void splacKredyt() throws Exception {
         kr.zaciagnijKredyt(500);
-        OperacjaBankowa opb = new OperacjaBankowa(new Date(),"splata", ITypyOperacjiBankowych.WYPLATA);
+        OperacjaBankowa opb = new OperacjaBankowa(new GregorianCalendar(), "splata", ITypyOperacjiBankowych.WYPLATA);
         opb.wyplata(rb,400);
         kr.splacKredyt();
     }

@@ -4,10 +4,12 @@ import pl.put.poznan.utils.ITypyOperacjiBankowych;
 import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotEnoughFundsException;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Lokata extends ProduktBankowy {
-	private Date dataKonca;
+	private Calendar dataKonca;
 	private RachunekBankowy rachunekPowiazany;
     private double odsetki;
 
@@ -20,21 +22,25 @@ public class Lokata extends ProduktBankowy {
         this.historia = new Historia();
     }
 
-    public void otworzLokate(double kwota) throws InvalidInputException, NotEnoughFundsException {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Otworzenie lokaty", ITypyOperacjiBankowych.OTWORZENIE_LOKATY);
+    public void otworzLokate(double kwota, Calendar dataKonca) throws InvalidInputException, NotEnoughFundsException {
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Otworzenie lokaty", ITypyOperacjiBankowych.OTWORZENIE_LOKATY);
         operacjaBankowa.przelew(this.rachunekPowiazany, this, kwota);
         this.bank = rachunekPowiazany.getBank();
+        this.dataKonca = dataKonca;
     }
 
     public void zerwijLokate() throws InvalidInputException, NotEnoughFundsException {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Zerwanie lokaty", ITypyOperacjiBankowych.ZERWANIE_LOKATY);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Zerwanie lokaty", ITypyOperacjiBankowych.ZERWANIE_LOKATY);
+        this.dataKonca = new GregorianCalendar(1,1,1);
         operacjaBankowa.przelew(this, this.rachunekPowiazany, this.srodki);
         this.odsetki = 0;
     }
 
     public void rozwiazLokate() throws InvalidInputException, NotEnoughFundsException {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Rozwiazanie lokaty", ITypyOperacjiBankowych.ROZWIAZANIE_LOKATY);
-        operacjaBankowa.przelew(this, this.rachunekPowiazany, this.srodki + this.odsetki);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Rozwiazanie lokaty", ITypyOperacjiBankowych.ROZWIAZANIE_LOKATY);
+        this.srodki += odsetki;
+        operacjaBankowa.przelew(this, this.rachunekPowiazany, this.srodki);
+        this.odsetki = 0;
     }
 
     @Override
@@ -48,16 +54,16 @@ public class Lokata extends ProduktBankowy {
 
     @Override
     public void setSrodki(double srodki) {
-        if (this.dataKonca.after(new Date())) {
+        if (this.srodki > 0 && this.dataKonca.after(new GregorianCalendar())) {
             throw new UnsupportedOperationException("Lokata nie zostala jeszcze rozwiazana,");
         }
+        this.srodki = srodki;
     }
 
-
-    public Date getDataKonca() {
+    public Calendar getDataKonca() {
 		return dataKonca;
 	}
-	public void setDataKonca(Date dataKonca) {
+	public void setDataKonca(Calendar dataKonca) {
 		this.dataKonca = dataKonca;
 	}
 	public RachunekBankowy getRachunekPowiazany() {

@@ -3,6 +3,7 @@ package pl.put.poznan.bank;
 import static org.junit.Assert.*;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +15,11 @@ public class HistoriaTest {
 	@Test
 	public void historiaSortTest() throws InvalidInputException{
 		Historia historia = new Historia();
-		OperacjaBankowa op = new OperacjaBankowa(new Date(116,1,1), "opis", 1);
-		OperacjaBankowa op1 = new OperacjaBankowa(new Date(115,1,1), "opis", 1);
-		OperacjaBankowa op2 = new OperacjaBankowa(new Date(117,1,1), "opis", 1);
-		OperacjaBankowa op3 = new OperacjaBankowa(new Date(116,5,1), "opis", 1);
-		OperacjaBankowa op4 = new OperacjaBankowa(new Date(117,2,1), "opis", 1);
+		OperacjaBankowa op = new OperacjaBankowa(new GregorianCalendar(115, 1, 1), "opis", 1);
+		OperacjaBankowa op1 = new OperacjaBankowa(new GregorianCalendar(115,1,1), "opis", 1);
+		OperacjaBankowa op2 = new OperacjaBankowa(new GregorianCalendar(117,1,1), "opis", 1);
+		OperacjaBankowa op3 = new OperacjaBankowa(new GregorianCalendar(116,5,1), "opis", 1);
+		OperacjaBankowa op4 = new OperacjaBankowa(new GregorianCalendar(117,2,1), "opis", 1);
 		historia.dodajOperacje(op);
 		historia.dodajOperacje(op1);
 		historia.dodajOperacje(op2);

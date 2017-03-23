@@ -3,6 +3,7 @@ package pl.put.poznan.bank;
 import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotEnoughFundsException;
 
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 public class Klient {
@@ -45,7 +46,7 @@ public class Klient {
     public void otworzLokate(String numerRachunku, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) this.listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
-            Lokata lokata = this.bank.stworzLokate(this, rachunekBankowy, kwota, mechanizmOdsetkowy);
+            Lokata lokata = this.bank.stworzLokate(this, rachunekBankowy, kwota, new GregorianCalendar(2017, 10, 10), mechanizmOdsetkowy);
             this.listaProduktow.put(rachunekBankowy.getNumerRachunku(), rachunekBankowy);
         } else {
             throw new InvalidInputException("Rachunek nie istnieje.");

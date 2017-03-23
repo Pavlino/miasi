@@ -1,7 +1,6 @@
 package pl.put.poznan.bank;
 
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotDebetException;
@@ -54,21 +53,21 @@ public class Bank {
 		}
 	}
 
-    public Lokata stworzLokate(Klient klient, RachunekBankowy rachunekBankowy, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
+    public Lokata stworzLokate(Klient klient, RachunekBankowy rachunekBankowy, double kwota, Calendar data, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
         if (listaKlientow.containsKey(klient.getId())) {
             if (listaRachunkow.size()==0){
                 String numer = "0001";
                 Lokata lokata = new Lokata(klient, numer, rachunekBankowy, mechanizmOdsetkowy);
                 listaRachunkow.put(numer, lokata);  // zmienic rachunek na String?
                 System.out.println("Stworzono lokate o numerze 1");
-                lokata.otworzLokate(kwota);
+                lokata.otworzLokate(kwota, data);
                 return lokata;
             } else {
                 String numer = "0002";
                 Lokata lokata = new Lokata(klient, numer, rachunekBankowy, mechanizmOdsetkowy);
                 listaRachunkow.put(numer, lokata);  // zmienic rachunek na String?
                 System.out.println("Stworzono lokate o numerze 2");
-                lokata.otworzLokate(kwota);
+                lokata.otworzLokate(kwota, data);
                 return lokata;
             }
         } else {

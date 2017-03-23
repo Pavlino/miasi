@@ -7,6 +7,7 @@ import pl.put.poznan.utils.ITypyOperacjiBankowych;
 import pl.put.poznan.utils.InvalidInputException;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;
 
@@ -31,26 +32,26 @@ public class OperacjaBankowaTest {
 
     @Test
     public void testWplataKwotaDodatnia() throws Exception {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
         operacjaBankowa.wplata(this.konto, 100);
         assertEquals("Wynik wplaty: ", 200, konto.getSrodki(), 0.001);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testWplataKwotaUjemna() throws Exception {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
         operacjaBankowa.wplata(this.konto, -100);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testWplataKwotaZero() throws Exception {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
         operacjaBankowa.wplata(this.konto, 0);
     }
 
     @Test
     public void testWyplataKwotaDodatnia() throws Exception {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wyplata", ITypyOperacjiBankowych.WYPLATA);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowa wyplata", ITypyOperacjiBankowych.WYPLATA);
         operacjaBankowa.wyplata(this.konto, 50);
         assertEquals("Wynik wyplaty: ", 50, this.konto.getSrodki(), 0.001);
     }
@@ -59,7 +60,7 @@ public class OperacjaBankowaTest {
     public void testWyplataDebet() throws Exception {
         Debet debet = new Debet(1000, 0);
         this.konto.setDebet(debet);
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wyplata", ITypyOperacjiBankowych.WYPLATA);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowa wyplata", ITypyOperacjiBankowych.WYPLATA);
         operacjaBankowa.wyplata(this.konto, 200);
         assertEquals("Wynik wyplaty: ", 900, this.konto.getSrodki(), 0.001);
     }
@@ -69,7 +70,7 @@ public class OperacjaBankowaTest {
         Klient klientPrzelew = new Klient(2, this.bank);
         RachunekBankowy kontoPrzelew = new RachunekBankowy(klientPrzelew, "123", this.bank);
         kontoPrzelew.setSrodki(100);
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowy przelew", ITypyOperacjiBankowych.PRZELEW);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowy przelew", ITypyOperacjiBankowych.PRZELEW);
         operacjaBankowa.przelew(this.konto, kontoPrzelew, 50);
         assertEquals("Wynik przelewu nadawca: ", 50, this.konto.getSrodki(), 0.001);
         assertEquals("Wynik przelewu odbiorca: ", 150, kontoPrzelew.getSrodki(), 0.001);
@@ -78,7 +79,7 @@ public class OperacjaBankowaTest {
     @Test
     public void testNaliczOdsetkiRachunek() throws Exception {
         MechanizmOdsetkowyLiniowy mechanizmOdsetkowyLiniowy = new MechanizmOdsetkowyLiniowy(0.1);
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
         this.konto.setMechanizmOdsetkowy(mechanizmOdsetkowyLiniowy);
         operacjaBankowa.naliczOdsetki(this.konto);
         assertEquals("Wynik odsetek: ", 110, this.konto.getSrodki(), 0.001);
@@ -89,7 +90,7 @@ public class OperacjaBankowaTest {
         MechanizmOdsetkowyLiniowy mechanizmOdsetkowyLiniowy = new MechanizmOdsetkowyLiniowy(0.1);
         Kredyt kredyt = new Kredyt(this.klient, "123", this.konto, mechanizmOdsetkowyLiniowy);
         kredyt.zaciagnijKredyt(50);
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
         kredyt.setMechanizmOdsetkowy(mechanizmOdsetkowyLiniowy);
         operacjaBankowa.naliczOdsetki(kredyt);
         operacjaBankowa.naliczOdsetki(kredyt);
@@ -100,8 +101,8 @@ public class OperacjaBankowaTest {
     public void testNaliczOdsetkiLokata() throws Exception {
         MechanizmOdsetkowyLiniowy mechanizmOdsetkowyLiniowy = new MechanizmOdsetkowyLiniowy(0.1);
         Lokata lokata = new Lokata(this.klient, "123", this.konto, mechanizmOdsetkowyLiniowy);
-        lokata.otworzLokate(50);
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        lokata.otworzLokate(50, new GregorianCalendar(2017, 10, 10));
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
         lokata.setMechanizmOdsetkowy(mechanizmOdsetkowyLiniowy);
         operacjaBankowa.naliczOdsetki(lokata);
         operacjaBankowa.naliczOdsetki(lokata);
@@ -110,7 +111,7 @@ public class OperacjaBankowaTest {
 
     @Test
     public void testDodajDoHistorii() throws Exception {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowa wplata", ITypyOperacjiBankowych.WPLATA);
         operacjaBankowa.wplata(this.konto, 100);
         assertEquals("Rozmiar historii: ", 1, this.konto.getHistoria().getHistoria().size());
         assertEquals("Typ wpisu: ", ITypyOperacjiBankowych.WPLATA, this.konto.getHistoria().getHistoria().get(0).getTyp());
