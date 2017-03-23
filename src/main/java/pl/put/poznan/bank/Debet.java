@@ -3,6 +3,7 @@ package pl.put.poznan.bank;
 public class Debet {
 
     private double maxKwotaDebetu;
+
     private double kwotaDebetu;
 
     public Debet(double maxKwotaDebetu) {
@@ -29,6 +30,10 @@ public class Debet {
 
     public void setKwotaDebetu(double kwotaDebetu) {
         this.kwotaDebetu = kwotaDebetu;
+    }
+
+    public double getPozostalyDebet() {
+        return this.maxKwotaDebetu - this.kwotaDebetu;
     }
 
 }

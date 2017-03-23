@@ -39,4 +39,7 @@ public abstract class ProduktBankowy {
     public void setbank(Bank bank) {
         this.bank = bank;
     }
+    public void setOdsetki(double odsetki) {
+        this.srodki += odsetki;
+    }
 }

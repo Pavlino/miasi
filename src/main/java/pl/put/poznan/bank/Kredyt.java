@@ -29,4 +29,9 @@ public class Kredyt extends ProduktBankowy {
         this.splacony = true;
     }
 
+    @Override
+    public void setOdsetki(double odsetki) {
+        this.odsetki += odsetki;
+    }
+
 }

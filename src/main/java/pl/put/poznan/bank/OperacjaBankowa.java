@@ -18,9 +18,9 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 	
 	public void wplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException {
         if (konto != null && kwota > 0) {
-            double stanSrodkow = konto.getStanSrodkow();
+            double stanSrodkow = konto.getSrodki();
             stanSrodkow += kwota;
-            konto.setStanSrodkow(stanSrodkow);
+            konto.setSrodki(stanSrodkow);
             this.dodajDoHistorii(konto);
         } else {
             throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
@@ -29,17 +29,10 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 	
 	public void wyplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException, NotEnoughFundsException {
 		if (konto != null && kwota > 0) {
-			double stanSrodkow = konto.getStanSrodkow();
-            double stanOdsetek = konto.getStanOdsetek();
-			if (stanSrodkow + stanOdsetek >= kwota) {
+			double stanSrodkow = konto.getSrodki();
+			if (stanSrodkow >= kwota) {
 				stanSrodkow -= kwota;
-                if (stanSrodkow < 0) {
-                    stanOdsetek += stanSrodkow;
-                    konto.setStanSrodkow(0);
-                    konto.setStanOdsetek(stanOdsetek);
-                } else {
-                    konto.setStanSrodkow(stanSrodkow);
-                }
+                konto.setSrodki(stanSrodkow);
                 this.dodajDoHistorii(konto);
             } else {
 				throw new NotEnoughFundsException();
@@ -51,7 +44,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 	
 	public void przelew(final ProduktBankowy kontoZ, final ProduktBankowy kontoDo, final double kwota) throws InvalidInputException, NotEnoughFundsException {
 		if (kontoZ != null && kontoDo != null && kwota > 0) {
-			double stanSrodkow = kontoZ.getStanSrodkow();
+			double stanSrodkow = kontoZ.getSrodki();
 			if (stanSrodkow >= kwota) {
 				this.wyplata(kontoZ, kwota);
                 this.wplata(kontoDo, kwota);
@@ -67,9 +60,9 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 
     public void wplataOdsetek(final ProduktBankowy konto, final double kwotaOdsetek) {
         if (konto != null && kwotaOdsetek > 0) {
-            double stanOdsetek = konto.getStanOdsetek();
-            stanOdsetek += kwotaOdsetek;
-            konto.setStanOdsetek(stanOdsetek);
+            double stanKonta = konto.getSrodki();
+            stanKonta += kwotaOdsetek;
+            konto.setOdsetki(stanKonta);
             this.dodajDoHistorii(konto);
         }
     }

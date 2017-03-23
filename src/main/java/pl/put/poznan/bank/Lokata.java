@@ -33,8 +33,8 @@ public class Lokata extends ProduktBankowy {
     }
 
     @Override
-    public double getSrodki() {
-        return this.srodki + this.odsetki;
+    public void setOdsetki(double odsetki) {
+        this.odsetki += odsetki;
     }
 
 	public Date getDataKonca() {
