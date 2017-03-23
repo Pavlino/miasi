@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import pl.put.poznan.utils.InvalidInputException;
+
 public class Historia {
 	private ArrayList<OperacjaBankowa> historia;
 	
@@ -11,7 +13,7 @@ public class Historia {
 		return historia;
 	}
 
-	public void setRaport(ArrayList<OperacjaBankowa> raport) {
+	public void setHistoria(ArrayList<OperacjaBankowa> raport) {
 		this.historia = raport;
 	}
 
@@ -26,9 +28,14 @@ public class Historia {
 	    }
 	}
 	
-	public void dodajOperacje(OperacjaBankowa op){
-		historia.add(op);
-		Collections.sort(historia, new CustomComparator());
+	public void dodajOperacje(OperacjaBankowa op) throws InvalidInputException{
+		if(op != null){
+			historia.add(op);
+			Collections.sort(historia, new CustomComparator());
+		}
+		else{
+			throw new InvalidInputException("Podano pust¹ wartoœæ");
+		}
 	}
 
 	

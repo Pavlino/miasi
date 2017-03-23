@@ -10,21 +10,21 @@ import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotDebetException;
 
 public class RaportDebetowy implements IRaport {
-	public ArrayList<ProduktBankowy> getRaportDebetowy() {
+	public HashMap<String, ProduktBankowy> getRaportDebetowy() {
 		return raportDebetowy;
 	}
 
-	public void setRaportDebetowy(ArrayList<ProduktBankowy> raportDebetowy) {
+	public void setRaportDebetowy(HashMap<String, ProduktBankowy> raportDebetowy) {
 		this.raportDebetowy = raportDebetowy;
 	}
 
-	private ArrayList<ProduktBankowy> raportDebetowy;
+	private HashMap<String, ProduktBankowy> raportDebetowy;
 	
 	public RaportDebetowy(){
-		this.raportDebetowy = new ArrayList<ProduktBankowy>();
+		this.raportDebetowy = new HashMap<String, ProduktBankowy>();
 	}
 	
-	public ArrayList<ProduktBankowy> generujRaport(HashMap<Long, ProduktBankowy> listaProduktow) throws NotDebetException {
+	public HashMap<String, ProduktBankowy> generujRaport(HashMap<Long, ProduktBankowy> listaProduktow) throws NotDebetException {
         for (ProduktBankowy produktBankowy : listaProduktow.values()) {
             try {
                 this.dodajProdukt((RachunekBankowy) produktBankowy);
@@ -37,18 +37,27 @@ public class RaportDebetowy implements IRaport {
 	
 	public void dodajProdukt(RachunekBankowy produkt) throws InvalidInputException, NotDebetException {
 		if(produkt != null){
-			Double stanSrodkow = produkt.getDebet().getKwotaDebetu();
-			if(stanSrodkow>0){
-				raportDebetowy.add(produkt);
+			//Double stanSrodkow = produkt.getDebet().getKwotaDebetu();
+			if(produkt.czyPosiadaDebet()){
+				if(produkt.getDebet().getKwotaDebetu()>0){
+				raportDebetowy.put(produkt.getNumerRachunku(), produkt);
 				System.out.println("Dodano do raportu produkt z debetem");
+				}
+				else{
+					throw new NotDebetException("Na tym produkcie nie ma debetu");
+				}
 			}
 			else{
-				throw new NotDebetException("Na tym produkcie nie ma debetu");
+				throw new NotDebetException("Konto nie jest debetowe");
 			}
 		}
 		else{
 			throw new InvalidInputException("Produkt nie istnieje");
 		}
+	}
+	
+	public void usunProdukt(String rachunek){
+		raportDebetowy.remove(rachunek);
 	}
 
 }
