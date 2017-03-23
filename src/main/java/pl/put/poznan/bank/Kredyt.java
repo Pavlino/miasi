@@ -34,6 +34,14 @@ public class Kredyt extends ProduktBankowy {
     }
 
     @Override
+    public void setSrodki(double srodki) {
+        if (this.srodki > 0 && !this.splacony) {
+            throw new UnsupportedOperationException("Kredyt nie zostal splacony.");
+        }
+        this.srodki = srodki;
+    }
+
+    @Override
     public void setOdsetki(double odsetki) {
         this.odsetki += odsetki - this.srodki;
     }

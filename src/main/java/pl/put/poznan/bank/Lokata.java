@@ -46,7 +46,15 @@ public class Lokata extends ProduktBankowy {
         return this.odsetki;
     }
 
-	public Date getDataKonca() {
+    @Override
+    public void setSrodki(double srodki) {
+        if (this.dataKonca.after(new Date())) {
+            throw new UnsupportedOperationException("Lokata nie zostala jeszcze rozwiazana,");
+        }
+    }
+
+
+    public Date getDataKonca() {
 		return dataKonca;
 	}
 	public void setDataKonca(Date dataKonca) {
