@@ -9,33 +9,32 @@ import java.util.Date;
 public class Lokata extends ProduktBankowy {
 	private Date dataKonca;
 	private RachunekBankowy rachunekPowiazany;
-    private double kwota;
+    private double odsetki;
 
-    public Lokata(int id, String nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException, NotEnoughFundsException {
-        this.idKlienta = id;
+    public Lokata(Klient klient, String nr, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy, double kwota) throws InvalidInputException, NotEnoughFundsException {
+        this.klient = klient;
         this.numerRachunku = nr;
         this.rachunekPowiazany = rachunekPowiazany;
         this.mechanizmOdsetkowy = mechanizmOdsetkowy;
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Otworzenie lokaty", ITypyOperacjiBankowych.OTWORZENIE_LOKATY);
-        operacjaBankowa.przelew(this.rachunekPowiazany, this, this.kwota);
-        this.kwota = kwota;
+        operacjaBankowa.przelew(this.rachunekPowiazany, this, kwota);
         this.bank = rachunekPowiazany.getBank();
     }
 
     public void zerwijLokate() throws InvalidInputException, NotEnoughFundsException {
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Zerwanie lokaty", ITypyOperacjiBankowych.ZERWANIE_LOKATY);
-        operacjaBankowa.przelew(this, this.rachunekPowiazany, this.kwota);
-        this.stanOdsetek = 0;
+        operacjaBankowa.przelew(this, this.rachunekPowiazany, this.srodki);
+        this.odsetki = 0;
     }
 
     public void rozwiazLokate() throws InvalidInputException, NotEnoughFundsException {
         OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new Date(), "Rozwiazanie lokaty", ITypyOperacjiBankowych.ROZWIAZANIE_LOKATY);
-        operacjaBankowa.przelew(this, this.rachunekPowiazany, this.kwota + this.stanOdsetek);
+        operacjaBankowa.przelew(this, this.rachunekPowiazany, this.srodki + this.odsetki);
     }
 
     @Override
-    public double getStanSrodkow() {
-        return this.kwota;
+    public double getSrodki() {
+        return this.srodki + this.odsetki;
     }
 
 	public Date getDataKonca() {
@@ -50,11 +49,5 @@ public class Lokata extends ProduktBankowy {
 	public void setRachunekPowiazany(RachunekBankowy rachunekPowiazany) {
 		this.rachunekPowiazany = rachunekPowiazany;
 	}
-    public double getKwota() {
-        return this.kwota;
-    }
-    public void setKwota(double kwota) {
-        this.kwota = kwota;
-    }
 
 }

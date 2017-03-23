@@ -2,31 +2,25 @@ package pl.put.poznan.bank;
 
 public abstract class ProduktBankowy {
 
-    int idKlienta;
+    Klient klient;
 	String numerRachunku;
-	double stanSrodkow;
-	double stanOdsetek;
+	double srodki;
 	IMechanizmOdsetkowy mechanizmOdsetkowy;
     Historia historia;
     Bank bank;
 
-	public int getIdKlienta() {
-		return idKlienta;
+	public Klient getKlient() {
+		return this.klient;
 	}
-	public void setIdKlienta(int idKlienta) {
-		this.idKlienta = idKlienta;
+	public void setKlient(Klient klient) {
+		this.klient = klient;
 	}
-	public double getStanSrodkow() {
-		return stanSrodkow;
+	public double getSrodki() {
+		return this.srodki;
 	}
-	public void setStanSrodkow(double stanSrodkow) {
-		this.stanSrodkow = stanSrodkow;
+	public void setSrodki(double srodki) {
+		this.srodki = srodki;
 	}
-    public void setStanOdsetek(double stanOdsetek) {
-        this.stanOdsetek = stanOdsetek; }
-    public double getStanOdsetek() {
-        return this.stanOdsetek;
-    }
 	public String getNumerRachunku() {
 		return numerRachunku;
 	}

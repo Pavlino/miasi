@@ -6,19 +6,17 @@ public class RachunekBankowy extends ProduktBankowy {
 	private Date dataZalozenia;
 	private Debet debet;
 
-	public RachunekBankowy(int id, String nr, Bank bank){
-		this.idKlienta = id;
+	public RachunekBankowy(Klient klient, String nr, Bank bank){
+		this.klient = klient;
 		this.numerRachunku = nr;
-		this.stanOdsetek = 0;
         this.bank = bank;
 		this.historia = new Historia();
 	}
 
-	public RachunekBankowy(int id, String numer, Debet debet, Bank bank) {
-		this.idKlienta = id;
+	public RachunekBankowy(Klient klient, String numer, Debet debet, Bank bank) {
+		this.klient = klient;
 		this.numerRachunku = numer;
 		this.debet = debet;
-		this.stanOdsetek = 0;
         this.bank = bank;
 		this.historia = new Historia();
 	}
@@ -28,35 +26,42 @@ public class RachunekBankowy extends ProduktBankowy {
 	}
 
 	@Override
-	public double getStanSrodkow() {
+	public double getSrodki() {
 		if (this.czyPosiadaDebet()) {
 			double pozostalyDebet = this.debet.getMaxKwotaDebetu() - this.debet.getKwotaDebetu();
-			return this.stanSrodkow + this.stanOdsetek + pozostalyDebet;
+			return this.srodki + pozostalyDebet;
 		}
-		return this.stanSrodkow + this.stanOdsetek;
+		return this.srodki;
 	}
 
 	@Override
-	public void setStanSrodkow(double stanSrodkow) {
-		if (this.czyPosiadaDebet()) {
-		    double dostepneSrodki = this.stanSrodkow + this.stanOdsetek + this.debet.getMaxKwotaDebetu() - this.debet.getKwotaDebetu();
-			double kwotaWyplaty = dostepneSrodki - stanSrodkow;
-            double kwotaDebetu = this.stanSrodkow + this.stanOdsetek - kwotaWyplaty;
-			if (kwotaDebetu >= 0) {
-			    if (stanSrodkow - this.stanSrodkow > 0) {
-			        double stanOdsetek = stanSrodkow - this.stanSrodkow;
-                    this.stanSrodkow = 0;
-                    this.stanOdsetek -= stanOdsetek;
+	public void setSrodki(double sumaSrodkow) {
+        double dostepneSrodki = this.getSrodki();
+        double saldo = sumaSrodkow - dostepneSrodki;
+        if (saldo < 0) {
+            if (this.czyPosiadaDebet()) {
+                if ((this.srodki + saldo) >= 0) {
+                    this.srodki += saldo;
                 } else {
-                    this.stanSrodkow -= stanSrodkow;
+                    double dodatkowyDebet = (this.srodki + saldo) * -1;
+                    this.srodki = 0;
+                    this.debet.setKwotaDebetu(this.debet.getKwotaDebetu() + dodatkowyDebet);
                 }
-			} else {
-				this.stanSrodkow = 0;
-				this.stanOdsetek = 0;
-				this.debet.setKwotaDebetu(this.debet.getKwotaDebetu() - kwotaDebetu);
-			}
-		} else {
-            this.stanSrodkow = stanSrodkow;
+            } else {
+                this.srodki += saldo;
+            }
+        } else {
+            if (this.czyPosiadaDebet() && this.debet.getKwotaDebetu() > 0 ) {
+                double pozostaleSrodki = this.debet.getKwotaDebetu() - saldo;
+                if (pozostaleSrodki >= 0) {
+                    this.debet.setKwotaDebetu(pozostaleSrodki);
+                } else {
+                    this.debet.setKwotaDebetu(0);
+                    this.srodki -= pozostaleSrodki;
+                }
+            } else {
+                this.srodki = sumaSrodkow;
+            }
         }
 	}
 
