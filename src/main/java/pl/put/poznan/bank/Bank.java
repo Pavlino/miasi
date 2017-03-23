@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotDebetException;
+import pl.put.poznan.utils.NotEnoughFundsException;
 
 public class Bank {
 	private int id;
@@ -33,21 +34,71 @@ public class Bank {
 		}
 	}
 	
-	public void stworzRachunek(Klient klient) throws InvalidInputException {
+	public RachunekBankowy stworzRachunek(Klient klient) throws InvalidInputException {
 		if (listaKlientow.containsKey(klient.getId())) {
 			if (listaRachunkow.size()==0){
                 String numer = "0001";
-				listaRachunkow.put(numer, new RachunekBankowy(klient, numer, this));  // zmienic rachunek na String?
+				RachunekBankowy rachunekBankowy = new RachunekBankowy(klient, numer, this);
+				listaRachunkow.put(numer, rachunekBankowy);  // zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze 1");
+				return rachunekBankowy;
 			} else {
                 String numer = Collections.max(listaRachunkow.keySet());
-				listaRachunkow.put("00001", new RachunekBankowy(klient, "0001", this)); //zmienic rachunek na String?
+				RachunekBankowy rachunekBankowy = new RachunekBankowy(klient, "0002", this);
+				listaRachunkow.put("00001", rachunekBankowy); //zmienic rachunek na String?
 				System.out.println("Stworzono rachunek o numerze " + numer);
+				return rachunekBankowy;
 			}
 		} else {
 			throw new InvalidInputException("Klient o id " + klient.getId() + " nie istnieje");
 		}
 	}
+
+    public Lokata stworzLokate(Klient klient, RachunekBankowy rachunekBankowy, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
+        if (listaKlientow.containsKey(klient.getId())) {
+            if (listaRachunkow.size()==0){
+                String numer = "0001";
+                Lokata lokata = new Lokata(klient, numer, rachunekBankowy, mechanizmOdsetkowy);
+                listaRachunkow.put(numer, lokata);  // zmienic rachunek na String?
+                System.out.println("Stworzono lokate o numerze 1");
+                lokata.otworzLokate(kwota);
+                return lokata;
+            } else {
+                String numer = "0002";
+                Lokata lokata = new Lokata(klient, numer, rachunekBankowy, mechanizmOdsetkowy);
+                listaRachunkow.put(numer, lokata);  // zmienic rachunek na String?
+                System.out.println("Stworzono lokate o numerze 2");
+                lokata.otworzLokate(kwota);
+                return lokata;
+            }
+        } else {
+            throw new InvalidInputException("Klient o id " + klient.getId() + " nie istnieje");
+        }
+    }
+
+    public Kredyt stworzKredyt(Klient klient, RachunekBankowy rachunekBankowy, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
+        if (listaKlientow.containsKey(klient.getId())) {
+            if (listaRachunkow.size()==0){
+                String numer = "0001";
+                Kredyt kredyt = new Kredyt(klient, numer, rachunekBankowy, mechanizmOdsetkowy);
+                listaRachunkow.put(numer, kredyt);  // zmienic rachunek na String?
+                System.out.println("Stworzono lokate o numerze 1");
+                kredyt.zaciagnijKredyt(kwota);
+                return kredyt;
+            } else {
+                String numer = "0002";
+                Kredyt kredyt = new Kredyt(klient, numer, rachunekBankowy, mechanizmOdsetkowy);
+                listaRachunkow.put(numer, kredyt);  // zmienic rachunek na String?
+                System.out.println("Stworzono lokate o numerze 2");
+                kredyt.zaciagnijKredyt(kwota);
+                return kredyt;
+            }
+        } else {
+            throw new InvalidInputException("Klient o id " + klient.getId() + " nie istnieje");
+        }
+    }
+
+
 
     public Object stworzRaport(IRaport raport, HashMap<Long, ProduktBankowy> listaProduktow) throws InvalidInputException, NotDebetException {
         return raport.generujRaport(listaProduktow);
