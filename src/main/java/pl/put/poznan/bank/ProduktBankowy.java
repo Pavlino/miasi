@@ -10,13 +10,13 @@ public abstract class ProduktBankowy {
     Bank bank;
 
 	public Klient getKlient() {
-		return this.klient;
+		return klient;
 	}
 	public void setKlient(Klient klient) {
 		this.klient = klient;
 	}
 	public double getSrodki() {
-		return this.srodki;
+		return srodki;
 	}
 	public void setSrodki(double srodki) {
 		this.srodki = srodki;
@@ -31,10 +31,10 @@ public abstract class ProduktBankowy {
 		this.mechanizmOdsetkowy = mechanizmOdsetkowy;
 	}
     public Historia getHistoria() {
-        return this.historia;
+        return historia;
     }
     public Bank getBank() {
-        return this.bank;
+        return bank;
     }
     public void setBank(Bank bank) {
         this.bank = bank;

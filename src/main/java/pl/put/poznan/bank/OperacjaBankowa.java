@@ -21,7 +21,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
             double stanSrodkow = konto.getSrodki();
             stanSrodkow += kwota;
             konto.setSrodki(stanSrodkow);
-            this.dodajDoHistorii(konto);
+            dodajDoHistorii(konto);
         } else {
             throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
         }
@@ -33,7 +33,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 			if (stanSrodkow >= kwota) {
 				stanSrodkow -= kwota;
                 konto.setSrodki(stanSrodkow);
-                this.dodajDoHistorii(konto);
+                dodajDoHistorii(konto);
             } else {
 				throw new NotEnoughFundsException();
 			}
@@ -46,13 +46,13 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 		if (kontoZ != null && kontoDo != null && kwota > 0) {
 			double stanSrodkow = kontoZ.getSrodki();
 			if (stanSrodkow >= kwota) {
-				this.wyplata(kontoZ, kwota);
-                this.wplata(kontoDo, kwota);
+				wyplata(kontoZ, kwota);
+                wplata(kontoDo, kwota);
 			} else {
 				throw new NotEnoughFundsException();
 			}
-            this.dodajDoHistorii(kontoZ);
-            this.dodajDoHistorii(kontoDo);
+            dodajDoHistorii(kontoZ);
+            dodajDoHistorii(kontoDo);
 		} else {
 			throw new InvalidInputException("Konto nie istnieje lub podana kwota jest ujemna");
 		}
@@ -63,7 +63,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
             double stanKonta = konto.getSrodki();
             stanKonta += kwotaOdsetek;
             konto.setOdsetki(stanKonta);
-            this.dodajDoHistorii(konto);
+            dodajDoHistorii(konto);
         }
     }
 
@@ -71,7 +71,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
         IMechanizmOdsetkowy mechanizmOdsetkowy = produktBankowy.getMechanizmOdsetkowy();
         Odsetki odsetki = new Odsetki(mechanizmOdsetkowy);
         double wartoscOdsetek = odsetki.naliczOdsetki(produktBankowy);
-        this.wplataOdsetek(produktBankowy, wartoscOdsetek);
+        wplataOdsetek(produktBankowy, wartoscOdsetek);
     }
 
     private void dodajDoHistorii(ProduktBankowy produktBankowy) throws InvalidInputException {

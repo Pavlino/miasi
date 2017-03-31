@@ -8,7 +8,7 @@ public class Debet {
 
     public Debet(double maxKwotaDebetu) {
         this.maxKwotaDebetu = maxKwotaDebetu;
-        this.kwotaDebetu = 0;
+        kwotaDebetu = 0;
     }
 
     public Debet(double maxKwotaDebetu, double kwotaDebetu) {
@@ -17,7 +17,7 @@ public class Debet {
     }
 
     public double getMaxKwotaDebetu() {
-        return this.maxKwotaDebetu;
+        return maxKwotaDebetu;
     }
 
     public void setMaxKwotaDebetu(double maxKwotaDebetu) {
@@ -25,7 +25,7 @@ public class Debet {
     }
 
     public double getKwotaDebetu() {
-        return this.kwotaDebetu;
+        return kwotaDebetu;
     }
 
     public void setKwotaDebetu(double kwotaDebetu) {
@@ -33,7 +33,7 @@ public class Debet {
     }
 
     public double getPozostalyDebet() {
-        return this.maxKwotaDebetu - this.kwotaDebetu;
+        return this.maxKwotaDebetu - kwotaDebetu;
     }
 
 }

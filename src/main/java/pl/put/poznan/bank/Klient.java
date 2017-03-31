@@ -26,12 +26,12 @@ public class Klient {
 	}
 
 	public void otworzRachunek() throws InvalidInputException {
-		RachunekBankowy rachunekBankowy = this.bank.stworzRachunek(this);
-        this.listaProduktow.put(rachunekBankowy.getNumerRachunku(), rachunekBankowy);
+		RachunekBankowy rachunekBankowy = bank.stworzRachunek(this);
+        listaProduktow.put(rachunekBankowy.getNumerRachunku(), rachunekBankowy);
 	}
 
     public void dodajDebetDoRachunku(String numerRachunku, Debet debet)  throws InvalidInputException {
-        RachunekBankowy rachunekBankowy = (RachunekBankowy) this.listaProduktow.get(numerRachunku);
+        RachunekBankowy rachunekBankowy = (RachunekBankowy) listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
             try {
                 rachunekBankowy.setDebet(debet);
@@ -44,26 +44,26 @@ public class Klient {
     }
 
     public void otworzLokate(String numerRachunku, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
-        RachunekBankowy rachunekBankowy = (RachunekBankowy) this.listaProduktow.get(numerRachunku);
+        RachunekBankowy rachunekBankowy = (RachunekBankowy) listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
-            Lokata lokata = this.bank.stworzLokate(this, rachunekBankowy, kwota, new GregorianCalendar(2017, 10, 10), mechanizmOdsetkowy);
+            Lokata lokata = bank.stworzLokate(this, rachunekBankowy, kwota, new GregorianCalendar(2017, 10, 10), mechanizmOdsetkowy);
             this.listaProduktow.put(lokata.getNumerRachunku(), lokata);
         } else {
             throw new InvalidInputException("Rachunek nie istnieje.");
         }
     }
     public void zaciagnijKredyt(String numerRachunku, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
-        RachunekBankowy rachunekBankowy = (RachunekBankowy) this.listaProduktow.get(numerRachunku);
+        RachunekBankowy rachunekBankowy = (RachunekBankowy) listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
-            Kredyt kredyt = this.bank.stworzKredyt(this, rachunekBankowy, kwota, mechanizmOdsetkowy);
-            this.listaProduktow.put(kredyt.getNumerRachunku(), kredyt);
+            Kredyt kredyt = bank.stworzKredyt(this, rachunekBankowy, kwota, mechanizmOdsetkowy);
+            listaProduktow.put(kredyt.getNumerRachunku(), kredyt);
         } else {
             throw new InvalidInputException("Rachunek nie istnieje.");
         }
     }
 
     public void dodajProduktBankowy(ProduktBankowy produktBankowy) {
-        this.listaProduktow.put(produktBankowy.getNumerRachunku(), produktBankowy);
+        listaProduktow.put(produktBankowy.getNumerRachunku(), produktBankowy);
     }
 
     public HashMap<String, ProduktBankowy> getListaProduktow() {

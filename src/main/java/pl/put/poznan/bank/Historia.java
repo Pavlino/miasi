@@ -14,11 +14,11 @@ public class Historia {
 	}
 
 	public void setHistoria(ArrayList<OperacjaBankowa> raport) {
-		this.historia = raport;
+		historia = raport;
 	}
 
 	public Historia(){
-		this.historia = new ArrayList<OperacjaBankowa>();
+		historia = new ArrayList<OperacjaBankowa>();
 	}
 	
 	public class CustomComparator implements Comparator<OperacjaBankowa> {
@@ -34,7 +34,7 @@ public class Historia {
 			Collections.sort(historia, new CustomComparator());
 		}
 		else{
-			throw new InvalidInputException("Podano pust¹ wartoœæ");
+			throw new InvalidInputException("Podano pustï¿½ wartoï¿½ï¿½");
 		}
 	}
 

@@ -16,9 +16,9 @@ public class Bank {
 	public Bank(String nazwa, int id){
 		this.nazwa = nazwa;
 		this.id = id;
-		this.historia = new Historia();
-		this.listaRachunkow = new HashMap<>();
-		this.listaKlientow = new HashMap<>();
+		historia = new Historia();
+		listaRachunkow = new HashMap<>();
+		listaKlientow = new HashMap<>();
 	}
 	
 	public Klient stworzKlienta(){
@@ -85,7 +85,7 @@ public class Bank {
     }
 
 	public HashMap<String, ProduktBankowy> getListaRachunkow() {
-		return this.listaRachunkow;
+		return listaRachunkow;
 	}
 	public void setListaProduktow(HashMap<String, ProduktBankowy> listaRachunkow) {
 		this.listaRachunkow = listaRachunkow;

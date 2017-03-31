@@ -10,7 +10,7 @@ public class RachunekBankowy extends ProduktBankowy {
 		this.klient = klient;
 		this.numerRachunku = nr;
         this.bank = bank;
-		this.historia = new Historia();
+		historia = new Historia();
 	}
 
 	public RachunekBankowy(Klient klient, String numer, Debet debet, Bank bank) {
@@ -18,7 +18,7 @@ public class RachunekBankowy extends ProduktBankowy {
 		this.numerRachunku = numer;
 		this.debet = debet;
         this.bank = bank;
-		this.historia = new Historia();
+		historia = new Historia();
 	}
 
 	public boolean czyPosiadaDebet() {
@@ -27,40 +27,40 @@ public class RachunekBankowy extends ProduktBankowy {
 
 	@Override
 	public double getSrodki() {
-		if (this.czyPosiadaDebet()) {
-			double pozostalyDebet = this.debet.getMaxKwotaDebetu() - this.debet.getKwotaDebetu();
-			return this.srodki + pozostalyDebet;
+		if (czyPosiadaDebet()) {
+			double pozostalyDebet = debet.getMaxKwotaDebetu() - debet.getKwotaDebetu();
+			return srodki + pozostalyDebet;
 		}
-		return this.srodki;
+		return srodki;
 	}
 
 	@Override
 	public void setSrodki(double sumaSrodkow) {
-        double dostepneSrodki = this.getSrodki();
+        double dostepneSrodki = getSrodki();
         double saldo = sumaSrodkow - dostepneSrodki;
         if (saldo < 0) {
-            if (this.czyPosiadaDebet()) {
-                if ((this.srodki + saldo) >= 0) {
-                    this.srodki += saldo;
+            if (czyPosiadaDebet()) {
+                if ((srodki + saldo) >= 0) {
+                    srodki += saldo;
                 } else {
-                    double dodatkowyDebet = (this.srodki + saldo) * -1;
-                    this.srodki = 0;
-                    this.debet.setKwotaDebetu(this.debet.getKwotaDebetu() + dodatkowyDebet);
+                    double dodatkowyDebet = (srodki + saldo) * -1;
+                    srodki = 0;
+                    debet.setKwotaDebetu(debet.getKwotaDebetu() + dodatkowyDebet);
                 }
             } else {
-                this.srodki += saldo;
+                srodki += saldo;
             }
         } else {
-            if (this.czyPosiadaDebet() && this.debet.getKwotaDebetu() > 0 ) {
-                double pozostaleSrodki = this.debet.getKwotaDebetu() - saldo;
+            if (czyPosiadaDebet() && debet.getKwotaDebetu() > 0 ) {
+                double pozostaleSrodki = debet.getKwotaDebetu() - saldo;
                 if (pozostaleSrodki >= 0) {
-                    this.debet.setKwotaDebetu(pozostaleSrodki);
+                    debet.setKwotaDebetu(pozostaleSrodki);
                 } else {
-                    this.debet.setKwotaDebetu(0);
-                    this.srodki -= pozostaleSrodki;
+                    debet.setKwotaDebetu(0);
+                    srodki -= pozostaleSrodki;
                 }
             } else {
-                this.srodki = sumaSrodkow;
+               	srodki = sumaSrodkow;
             }
         }
 	}
@@ -75,7 +75,7 @@ public class RachunekBankowy extends ProduktBankowy {
 		this.debet = debet;
 	}
 	public Debet getDebet() {
-		return this.debet;
+		return debet;
 	}
 
 	public void setNumerRachunku(String numerRachunku) {
