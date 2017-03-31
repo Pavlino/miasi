@@ -65,6 +65,10 @@ public class RachunekBankowy extends ProduktBankowy {
         }
 	}
 
+	public double getKwotaDebetu() {
+		return debet.getKwotaDebetu();
+	}
+
 	public Date getDataZalozenia() {
 		return dataZalozenia;
 	}

@@ -39,7 +39,7 @@ public class RaportDebetowy implements IRaport {
 		if (produkt != null) {
 			//Double stanSrodkow = produkt.getDebet().getKwotaDebetu();
 			if (produkt.czyPosiadaDebet()) {
-				if (produkt.getDebet().getKwotaDebetu()>0) {
+				if (produkt.getKwotaDebetu() > 0) {
 					raportDebetowy.put(produkt.getNumerRachunku(), produkt);
 					System.out.println("Dodano do raportu produkt z debetem");
 				} else {

@@ -75,7 +75,8 @@ public class OperacjaBankowa implements IOperacjaBankowa {
     }
 
     private void dodajDoHistorii(ProduktBankowy produktBankowy) throws InvalidInputException {
-        produktBankowy.getHistoria().dodajOperacje(this);
+        produktBankowy.dodajOperacjeDoHistorii(this);
+		//TODO: add helper method
         produktBankowy.getBank().getHistoria().dodajOperacje(this);
     }
 

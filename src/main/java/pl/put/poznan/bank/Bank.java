@@ -84,6 +84,10 @@ public class Bank {
         return raport.generujRaport(listaProduktow);
     }
 
+    public void dodajOperacjeDoHistorii(OperacjaBankowa operacjaBankowa) throws InvalidInputException {
+        historia.dodajOperacje(operacjaBankowa);
+    }
+
 	public HashMap<String, ProduktBankowy> getListaRachunkow() {
 		return listaRachunkow;
 	}

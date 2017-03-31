@@ -1,5 +1,7 @@
 package pl.put.poznan.bank;
 
+import pl.put.poznan.utils.InvalidInputException;
+
 public abstract class ProduktBankowy {
 
     Klient klient;
@@ -8,6 +10,14 @@ public abstract class ProduktBankowy {
 	IMechanizmOdsetkowy mechanizmOdsetkowy;
     Historia historia;
     Bank bank;
+
+	public void dodajOperacjeDoHistorii(OperacjaBankowa operacjaBankowa) throws InvalidInputException {
+		historia.dodajOperacje(operacjaBankowa);
+	}
+
+	public void dodajOperacjeDoHistoriiBanku(OperacjaBankowa operacjaBankowa) throws InvalidInputException {
+		bank.dodajOperacjeDoHistorii(operacjaBankowa);
+	}
 
 	public Klient getKlient() {
 		return klient;
