@@ -1,6 +1,6 @@
 package pl.put.poznan.utils;
 
-public interface ITypyOperacjiBankowych {
+public interface TypyOperacjiBankowych {
     int WPLATA = 0;
     int WYPLATA = 1;
     int PRZELEW = 2;
