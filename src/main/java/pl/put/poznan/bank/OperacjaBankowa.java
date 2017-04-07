@@ -58,7 +58,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 		}
 	}
 
-    public void wplataOdsetek(final ProduktBankowy konto, final double kwotaOdsetek) throws InvalidInputException {
+    private void wplataOdsetek(final ProduktBankowy konto, final double kwotaOdsetek) throws InvalidInputException {
         if (konto != null && kwotaOdsetek > 0) {
             double stanKonta = konto.getSrodki();
             stanKonta += kwotaOdsetek;
@@ -69,8 +69,7 @@ public class OperacjaBankowa implements IOperacjaBankowa {
 
     public void naliczOdsetki(final ProduktBankowy produktBankowy) throws InvalidInputException {
         IMechanizmOdsetkowy mechanizmOdsetkowy = produktBankowy.getMechanizmOdsetkowy();
-        Odsetki odsetki = new Odsetki(mechanizmOdsetkowy);
-        double wartoscOdsetek = odsetki.naliczOdsetki(produktBankowy);
+        double wartoscOdsetek = mechanizmOdsetkowy.naliczOdsetki(produktBankowy);
         wplataOdsetek(produktBankowy, wartoscOdsetek);
     }
 

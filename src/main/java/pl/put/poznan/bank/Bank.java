@@ -84,7 +84,7 @@ public class Bank {
         return raport.generujRaport(listaProduktow);
     }
 
-    public void dodajOperacjeDoHistorii(OperacjaBankowa operacjaBankowa) throws InvalidInputException {
+    public void dodajOperacjeDoHistorii(IOperacjaBankowa operacjaBankowa) throws InvalidInputException {
         historia.dodajOperacje(operacjaBankowa);
     }
 

@@ -7,28 +7,28 @@ import java.util.Comparator;
 import pl.put.poznan.utils.InvalidInputException;
 
 public class Historia {
-	private ArrayList<OperacjaBankowa> historia;
+	private ArrayList<IOperacjaBankowa> historia;
 	
-	public ArrayList<OperacjaBankowa> getHistoria() {
+	public ArrayList<IOperacjaBankowa> getHistoria() {
 		return historia;
 	}
 
-	public void setHistoria(ArrayList<OperacjaBankowa> raport) {
+	public void setHistoria(ArrayList<IOperacjaBankowa> raport) {
 		historia = raport;
 	}
 
 	public Historia(){
-		historia = new ArrayList<OperacjaBankowa>();
+		historia = new ArrayList<IOperacjaBankowa>();
 	}
 	
-	public class CustomComparator implements Comparator<OperacjaBankowa> {
+	public class CustomComparator implements Comparator<IOperacjaBankowa> {
 	    @Override
-	    public int compare(OperacjaBankowa o1, OperacjaBankowa o2) {
+	    public int compare(IOperacjaBankowa o1, IOperacjaBankowa o2) {
 	        return o1.getData().compareTo(o2.getData());
 	    }
 	}
 	
-	public void dodajOperacje(OperacjaBankowa op) throws InvalidInputException{
+	public void dodajOperacje(IOperacjaBankowa op) throws InvalidInputException{
 		if(op != null){
 			historia.add(op);
 			Collections.sort(historia, new CustomComparator());
