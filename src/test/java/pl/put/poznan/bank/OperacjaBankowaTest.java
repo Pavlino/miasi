@@ -115,4 +115,31 @@ public class OperacjaBankowaTest {
         assertEquals("Rozmiar historii: ", 1, konto.getHistoria().getHistoria().size());
         assertEquals("Typ wpisu: ", TypyOperacjiBankowych.WPLATA, konto.getHistoria().getHistoria().get(0).getTyp());
     }
+    
+    @Test
+    public void testNaliczOdsetkiRegresywneRachunekPierwszyProg() throws Exception {
+    	MechanizmOdsetkowyRegresywny mechanizmOdsetkowyRegresywny = new MechanizmOdsetkowyRegresywny();
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", TypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        konto.setMechanizmOdsetkowy(mechanizmOdsetkowyRegresywny);
+        operacjaBankowa.naliczOdsetki(konto);
+        assertEquals("Wynik odsetek: ", 120, konto.getSrodki(), 0.001);
+    }
+    @Test
+    public void testNaliczOdsetkiRegresywneRachunekTrzeciProg() throws Exception {
+    	MechanizmOdsetkowyRegresywny mechanizmOdsetkowyRegresywny = new MechanizmOdsetkowyRegresywny();
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", TypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        konto.setMechanizmOdsetkowy(mechanizmOdsetkowyRegresywny);
+        konto.setSrodki(10010);
+        operacjaBankowa.naliczOdsetki(konto);
+        assertEquals("Wynik odsetek: ", 10510.5 , konto.getSrodki(), 0.001);
+    }
+    @Test
+    public void testNaliczOdsetkiRegresywneRachunekDrugiProg() throws Exception {
+    	MechanizmOdsetkowyRegresywny mechanizmOdsetkowyRegresywny = new MechanizmOdsetkowyRegresywny();
+        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", TypyOperacjiBankowych.ODSETKI_RACHUNEK);
+        konto.setMechanizmOdsetkowy(mechanizmOdsetkowyRegresywny);
+        konto.setSrodki(1250);
+        operacjaBankowa.naliczOdsetki(konto);
+        assertEquals("Wynik odsetek: ", 1375, konto.getSrodki(), 0.001);
+    }
 }
