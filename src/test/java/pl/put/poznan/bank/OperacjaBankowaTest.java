@@ -144,30 +144,30 @@ public class OperacjaBankowaTest {
     }
     
     @Test
-    public void testNaliczOdsetkiA100() throws InvalidInputException{
+    public void testNaliczOdsetkiProgresywny100() throws InvalidInputException{
     	konto.setSrodki(100);
     	MechanizmOdsetkowyProgresywny mechanizmOdsetkowy = new MechanizmOdsetkowyProgresywny();
-    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", TypyOperacjiBankowych.ODSETKI_RACHUNEK);
     	this.konto.setMechanizmOdsetkowy(mechanizmOdsetkowy);
         operacjaBankowa.naliczOdsetki(this.konto);
         assertEquals("Wynik odsetek: ", 101, this.konto.getSrodki(), 0.001);
     }
     
     @Test
-    public void testNaliczOdsetkiA10100() throws InvalidInputException{
+    public void testNaliczOdsetkiProgresywny10100() throws InvalidInputException{
     	konto.setSrodki(10100);
     	MechanizmOdsetkowyProgresywny mechanizmOdsetkowy = new MechanizmOdsetkowyProgresywny();
-    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", TypyOperacjiBankowych.ODSETKI_RACHUNEK);
     	this.konto.setMechanizmOdsetkowy(mechanizmOdsetkowy);
         operacjaBankowa.naliczOdsetki(this.konto);
         assertEquals("Wynik odsetek: ", 10211.1, this.konto.getSrodki(), 0.001);
     }
     
     @Test
-    public void testNaliczOdsetkiA20100() throws InvalidInputException{
+    public void testNaliczOdsetkiProgresywny20100() throws InvalidInputException{
     	konto.setSrodki(20100);
     	MechanizmOdsetkowyProgresywny mechanizmOdsetkowy = new MechanizmOdsetkowyProgresywny();
-    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", TypyOperacjiBankowych.ODSETKI_RACHUNEK);
     	this.konto.setMechanizmOdsetkowy(mechanizmOdsetkowy);
         operacjaBankowa.naliczOdsetki(this.konto);
         assertEquals("Wynik odsetek: ", 20341.2, this.konto.getSrodki(), 0.001);
