@@ -27,7 +27,7 @@ public class RaportDebetowy implements IRaport {
 	public HashMap<String, ProduktBankowy> generujRaport(HashMap<Long, ProduktBankowy> listaProduktow) throws NotDebetException {
         for (ProduktBankowy produktBankowy : listaProduktow.values()) {
             try {
-                this.dodajProdukt((RachunekBankowy) produktBankowy);
+                dodajProdukt((RachunekBankowy) produktBankowy);
             } catch (InvalidInputException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -36,22 +36,19 @@ public class RaportDebetowy implements IRaport {
 	}
 	
 	public void dodajProdukt(RachunekBankowy produkt) throws InvalidInputException, NotDebetException {
-		if(produkt != null){
+		if (produkt != null) {
 			//Double stanSrodkow = produkt.getDebet().getKwotaDebetu();
-			if(produkt.czyPosiadaDebet()){
-				if(produkt.getDebet().getKwotaDebetu()>0){
-				raportDebetowy.put(produkt.getNumerRachunku(), produkt);
-				System.out.println("Dodano do raportu produkt z debetem");
-				}
-				else{
+			if (produkt.czyPosiadaDebet()) {
+				if (produkt.getKwotaDebetu() > 0) {
+					raportDebetowy.put(produkt.getNumerRachunku(), produkt);
+					System.out.println("Dodano do raportu produkt z debetem");
+				} else {
 					throw new NotDebetException("Na tym produkcie nie ma debetu");
 				}
-			}
-			else{
+			} else {
 				throw new NotDebetException("Konto nie jest debetowe");
 			}
-		}
-		else{
+		} else {
 			throw new InvalidInputException("Produkt nie istnieje");
 		}
 	}

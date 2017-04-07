@@ -11,7 +11,7 @@ public class Odsetki implements IOdsetki {
     }
 
     public double naliczOdsetki(ProduktBankowy konto) throws InvalidInputException {
-        return this.mechanizmOdsetkowy.naliczOdsetki(konto);
+        return mechanizmOdsetkowy.naliczOdsetki(konto);
     }
 
     public void setMechanizmOdsetkowy(IMechanizmOdsetkowy mechanizmOdsetkowy) {

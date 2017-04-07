@@ -13,21 +13,21 @@ public class BankTest {
 
     @Before
     public void setUp() throws Exception {
-        this.bank = new Bank("test bank", 1);
+        bank = new Bank("test bank", 1);
     }
 
     @Test
     public void testStworzKlienta() throws Exception {
-        Klient klient = this.bank.stworzKlienta();
-        Klient drugiKlient = this.bank.stworzKlienta();
+        Klient klient = bank.stworzKlienta();
+        Klient drugiKlient = bank.stworzKlienta();
         assertEquals("Id klienta: ", klient.getId()+1, drugiKlient.getId());
     }
 
     @Test(expected = InvalidInputException.class)
     public void testStworzRachunek() throws Exception {
-        Klient klient = this.bank.stworzKlienta();
+        Klient klient = bank.stworzKlienta();
         klient.setId(10);
-        this.bank.stworzRachunek(klient);
+        bank.stworzRachunek(klient);
     }
 
 }

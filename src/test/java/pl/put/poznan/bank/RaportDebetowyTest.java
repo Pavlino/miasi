@@ -2,13 +2,8 @@ package pl.put.poznan.bank;
 
 import static org.junit.Assert.*;
 
-import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import pl.put.poznan.utils.ITypyOperacjiBankowych;
-import pl.put.poznan.utils.InvalidInputException;
 import pl.put.poznan.utils.NotDebetException;
 
 public class RaportDebetowyTest {
@@ -18,7 +13,7 @@ public class RaportDebetowyTest {
 	
 	@Before
 	public void setUp(){
-		bank = new Bank("asd", 1);
+		bank = new Bank("Bank testowy", 1);
 		klient = new Klient(1, bank);
 	}
 	

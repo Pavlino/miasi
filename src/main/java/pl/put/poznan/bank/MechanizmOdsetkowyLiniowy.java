@@ -15,14 +15,14 @@ public class MechanizmOdsetkowyLiniowy implements IMechanizmOdsetkowy {
 
     public double naliczOdsetki(ProduktBankowy konto) throws InvalidInputException {
         if (konto != null) {
-            return konto.getSrodki() * this.procent;
+            return konto.getSrodki() * procent;
         } else {
             throw new InvalidInputException("Podane konto nie istnieje.");
         }
     }
 
     public double getProcent() {
-        return this.procent;
+        return procent;
     }
 
     public void setProcent(double procent) {
