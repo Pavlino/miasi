@@ -23,6 +23,10 @@ public abstract class ProduktBankowy {
 		bank.dodajOperacjeDoHistorii(operacjaBankowa);
 	}
 
+	public void wykonaj(IOperacjaBankowa operacjaBankowa) throws InvalidInputException {
+	    operacjaBankowa.wykonaj();
+    }
+
 	public Klient getKlient() {
 		return klient;
 	}
