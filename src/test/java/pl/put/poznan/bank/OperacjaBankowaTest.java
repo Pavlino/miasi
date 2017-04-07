@@ -116,4 +116,34 @@ public class OperacjaBankowaTest {
         assertEquals("Rozmiar historii: ", 1, this.konto.getHistoria().getHistoria().size());
         assertEquals("Typ wpisu: ", ITypyOperacjiBankowych.WPLATA, this.konto.getHistoria().getHistoria().get(0).getTyp());
     }
+    
+    @Test
+    public void testNaliczOdsetkiA100() throws InvalidInputException{
+    	konto.setSrodki(100);
+    	MechanizmOdsetkowyProgresywny mechanizmOdsetkowy = new MechanizmOdsetkowyProgresywny();
+    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+    	this.konto.setMechanizmOdsetkowy(mechanizmOdsetkowy);
+        operacjaBankowa.naliczOdsetki(this.konto);
+        assertEquals("Wynik odsetek: ", 101, this.konto.getSrodki(), 0.001);
+    }
+    
+    @Test
+    public void testNaliczOdsetkiA10100() throws InvalidInputException{
+    	konto.setSrodki(10100);
+    	MechanizmOdsetkowyProgresywny mechanizmOdsetkowy = new MechanizmOdsetkowyProgresywny();
+    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+    	this.konto.setMechanizmOdsetkowy(mechanizmOdsetkowy);
+        operacjaBankowa.naliczOdsetki(this.konto);
+        assertEquals("Wynik odsetek: ", 10211.1, this.konto.getSrodki(), 0.001);
+    }
+    
+    @Test
+    public void testNaliczOdsetkiA20100() throws InvalidInputException{
+    	konto.setSrodki(20100);
+    	MechanizmOdsetkowyProgresywny mechanizmOdsetkowy = new MechanizmOdsetkowyProgresywny();
+    	OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Testowe odsetki", ITypyOperacjiBankowych.ODSETKI_RACHUNEK);
+    	this.konto.setMechanizmOdsetkowy(mechanizmOdsetkowy);
+        operacjaBankowa.naliczOdsetki(this.konto);
+        assertEquals("Wynik odsetek: ", 20341.2, this.konto.getSrodki(), 0.001);
+    }
 }
