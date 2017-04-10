@@ -11,6 +11,9 @@ public abstract class ProduktBankowy {
     Historia historia;
     Bank bank;
 
+	public ProduktBankowy() {
+		mechanizmOdsetkowy = new MechanizmOdsetkowyLiniowy(0.1);
+	}
 	public void dodajOperacjeDoHistorii(OperacjaBankowa operacjaBankowa) throws InvalidInputException {
 		historia.dodajOperacje(operacjaBankowa);
 	}
