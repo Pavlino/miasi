@@ -35,7 +35,7 @@ public class LokataTest {
     @Test
     public void testZerwijLokate() throws Exception {
         lokata.otworzLokate(50, new GregorianCalendar(2017, 10, 10));
-        lokata.getMechanizmOdsetkowy().naliczOdsetki(lokata);
+        lokata.naliczOdsetki();
         lokata.zerwijLokate();
         assertEquals("Stan konta powiazanego: ", 100, konto.getSrodki(), 0.001);
         assertEquals("Stan lokaty: ", 0, lokata.getSrodki(), 0.001);
@@ -46,7 +46,7 @@ public class LokataTest {
     @Test
     public void testRozwiazLokate() throws Exception {
         lokata.otworzLokate(50, new GregorianCalendar(2017, 1, 10));
-        lokata.getMechanizmOdsetkowy().naliczOdsetki(lokata);
+        lokata.naliczOdsetki();
         lokata.rozwiazLokate();
         assertEquals("Stan konta powiazanego: ", 105, this.konto.getSrodki(), 0.001);
         assertEquals("Stan lokaty: ", 0, this.lokata.getSrodki(), 0.001);

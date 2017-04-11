@@ -34,6 +34,10 @@ public abstract class ProduktBankowy {
 		operacjaBankowa.wykonaj();
 	}
 
+	public void naliczOdsetki() throws InvalidBankOperationException {
+		mechanizmOdsetkowy.naliczOdsetki(this);
+	}
+
 	public Klient getKlient() {
 		return klient;
 	}

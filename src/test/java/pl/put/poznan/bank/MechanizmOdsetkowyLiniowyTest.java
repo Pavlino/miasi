@@ -25,7 +25,7 @@ public class MechanizmOdsetkowyLiniowyTest {
 
     @Test
     public void testNaliczOdsetkiRachunek() throws Exception {
-        konto.getMechanizmOdsetkowy().naliczOdsetki(konto);
+        konto.naliczOdsetki();
         assertEquals("Wynik odsetek: ", 110, konto.getSrodki(), 0.001);
     }
 
@@ -35,8 +35,8 @@ public class MechanizmOdsetkowyLiniowyTest {
         Kredyt kredyt = new Kredyt(klient, "123", konto, mechanizmOdsetkowyLiniowy);
         kredyt.zaciagnijKredyt(50);
         kredyt.setMechanizmOdsetkowy(mechanizmOdsetkowyLiniowy);
-        kredyt.getMechanizmOdsetkowy().naliczOdsetki(kredyt);
-        kredyt.getMechanizmOdsetkowy().naliczOdsetki(kredyt);
+        kredyt.naliczOdsetki();
+        kredyt.naliczOdsetki();
         assertEquals("Wynik odsetek: ", 10, kredyt.getOdsetki(), 0.001);
     }
 
@@ -46,8 +46,8 @@ public class MechanizmOdsetkowyLiniowyTest {
         Lokata lokata = new Lokata(klient, "123", konto, mechanizmOdsetkowyLiniowy);
         lokata.otworzLokate(50, new GregorianCalendar(2017, 10, 10));
         lokata.setMechanizmOdsetkowy(mechanizmOdsetkowyLiniowy);
-        lokata.getMechanizmOdsetkowy().naliczOdsetki(lokata);
-        lokata.getMechanizmOdsetkowy().naliczOdsetki(lokata);
+        lokata.naliczOdsetki();
+        lokata.naliczOdsetki();
         assertEquals("Wynik odsetek: ", 10, lokata.getOdsetki(), 0.001);
     }
 }

@@ -23,19 +23,19 @@ public class MechanizmOdsetkowyRegresywnyTest {
 
     @Test
     public void testNaliczOdsetkiRegresywneRachunekPierwszyProg() throws Exception {
-        konto.getMechanizmOdsetkowy().naliczOdsetki(konto);
+        konto.naliczOdsetki();
         assertEquals("Wynik odsetek: ", 120, konto.getSrodki(), 0.001);
     }
     @Test
     public void testNaliczOdsetkiRegresywneRachunekTrzeciProg() throws Exception {
         konto.setSrodki(10010);
-        konto.getMechanizmOdsetkowy().naliczOdsetki(konto);
+        konto.naliczOdsetki();
         assertEquals("Wynik odsetek: ", 10510.5 , konto.getSrodki(), 0.001);
     }
     @Test
     public void testNaliczOdsetkiRegresywneRachunekDrugiProg() throws Exception {
         konto.setSrodki(1250);
-        konto.getMechanizmOdsetkowy().naliczOdsetki(konto);
+        konto.naliczOdsetki();
         assertEquals("Wynik odsetek: ", 1375, konto.getSrodki(), 0.001);
     }
 
