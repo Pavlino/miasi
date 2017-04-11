@@ -1,6 +1,6 @@
 package pl.put.poznan.bank;
 
-import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.InvalidBankOperationException;
 
 public abstract class ProduktBankowy {
 
@@ -14,12 +14,24 @@ public abstract class ProduktBankowy {
 	public ProduktBankowy() {
 		mechanizmOdsetkowy = new MechanizmOdsetkowyLiniowy(0.1);
 	}
-	public void dodajOperacjeDoHistorii(OperacjaBankowa operacjaBankowa) throws InvalidInputException {
+	public void dodajOperacjeDoHistorii(IOperacjaBankowa operacjaBankowa) throws InvalidBankOperationException {
 		historia.dodajOperacje(operacjaBankowa);
 	}
 
-	public void dodajOperacjeDoHistoriiBanku(OperacjaBankowa operacjaBankowa) throws InvalidInputException {
+	public void dodajOperacjeDoHistoriiBanku(IOperacjaBankowa operacjaBankowa) throws InvalidBankOperationException {
 		bank.dodajOperacjeDoHistorii(operacjaBankowa);
+	}
+
+	public IOperacjaBankowa pobierzOperacjeBankowaZHistorii(int indeks) {
+		return historia.getOperacje().get(indeks);
+	}
+
+	public IOperacjaBankowa pobierzOperacjeBankowaZHistoriiBanku(int indeks) {
+		return bank.pobierzOperacjeZHistorii(indeks);
+	}
+
+	public void wykonajOperacje(IOperacjaBankowa operacjaBankowa) throws InvalidBankOperationException {
+		operacjaBankowa.wykonaj();
 	}
 
 	public Klient getKlient() {
@@ -53,6 +65,6 @@ public abstract class ProduktBankowy {
         this.bank = bank;
     }
     public void setOdsetki(double odsetki) {
-        this.srodki = odsetki;
+        this.srodki += odsetki;
     }
 }

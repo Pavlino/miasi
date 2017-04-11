@@ -1,10 +1,11 @@
 package pl.put.poznan.bank;
 
-import pl.put.poznan.utils.InvalidInputException;
-import pl.put.poznan.utils.NotEnoughFundsException;
+import pl.put.poznan.utils.InvalidBankOperationException;
+
+import java.util.Calendar;
 
 public interface IOperacjaBankowa {
-    void wplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException;
-    void wyplata(final ProduktBankowy konto, final double kwota) throws InvalidInputException, NotEnoughFundsException;
-    void przelew(final ProduktBankowy kontoZ, final ProduktBankowy kontoDo, final double kwota) throws InvalidInputException, NotEnoughFundsException;
+    void wykonaj() throws InvalidBankOperationException;
+    Calendar getData();
+    int getTyp();
 }

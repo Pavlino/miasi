@@ -1,7 +1,6 @@
 package pl.put.poznan.bank;
 
-import pl.put.poznan.utils.InvalidInputException;
-import pl.put.poznan.utils.NotEnoughFundsException;
+import pl.put.poznan.utils.InvalidBankOperationException;
 
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -25,40 +24,40 @@ public class Klient {
 		this.id = id;
 	}
 
-	public void otworzRachunek() throws InvalidInputException {
+	public void otworzRachunek() throws InvalidBankOperationException {
 		RachunekBankowy rachunekBankowy = bank.stworzRachunek(this);
         listaProduktow.put(rachunekBankowy.getNumerRachunku(), rachunekBankowy);
 	}
 
-    public void dodajDebetDoRachunku(String numerRachunku, Debet debet)  throws InvalidInputException {
+    public void dodajDebetDoRachunku(String numerRachunku, Debet debet)  throws InvalidBankOperationException {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
             try {
                 rachunekBankowy.setDebet(debet);
             } catch (Exception e) {
-                throw new InvalidInputException("Rachunek nie istnieje.");
+                throw new InvalidBankOperationException("Rachunek nie istnieje.");
             }
         } else {
-            throw new InvalidInputException("Rachunek nie istnieje.");
+            throw new InvalidBankOperationException("Rachunek nie istnieje.");
         }
     }
 
-    public void otworzLokate(String numerRachunku, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
+    public void otworzLokate(String numerRachunku, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidBankOperationException {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
             Lokata lokata = bank.stworzLokate(this, rachunekBankowy, kwota, new GregorianCalendar(2017, 10, 10), mechanizmOdsetkowy);
             this.listaProduktow.put(lokata.getNumerRachunku(), lokata);
         } else {
-            throw new InvalidInputException("Rachunek nie istnieje.");
+            throw new InvalidBankOperationException("Rachunek nie istnieje.");
         }
     }
-    public void zaciagnijKredyt(String numerRachunku, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
+    public void zaciagnijKredyt(String numerRachunku, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidBankOperationException {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
             Kredyt kredyt = bank.stworzKredyt(this, rachunekBankowy, kwota, mechanizmOdsetkowy);
             listaProduktow.put(kredyt.getNumerRachunku(), kredyt);
         } else {
-            throw new InvalidInputException("Rachunek nie istnieje.");
+            throw new InvalidBankOperationException("Rachunek nie istnieje.");
         }
     }
 

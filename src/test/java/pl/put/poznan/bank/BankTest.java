@@ -2,7 +2,7 @@ package pl.put.poznan.bank;
 
 import org.junit.Before;
 import org.junit.Test;
-import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.InvalidBankOperationException;
 
 import static org.junit.Assert.*;
 
@@ -23,7 +23,7 @@ public class BankTest {
         assertEquals("Id klienta: ", klient.getId()+1, drugiKlient.getId());
     }
 
-    @Test(expected = InvalidInputException.class)
+    @Test(expected = InvalidBankOperationException.class)
     public void testStworzRachunek() throws Exception {
         Klient klient = bank.stworzKlienta();
         klient.setId(10);

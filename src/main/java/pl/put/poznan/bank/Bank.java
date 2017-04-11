@@ -2,9 +2,8 @@ package pl.put.poznan.bank;
 
 import java.util.*;
 
-import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.InvalidBankOperationException;
 import pl.put.poznan.utils.NotDebetException;
-import pl.put.poznan.utils.NotEnoughFundsException;
 
 public class Bank {
 	private int id;
@@ -31,7 +30,7 @@ public class Bank {
         return new Klient(id, this);
 	}
 	
-	public RachunekBankowy stworzRachunek(Klient klient) throws InvalidInputException {
+	public RachunekBankowy stworzRachunek(Klient klient) throws InvalidBankOperationException {
 		if (listaKlientow.containsKey(klient.getId())) {
             int numer = 1;
 			if (listaRachunkow.size() > 0){
@@ -42,11 +41,11 @@ public class Bank {
             System.out.println("Stworzono rachunek o numerze " + Integer.toString(numer));
             return rachunekBankowy;
 		} else {
-			throw new InvalidInputException("Klient o id " + klient.getId() + " nie istnieje");
+			throw new InvalidBankOperationException("Klient o id " + klient.getId() + " nie istnieje");
 		}
 	}
 
-    public Lokata stworzLokate(Klient klient, RachunekBankowy rachunekBankowy, double kwota, Calendar data, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
+    public Lokata stworzLokate(Klient klient, RachunekBankowy rachunekBankowy, double kwota, Calendar data, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidBankOperationException {
         if (listaKlientow.containsKey(klient.getId())) {
             int numer = 1;
             if (listaRachunkow.size() > 0){
@@ -58,11 +57,11 @@ public class Bank {
             lokata.otworzLokate(kwota, data);
             return lokata;
         } else {
-            throw new InvalidInputException("Klient o id " + klient.getId() + " nie istnieje");
+            throw new InvalidBankOperationException("Klient o id " + klient.getId() + " nie istnieje");
         }
     }
 
-    public Kredyt stworzKredyt(Klient klient, RachunekBankowy rachunekBankowy, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException, NotEnoughFundsException {
+    public Kredyt stworzKredyt(Klient klient, RachunekBankowy rachunekBankowy, double kwota, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidBankOperationException {
         if (listaKlientow.containsKey(klient.getId())) {
             int numer = 1;
             if (listaRachunkow.size() > 0){
@@ -74,18 +73,22 @@ public class Bank {
             kredyt.zaciagnijKredyt(kwota);
             return kredyt;
         } else {
-            throw new InvalidInputException("Klient o id " + klient.getId() + " nie istnieje");
+            throw new InvalidBankOperationException("Klient o id " + klient.getId() + " nie istnieje");
         }
     }
 
 
 
-    public Object stworzRaport(IRaport raport, HashMap<Long, ProduktBankowy> listaProduktow) throws InvalidInputException, NotDebetException {
+    public Object stworzRaport(IRaport raport, HashMap<Long, ProduktBankowy> listaProduktow) throws InvalidBankOperationException, NotDebetException {
         return raport.generujRaport(listaProduktow);
     }
 
-    public void dodajOperacjeDoHistorii(OperacjaBankowa operacjaBankowa) throws InvalidInputException {
+    public void dodajOperacjeDoHistorii(IOperacjaBankowa operacjaBankowa) throws InvalidBankOperationException {
         historia.dodajOperacje(operacjaBankowa);
+    }
+
+    public IOperacjaBankowa pobierzOperacjeZHistorii(int indeks) {
+        return historia.getOperacje().get(indeks);
     }
 
 	public HashMap<String, ProduktBankowy> getListaRachunkow() {

@@ -1,7 +1,7 @@
 package pl.put.poznan.bank;
 
-import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.InvalidBankOperationException;
 
 public interface IMechanizmOdsetkowy {
-    double naliczOdsetki(ProduktBankowy konto) throws InvalidInputException;
+    void naliczOdsetki(ProduktBankowy konto) throws InvalidBankOperationException;
 }

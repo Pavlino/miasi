@@ -35,8 +35,7 @@ public class LokataTest {
     @Test
     public void testZerwijLokate() throws Exception {
         lokata.otworzLokate(50, new GregorianCalendar(2017, 10, 10));
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Odsetki dla lokaty", TypyOperacjiBankowych.ODSETKI_LOKATA);
-        operacjaBankowa.naliczOdsetki(lokata);
+        lokata.getMechanizmOdsetkowy().naliczOdsetki(lokata);
         lokata.zerwijLokate();
         assertEquals("Stan konta powiazanego: ", 100, konto.getSrodki(), 0.001);
         assertEquals("Stan lokaty: ", 0, lokata.getSrodki(), 0.001);
@@ -47,8 +46,7 @@ public class LokataTest {
     @Test
     public void testRozwiazLokate() throws Exception {
         lokata.otworzLokate(50, new GregorianCalendar(2017, 1, 10));
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Odsetki dla lokaty", TypyOperacjiBankowych.ODSETKI_LOKATA);
-        operacjaBankowa.naliczOdsetki(lokata);
+        lokata.getMechanizmOdsetkowy().naliczOdsetki(lokata);
         lokata.rozwiazLokate();
         assertEquals("Stan konta powiazanego: ", 105, this.konto.getSrodki(), 0.001);
         assertEquals("Stan lokaty: ", 0, this.lokata.getSrodki(), 0.001);
@@ -58,7 +56,6 @@ public class LokataTest {
     @Test(expected = UnsupportedOperationException.class)
     public void testLokataWyplataPrzedKoncem() throws Exception {
         lokata.otworzLokate(50, new GregorianCalendar(2017, 10, 10));
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Wyplata lokaty", TypyOperacjiBankowych.WYPLATA);
-        operacjaBankowa.przelew(lokata, konto, 10);
+        lokata.rozwiazLokate();
     }
 }

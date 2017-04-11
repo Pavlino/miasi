@@ -1,6 +1,7 @@
 package pl.put.poznan.bank;
 
-import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.InvalidBankOperationException;
+import pl.put.poznan.utils.TypyOperacjiBankowych;
 
 public class MechanizmOdsetkowyRegresywny implements IMechanizmOdsetkowy {
 
@@ -13,20 +14,21 @@ public class MechanizmOdsetkowyRegresywny implements IMechanizmOdsetkowy {
         this.procent = procent;*/
     }
 
-    public double naliczOdsetki(ProduktBankowy konto) throws InvalidInputException {
+    public void naliczOdsetki(ProduktBankowy konto) throws InvalidBankOperationException {
         if (konto != null) {
         	//oblicz procent
         	double srodki = konto.getSrodki();
+            double odsetki = 0;
         	if (srodki > 0 && srodki < 1000)
-        		return srodki * 0.2;
+        		odsetki = srodki * 0.2;
         	else if (srodki >= 1000 && srodki < 10000)
-        		return srodki * 0.1;
-        	else if (srodki >= 10000)
-        		return srodki * 0.05;
+        		odsetki =  srodki * 0.1;
         	else
-        		return srodki;
+        		odsetki = srodki * 0.05;
+            Wplata wplata = new Wplata(konto, odsetki, "Wplata odsetek", TypyOperacjiBankowych.ODSETKI);
+            konto.wykonajOperacje(wplata);
         } else {
-            throw new InvalidInputException("Podane konto nie istnieje.");
+            throw new InvalidBankOperationException("Podane konto nie istnieje.");
         }
     }
 

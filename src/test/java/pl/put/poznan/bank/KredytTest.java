@@ -3,8 +3,7 @@ package pl.put.poznan.bank;
 import org.junit.Test;
 import org.junit.Before;
 import pl.put.poznan.utils.TypyOperacjiBankowych;
-import pl.put.poznan.utils.InvalidInputException;
-import pl.put.poznan.utils.NotEnoughFundsException;
+import pl.put.poznan.utils.InvalidBankOperationException;
 
 import java.util.GregorianCalendar;
 
@@ -34,17 +33,17 @@ public class KredytTest {
         assertEquals(500, rb.getSrodki(), 0.001);
     }
 
-    @Test(expected = InvalidInputException.class)
+    @Test(expected = InvalidBankOperationException.class)
     public void zaciagnijKredytInvalidInput() throws Exception {
         kr.zaciagnijKredyt(-500);
     }
 
 
-    @Test(expected = NotEnoughFundsException.class)
+    @Test(expected = InvalidBankOperationException.class)
     public void splacKredyt() throws Exception {
         kr.zaciagnijKredyt(500);
-        OperacjaBankowa opb = new OperacjaBankowa(new GregorianCalendar(), "splata", TypyOperacjiBankowych.WYPLATA);
-        opb.wyplata(rb,400);
+        Wyplata wyplata = new Wyplata(rb, 400, "test wyplata", TypyOperacjiBankowych.WYPLATA);
+        rb.wykonajOperacje(wyplata);
         kr.splacKredyt();
     }
 

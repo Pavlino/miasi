@@ -2,10 +2,8 @@ package pl.put.poznan.bank;
 
 import org.junit.Before;
 import org.junit.Test;
+import pl.put.poznan.utils.InvalidBankOperationException;
 import pl.put.poznan.utils.TypyOperacjiBankowych;
-import pl.put.poznan.utils.NotEnoughFundsException;
-
-import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;
 
@@ -19,9 +17,9 @@ public class KlientTest {
         bank = new Bank("Testowy", 1);
         klient = bank.stworzKlienta();
         klient.otworzRachunek();
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "test wplata", TypyOperacjiBankowych.WPLATA);
         RachunekBankowy rachunekBankowy = (RachunekBankowy) klient.getListaProduktow().get("1");
-        operacjaBankowa.wplata(rachunekBankowy, 200);
+        Wplata wplata = new Wplata(rachunekBankowy, 200, "test wplata", TypyOperacjiBankowych.WPLATA);
+        rachunekBankowy.wykonajOperacje(wplata);
     }
 
     @Test
@@ -49,7 +47,7 @@ public class KlientTest {
         assertEquals("Stan lokaty: ", 100, rachunekBankowy.getSrodki(), 0.001);
     }
 
-    @Test(expected = NotEnoughFundsException.class)
+    @Test(expected = InvalidBankOperationException.class)
     public void testOtworzLokateNiewystarczajaceFundusze() throws Exception {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) klient.getListaProduktow().get("1");
         MechanizmOdsetkowyLiniowy mechanizmOdsetkowyLiniowy = new MechanizmOdsetkowyLiniowy(0.1);

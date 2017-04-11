@@ -1,12 +1,7 @@
 package pl.put.poznan.bank;
 
-import java.awt.List;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-
-import pl.put.poznan.utils.InvalidInputException;
+import pl.put.poznan.utils.InvalidBankOperationException;
 import pl.put.poznan.utils.NotDebetException;
 
 public class RaportDebetowy implements IRaport {
@@ -28,14 +23,14 @@ public class RaportDebetowy implements IRaport {
         for (ProduktBankowy produktBankowy : listaProduktow.values()) {
             try {
                 dodajProdukt((RachunekBankowy) produktBankowy);
-            } catch (InvalidInputException ex) {
+            } catch (InvalidBankOperationException ex) {
                 System.err.println(ex.getMessage());
             }
         }
         return this.raportDebetowy;
 	}
 	
-	public void dodajProdukt(RachunekBankowy produkt) throws InvalidInputException, NotDebetException {
+	public void dodajProdukt(RachunekBankowy produkt) throws InvalidBankOperationException, NotDebetException {
 		if (produkt != null) {
 			//Double stanSrodkow = produkt.getDebet().getKwotaDebetu();
 			if (produkt.czyPosiadaDebet()) {
@@ -49,7 +44,7 @@ public class RaportDebetowy implements IRaport {
 				throw new NotDebetException("Konto nie jest debetowe");
 			}
 		} else {
-			throw new InvalidInputException("Produkt nie istnieje");
+			throw new InvalidBankOperationException("Produkt nie istnieje");
 		}
 	}
 	

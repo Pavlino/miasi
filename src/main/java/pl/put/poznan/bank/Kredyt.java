@@ -1,10 +1,7 @@
 package pl.put.poznan.bank;
 
 import pl.put.poznan.utils.TypyOperacjiBankowych;
-import pl.put.poznan.utils.InvalidInputException;
-import pl.put.poznan.utils.NotEnoughFundsException;
-
-import java.util.GregorianCalendar;
+import pl.put.poznan.utils.InvalidBankOperationException;
 
 public class Kredyt extends ProduktBankowy {
 
@@ -13,7 +10,7 @@ public class Kredyt extends ProduktBankowy {
 	private StatusKredytu status;
     private double odsetki;
 	
-	public Kredyt(Klient klient, String rachunek, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidInputException {
+	public Kredyt(Klient klient, String rachunek, RachunekBankowy rachunekPowiazany, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidBankOperationException {
 		this.klient = klient;
 		this.numerRachunku = rachunek;
         this.rachunekPowiazany = rachunekPowiazany;
@@ -23,21 +20,21 @@ public class Kredyt extends ProduktBankowy {
         historia = new Historia();
 	}
 
-    public void zaciagnijKredyt(double kwota) throws InvalidInputException {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Zaciagniecie kredytu", TypyOperacjiBankowych.ZACIAGNIECIE_KREDYTU);
-        operacjaBankowa.wplata(rachunekPowiazany, kwota);
+    public void zaciagnijKredyt(double kwota) throws InvalidBankOperationException {
+        Wplata wplata = new Wplata(rachunekPowiazany, kwota, "Zaciagniecie kredytu", TypyOperacjiBankowych.ZACIAGNIECIE_KREDYTU);
+        rachunekPowiazany.wykonajOperacje(wplata);
         srodki = kwota;
     }
 
-    public void splacKredyt() throws InvalidInputException, NotEnoughFundsException {
-        OperacjaBankowa operacjaBankowa = new OperacjaBankowa(new GregorianCalendar(), "Splata kredytu", TypyOperacjiBankowych.SPLATA_KREDYTU);
-       status = StatusKredytu.PRZETWARZANY;
+    public void splacKredyt() throws InvalidBankOperationException {
+        Przelew przelew = new Przelew(rachunekPowiazany, this, srodki + odsetki, "Splata kredytu", TypyOperacjiBankowych.SPLATA_KREDYTU);
+        status = StatusKredytu.PRZETWARZANY;
         try {
-            operacjaBankowa.przelew(rachunekPowiazany, this, srodki + odsetki);
+            rachunekPowiazany.wykonajOperacje(przelew);
             status = StatusKredytu.SPLACONY;
-        } catch(NotEnoughFundsException e) {
+        } catch(InvalidBankOperationException e) {
             status = StatusKredytu.NIESPLACONY;
-            throw new NotEnoughFundsException();
+            throw new InvalidBankOperationException(e.getMessage());
         }
     }
 
@@ -51,7 +48,7 @@ public class Kredyt extends ProduktBankowy {
 
     @Override
     public void setOdsetki(double odsetki) {
-        this.odsetki += odsetki - srodki;
+        this.odsetki += odsetki;
     }
 
     public double getOdsetki() {
