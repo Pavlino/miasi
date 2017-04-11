@@ -23,20 +23,20 @@ public class WplataTest {
 
     @Test
     public void testWykonajKwotaDodatnia() throws Exception {
-        Wplata wplata = new Wplata(konto, 100, "test wplata");
+        Wplata wplata = new Wplata(100, "test wplata");
         konto.wykonajOperacje(wplata);
         assertEquals("Wynik wplaty: ", 200, konto.getSrodki(), 0.001);
     }
 
     @Test(expected = InvalidBankOperationException.class)
     public void testWykonajKwotaUjemna() throws Exception {
-        Wplata wplata = new Wplata(konto, -100, "test wplata");
+        Wplata wplata = new Wplata(-100, "test wplata");
         konto.wykonajOperacje(wplata);
     }
 
     @Test(expected = InvalidBankOperationException.class)
     public void testWykonajKwotaZero() throws Exception {
-        Wplata wplata = new Wplata(konto, 0, "test wplata");
+        Wplata wplata = new Wplata(0, "test wplata");
         konto.wykonajOperacje(wplata);
     }
 
@@ -45,14 +45,14 @@ public class WplataTest {
         konto.setSrodki(0);
         Debet debet = new Debet(100, 20);
         konto.setDebet(debet);
-        Wplata wplata = new Wplata(konto, 100, "test wplata");
+        Wplata wplata = new Wplata(100, "test wplata");
         konto.wykonajOperacje(wplata);
         assertEquals("Wynik wplaty: ", 180, konto.getSrodki(), 0.001);
     }
 
     @Test
     public void testDodajDoHistorii() throws Exception {
-        Wplata wplata = new Wplata(konto, 100, "test wplata");
+        Wplata wplata = new Wplata(100, "test wplata");
         konto.wykonajOperacje(wplata);
         assertEquals("Rozmiar historii: ", 1, konto.getHistoria().getOperacje().size());
         assertEquals("Typ wpisu: ", TypyOperacjiBankowych.WPLATA, konto.pobierzOperacjeBankowaZHistorii(0).getTyp());

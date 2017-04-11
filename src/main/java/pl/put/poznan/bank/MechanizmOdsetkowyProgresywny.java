@@ -22,7 +22,7 @@ public class MechanizmOdsetkowyProgresywny implements IMechanizmOdsetkowy {
 				procent = 0.012;
 			}
             double odsetki = konto.getSrodki() * this.procent;
-			Wplata wplata = new Wplata(konto, odsetki, "Wplata odsetek", TypyOperacjiBankowych.ODSETKI);
+			Wplata wplata = new Wplata(odsetki, "Wplata odsetek", TypyOperacjiBankowych.ODSETKI);
 			konto.wykonajOperacje(wplata);
         } else {
             throw new InvalidBankOperationException("Podane konto nie istnieje.");

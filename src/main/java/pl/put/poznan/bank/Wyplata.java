@@ -7,22 +7,23 @@ import java.util.GregorianCalendar;
 
 public class Wyplata extends OperacjaBankowa implements IOperacjaBankowa {
 
-    public Wyplata(ProduktBankowy konto, double kwota, String opis) {
-        super(konto, kwota, opis);
+    public Wyplata(double kwota, String opis) {
+        super(kwota, opis);
         typ = TypyOperacjiBankowych.WYPLATA;
     }
 
-    public Wyplata(ProduktBankowy konto, double kwota, String opis, int typ) {
-        super(konto, kwota, opis, typ);
+    public Wyplata(double kwota, String opis, int typ) {
+        super(kwota, opis, typ);
     }
 
-    public Wyplata(GregorianCalendar data, ProduktBankowy konto, double kwota, String opis) {
-        super(data, konto, kwota, opis);
+    public Wyplata(GregorianCalendar data, double kwota, String opis) {
+        super(data, kwota, opis);
     }
 
-    public void wykonaj() throws InvalidBankOperationException {
+    public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
         if (konto != null && kwota > 0) {
-			double stanSrodkow = konto.getSrodki();
+            this.konto = konto;
+            double stanSrodkow = konto.getSrodki();
 			if (stanSrodkow >= kwota) {
 				stanSrodkow -= kwota;
                 konto.setSrodki(stanSrodkow);

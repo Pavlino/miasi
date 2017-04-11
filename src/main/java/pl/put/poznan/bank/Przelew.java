@@ -9,25 +9,26 @@ public class Przelew extends OperacjaBankowa implements IOperacjaBankowa {
 
     private ProduktBankowy kontoDocelowe;
 
-    public Przelew(ProduktBankowy kontoZrodlowe, ProduktBankowy kontoDocelowe, double kwota, String opis) {
-        super(kontoZrodlowe, kwota, opis);
+    public Przelew(ProduktBankowy kontoDocelowe, double kwota, String opis) {
+        super(kwota, opis);
         this.kontoDocelowe = kontoDocelowe;
         typ = TypyOperacjiBankowych.PRZELEW;
     }
 
-    public Przelew(ProduktBankowy kontoZrodlowe, ProduktBankowy kontoDocelowe, double kwota, String opis, int typ) {
-        super(kontoZrodlowe, kwota, opis, typ);
+    public Przelew(ProduktBankowy kontoDocelowe, double kwota, String opis, int typ) {
+        super(kwota, opis, typ);
         this.kontoDocelowe = kontoDocelowe;
     }
 
-    public Przelew(GregorianCalendar data, ProduktBankowy kontoZrodlowe, ProduktBankowy kontoDocelowe, double kwota, String opis) {
-        super(data, kontoZrodlowe, kwota, opis);
+    public Przelew(GregorianCalendar data, ProduktBankowy kontoDocelowe, double kwota, String opis) {
+        super(data, kwota, opis);
         this.kontoDocelowe = kontoDocelowe;
     }
 
-    public void wykonaj() throws InvalidBankOperationException {
+    public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
         if (konto != null && kontoDocelowe != null && kwota > 0 && !konto.equals(kontoDocelowe)) {
-			double stanSrodkow = konto.getSrodki();
+            this.konto = konto;
+            double stanSrodkow = konto.getSrodki();
 			if (stanSrodkow >= kwota) {
                 stanSrodkow -= kwota;
                 konto.setSrodki(stanSrodkow);

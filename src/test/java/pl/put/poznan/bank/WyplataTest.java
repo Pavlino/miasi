@@ -22,20 +22,20 @@ public class WyplataTest {
 
     @Test
     public void testWykonajKwotaDodatnia() throws Exception {
-        Wyplata wyplata = new Wyplata(konto, 100, "test wyplata");
+        Wyplata wyplata = new Wyplata(100, "test wyplata");
         konto.wykonajOperacje(wyplata);
         assertEquals("Wynik wyplaty: ", 0, konto.getSrodki(), 0.001);
     }
 
     @Test(expected = InvalidBankOperationException.class)
     public void testWykonajKwotaUjemna() throws Exception {
-        Wyplata wyplata = new Wyplata(konto, -100, "test wyplata");
+        Wyplata wyplata = new Wyplata(-100, "test wyplata");
         konto.wykonajOperacje(wyplata);
     }
 
     @Test(expected = InvalidBankOperationException.class)
     public void testWykonajKwotaZbytDuza() throws Exception {
-        Wyplata wyplata = new Wyplata(konto, 200, "test wyplata");
+        Wyplata wyplata = new Wyplata(200, "test wyplata");
         konto.wykonajOperacje(wyplata);
     }
 
@@ -43,7 +43,7 @@ public class WyplataTest {
     public void testWyplataDebet() throws Exception {
         Debet debet = new Debet(1000, 0);
         konto.setDebet(debet);
-        Wyplata wyplata = new Wyplata(konto, 200, "test wyplata");
+        Wyplata wyplata = new Wyplata(200, "test wyplata");
         konto.wykonajOperacje(wyplata);
         assertEquals("Wynik wyplaty: ", 900, konto.getSrodki(), 0.001);
     }

@@ -21,13 +21,13 @@ public class Kredyt extends ProduktBankowy {
 	}
 
     public void zaciagnijKredyt(double kwota) throws InvalidBankOperationException {
-        Wplata wplata = new Wplata(rachunekPowiazany, kwota, "Zaciagniecie kredytu", TypyOperacjiBankowych.ZACIAGNIECIE_KREDYTU);
+        Wplata wplata = new Wplata(kwota, "Zaciagniecie kredytu", TypyOperacjiBankowych.ZACIAGNIECIE_KREDYTU);
         rachunekPowiazany.wykonajOperacje(wplata);
         srodki = kwota;
     }
 
     public void splacKredyt() throws InvalidBankOperationException {
-        Przelew przelew = new Przelew(rachunekPowiazany, this, srodki + odsetki, "Splata kredytu", TypyOperacjiBankowych.SPLATA_KREDYTU);
+        Przelew przelew = new Przelew(this, srodki + odsetki, "Splata kredytu", TypyOperacjiBankowych.SPLATA_KREDYTU);
         status = StatusKredytu.PRZETWARZANY;
         try {
             rachunekPowiazany.wykonajOperacje(przelew);

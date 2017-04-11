@@ -17,7 +17,7 @@ public class MechanizmOdsetkowyLiniowy implements IMechanizmOdsetkowy {
     public void naliczOdsetki(ProduktBankowy konto) throws InvalidBankOperationException {
         if (konto != null) {
             double odsetki = konto.getSrodki() * procent;
-            Wplata wplata = new Wplata(konto, odsetki, "Wplata odsetek", TypyOperacjiBankowych.ODSETKI);
+            Wplata wplata = new Wplata(odsetki, "Wplata odsetek", TypyOperacjiBankowych.ODSETKI);
             konto.wykonajOperacje(wplata);
         } else {
             throw new InvalidBankOperationException("Podane konto nie istnieje.");

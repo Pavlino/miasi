@@ -25,7 +25,7 @@ public class MechanizmOdsetkowyRegresywny implements IMechanizmOdsetkowy {
         		odsetki =  srodki * 0.1;
         	else
         		odsetki = srodki * 0.05;
-            Wplata wplata = new Wplata(konto, odsetki, "Wplata odsetek", TypyOperacjiBankowych.ODSETKI);
+            Wplata wplata = new Wplata(odsetki, "Wplata odsetek", TypyOperacjiBankowych.ODSETKI);
             konto.wykonajOperacje(wplata);
         } else {
             throw new InvalidBankOperationException("Podane konto nie istnieje.");

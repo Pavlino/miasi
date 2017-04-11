@@ -31,7 +31,7 @@ public abstract class ProduktBankowy {
 	}
 
 	public void wykonajOperacje(IOperacjaBankowa operacjaBankowa) throws InvalidBankOperationException {
-		operacjaBankowa.wykonaj();
+		operacjaBankowa.wykonaj(this);
 	}
 
 	public void naliczOdsetki() throws InvalidBankOperationException {

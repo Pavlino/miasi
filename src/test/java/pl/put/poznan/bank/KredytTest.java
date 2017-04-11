@@ -42,7 +42,7 @@ public class KredytTest {
     @Test(expected = InvalidBankOperationException.class)
     public void splacKredyt() throws Exception {
         kr.zaciagnijKredyt(500);
-        Wyplata wyplata = new Wyplata(rb, 400, "test wyplata", TypyOperacjiBankowych.WYPLATA);
+        Wyplata wyplata = new Wyplata(400, "test wyplata", TypyOperacjiBankowych.WYPLATA);
         rb.wykonajOperacje(wyplata);
         kr.splacKredyt();
     }

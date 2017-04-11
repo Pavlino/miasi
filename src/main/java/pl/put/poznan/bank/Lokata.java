@@ -23,7 +23,7 @@ public class Lokata extends ProduktBankowy {
     }
 
     public void otworzLokate(double kwota, Calendar dataKonca) throws InvalidBankOperationException {
-        Przelew przelew = new Przelew(rachunekPowiazany, this, kwota, "Otworzenie lokaty", TypyOperacjiBankowych.OTWORZENIE_LOKATY);
+        Przelew przelew = new Przelew(this, kwota, "Otworzenie lokaty", TypyOperacjiBankowych.OTWORZENIE_LOKATY);
         rachunekPowiazany.wykonajOperacje(przelew);
         bank = rachunekPowiazany.getBank();
         this.dataKonca = dataKonca;
@@ -32,17 +32,16 @@ public class Lokata extends ProduktBankowy {
 
     public void zerwijLokate() throws InvalidBankOperationException {
         dataKonca = new GregorianCalendar(1,1,1);
-        Przelew przelew = new Przelew(this, rachunekPowiazany, srodki, "Zerwanie lokaty", TypyOperacjiBankowych.ZERWANIE_LOKATY);
-        rachunekPowiazany.wykonajOperacje(przelew);
+        Przelew przelew = new Przelew(rachunekPowiazany, srodki, "Zerwanie lokaty", TypyOperacjiBankowych.ZERWANIE_LOKATY);
+        this.wykonajOperacje(przelew);
         odsetki = 0;
     }
 
     public void rozwiazLokate() throws InvalidBankOperationException {
-        GregorianCalendar czasObecny = new GregorianCalendar();
         aktywna = false;
         srodki += odsetki;
-        Przelew przelew = new Przelew(this, rachunekPowiazany, srodki, "Rozwiazanie lokaty", TypyOperacjiBankowych.ROZWIAZANIE_LOKATY);
-        rachunekPowiazany.wykonajOperacje(przelew);
+        Przelew przelew = new Przelew(rachunekPowiazany, srodki, "Rozwiazanie lokaty", TypyOperacjiBankowych.ROZWIAZANIE_LOKATY);
+        this.wykonajOperacje(przelew);
         odsetki = 0;
     }
 

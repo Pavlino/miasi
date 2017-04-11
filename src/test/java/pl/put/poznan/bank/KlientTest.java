@@ -18,7 +18,7 @@ public class KlientTest {
         klient = bank.stworzKlienta();
         klient.otworzRachunek();
         RachunekBankowy rachunekBankowy = (RachunekBankowy) klient.getListaProduktow().get("1");
-        Wplata wplata = new Wplata(rachunekBankowy, 200, "test wplata", TypyOperacjiBankowych.WPLATA);
+        Wplata wplata = new Wplata(200, "test wplata", TypyOperacjiBankowych.WPLATA);
         rachunekBankowy.wykonajOperacje(wplata);
     }
 

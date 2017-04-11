@@ -25,7 +25,7 @@ public class PrzelewTest {
 
     @Test
     public void testWykonajKwotaDodatnia() throws Exception {
-        Przelew przelew = new Przelew(kontoZrodlowe, kontoDocelowe, 100, "test przelew");
+        Przelew przelew = new Przelew(kontoDocelowe, 100, "test przelew");
         kontoZrodlowe.wykonajOperacje(przelew);
         assertEquals("Wynik przelewu nadawca: ", 0, kontoZrodlowe.getSrodki(), 0.001);
         assertEquals("Wynik przelewu odbiorca: ", 200, kontoDocelowe.getSrodki(), 0.001);
@@ -33,24 +33,24 @@ public class PrzelewTest {
 
     @Test(expected = InvalidBankOperationException.class)
     public void testWykonajKwotaUjemna() throws Exception {
-        Przelew przelew = new Przelew(kontoZrodlowe, kontoDocelowe, -100, "test przelew");
+        Przelew przelew = new Przelew(kontoDocelowe, -100, "test przelew");
         kontoZrodlowe.wykonajOperacje(przelew);
     }
 
     @Test(expected = InvalidBankOperationException.class)
     public void testWykonajKwotaZero() throws Exception {
-        Przelew przelew = new Przelew(kontoZrodlowe, kontoDocelowe, 0, "test przelew");
+        Przelew przelew = new Przelew(kontoDocelowe, 0, "test przelew");
         kontoZrodlowe.wykonajOperacje(przelew);
     }
 
     @Test(expected = InvalidBankOperationException.class)
     public void testWykonajKwotaZbytDuza() throws Exception {
-        Przelew przelew = new Przelew(kontoZrodlowe, kontoDocelowe, 3000, "test przelew");
+        Przelew przelew = new Przelew(kontoDocelowe, 3000, "test przelew");
         kontoZrodlowe.wykonajOperacje(przelew);
     }
     @Test(expected = InvalidBankOperationException.class)
     public void testWykonajToSamoKonto() throws Exception {
-        Przelew przelew = new Przelew(kontoZrodlowe, kontoZrodlowe, 3000, "test przelew");
+        Przelew przelew = new Przelew(kontoZrodlowe, 3000, "test przelew");
         kontoZrodlowe.wykonajOperacje(przelew);
     }
 

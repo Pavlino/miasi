@@ -12,16 +12,14 @@ public abstract class OperacjaBankowa implements IOperacjaBankowa {
     int typ;
     String opis;
 
-    public OperacjaBankowa(ProduktBankowy konto, double kwota, String opis) {
-        this.konto = konto;
+    public OperacjaBankowa(double kwota, String opis) {
         this.kwota = kwota;
         this.opis = opis;
         data = new GregorianCalendar();
         wykonana = false;
     }
 
-    public OperacjaBankowa(ProduktBankowy konto, double kwota, String opis, int typ) {
-        this.konto = konto;
+    public OperacjaBankowa(double kwota, String opis, int typ) {
         this.kwota = kwota;
         this.opis = opis;
         this.typ = typ;
@@ -29,9 +27,8 @@ public abstract class OperacjaBankowa implements IOperacjaBankowa {
         wykonana = false;
     }
 
-    public OperacjaBankowa(GregorianCalendar data, ProduktBankowy konto, double kwota, String opis) {
+    public OperacjaBankowa(GregorianCalendar data, double kwota, String opis) {
         this.data = data;
-        this.konto = konto;
         this.kwota = kwota;
         this.opis = opis;
         wykonana = false;

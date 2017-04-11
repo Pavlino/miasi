@@ -7,21 +7,22 @@ import java.util.GregorianCalendar;
 
 public class Wplata extends OperacjaBankowa implements IOperacjaBankowa {
 
-    public Wplata(ProduktBankowy konto, double kwota, String opis) {
-        super(konto, kwota, opis);
+    public Wplata(double kwota, String opis) {
+        super(kwota, opis);
         typ = TypyOperacjiBankowych.WPLATA;
     }
 
-    public Wplata(ProduktBankowy konto, double kwota, String opis, int typ) {
-        super(konto, kwota, opis, typ);
+    public Wplata(double kwota, String opis, int typ) {
+        super(kwota, opis, typ);
     }
 
-    public Wplata(GregorianCalendar data, ProduktBankowy konto, double kwota, String opis) {
-        super(data, konto, kwota, opis);
+    public Wplata(GregorianCalendar data, double kwota, String opis) {
+        super(data, kwota, opis);
     }
 
-    public void wykonaj() throws InvalidBankOperationException {
+    public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
         if (konto != null && kwota > 0 && !wykonana) {
+            this.konto = konto;
             if (typ == TypyOperacjiBankowych.ODSETKI) {
                 konto.setOdsetki(kwota);
             } else {

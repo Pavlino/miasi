@@ -13,11 +13,11 @@ public class HistoriaTest {
 	@Test
 	public void historiaSortTest() throws InvalidBankOperationException {
 		Historia historia = new Historia();
-		Wplata wplata1 = new Wplata(new GregorianCalendar(115, 1, 1), null, 100, "opis1");
-		Wplata wplata2 = new Wplata(new GregorianCalendar(114, 1, 1), null, 100, "opis2");
-		Wplata wplata3 = new Wplata(new GregorianCalendar(117, 1, 1), null, 100, "opis3");
-		Wplata wplata4 = new Wplata(new GregorianCalendar(116, 5, 1), null, 100, "opis4");
-		Wplata wplata5 = new Wplata(new GregorianCalendar(117, 2, 1), null, 100, "opis5");
+		Wplata wplata1 = new Wplata(new GregorianCalendar(115, 1, 1), 100, "opis1");
+		Wplata wplata2 = new Wplata(new GregorianCalendar(114, 1, 1), 100, "opis2");
+		Wplata wplata3 = new Wplata(new GregorianCalendar(117, 1, 1), 100, "opis3");
+		Wplata wplata4 = new Wplata(new GregorianCalendar(116, 5, 1), 100, "opis4");
+		Wplata wplata5 = new Wplata(new GregorianCalendar(117, 2, 1), 100, "opis5");
 		historia.dodajOperacje(wplata1);
 		historia.dodajOperacje(wplata2);
 		historia.dodajOperacje(wplata3);
