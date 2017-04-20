@@ -28,6 +28,7 @@ public class Wyplata extends OperacjaBankowa implements IOperacjaBankowa {
 				stanSrodkow -= kwota;
                 konto.setSrodki(stanSrodkow);
                 dodajDoHistorii();
+                wykonana = true;
             } else {
 				throw new InvalidBankOperationException("Brak wystarczajacych srodkow na koncie");
 			}

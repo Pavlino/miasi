@@ -36,6 +36,7 @@ public class Przelew extends OperacjaBankowa implements IOperacjaBankowa {
                 stanSrodkow += kwota;
                 kontoDocelowe.setSrodki(stanSrodkow);
                 dodajDoHistorii();
+                wykonana = true;
 			} else {
 				throw new InvalidBankOperationException("Niewystarczajace srodki.");
 			}
