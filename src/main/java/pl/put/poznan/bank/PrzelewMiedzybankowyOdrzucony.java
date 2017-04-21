@@ -5,24 +5,36 @@ import pl.put.poznan.utils.TypyOperacjiBankowych;
 
 import java.util.GregorianCalendar;
 
-public class PrzelewMiedzybankowyOdrzucony extends OperacjaBankowa implements IOperacjaBankowa{
+public class PrzelewMiedzybankowyOdrzucony extends PrzelewMiedzybankowy implements IOperacjaBankowa {
 
+    private ProduktBankowy kontoDocelowe;
     private Bank bankDocelowy;
 
-    public PrzelewMiedzybankowyOdrzucony(Bank bankDocelowy, double kwota, String opis) {
-        super(kwota, opis);
-        this.bankDocelowy = bankDocelowy;
+    public PrzelewMiedzybankowyOdrzucony(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis) {
+        super(kontoDocelowe, bankDocelowy, kwota, opis);
         typ = TypyOperacjiBankowych.PRZELEW_MIEDZYBANKOWY_ODRZUCONY;
     }
 
-    public PrzelewMiedzybankowyOdrzucony(GregorianCalendar data, Bank bankDocelowy, double kwota, String opis) {
-        super(data, kwota, opis);
-        this.bankDocelowy = bankDocelowy;
-        typ = TypyOperacjiBankowych.WPLATA;
+    public PrzelewMiedzybankowyOdrzucony(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis, int typ) {
+        super(kontoDocelowe, bankDocelowy, kwota, opis, typ);
+        this.typ = TypyOperacjiBankowych.WPLATA;
+    }
+
+    public PrzelewMiedzybankowyOdrzucony(GregorianCalendar data, ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis) {
+        super(data, kontoDocelowe, bankDocelowy, kwota, opis);
+        typ = TypyOperacjiBankowych.PRZELEW_MIEDZYBANKOWY_ODRZUCONY;
     }
 
     public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
         dodajDoHistorii();
         wykonana = true;
+    }
+
+    public ProduktBankowy getKontoDocelowe() {
+        return kontoDocelowe;
+    }
+
+    public Bank getBankDocelowy() {
+        return bankDocelowy;
     }
 }
