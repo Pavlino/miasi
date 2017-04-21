@@ -4,34 +4,12 @@ import java.util.Date;
 
 public class RachunekBankowy extends ProduktBankowy {
 	private Date dataZalozenia;
-	private Debet debet;
 
 	public RachunekBankowy(Klient klient, String nr, Bank bank){
 		this.klient = klient;
 		this.numerRachunku = nr;
         this.bank = bank;
 		historia = new Historia();
-	}
-
-	public RachunekBankowy(Klient klient, String numer, Debet debet, Bank bank) {
-		this.klient = klient;
-		this.numerRachunku = numer;
-		this.debet = debet;
-        this.bank = bank;
-		historia = new Historia();
-	}
-
-	public boolean czyPosiadaDebet() {
-		return debet != null;
-	}
-
-	@Override
-	public double getSrodki() {
-		if (czyPosiadaDebet()) {
-			double pozostalyDebet = debet.getMaxKwotaDebetu() - debet.getKwotaDebetu();
-			return srodki + pozostalyDebet;
-		}
-		return srodki;
 	}
 
 	@Override
@@ -65,23 +43,12 @@ public class RachunekBankowy extends ProduktBankowy {
         }
 	}
 
-	public double getKwotaDebetu() {
-		return debet.getKwotaDebetu();
-	}
-
 	public Date getDataZalozenia() {
 		return dataZalozenia;
 	}
 	public void setDataZalozenia(Date dataZalozenia) {
 		this.dataZalozenia = dataZalozenia;
 	}
-	public void setDebet(Debet debet) {
-		this.debet = debet;
-	}
-	public Debet getDebet() {
-		return debet;
-	}
-
 	public void setNumerRachunku(String numerRachunku) {
 		this.numerRachunku = numerRachunku;
 	}
