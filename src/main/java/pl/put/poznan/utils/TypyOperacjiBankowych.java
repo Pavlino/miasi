@@ -10,4 +10,6 @@ public interface TypyOperacjiBankowych {
     int OTWORZENIE_LOKATY = 6;
     int ZACIAGNIECIE_KREDYTU = 7;
     int SPLATA_KREDYTU = 8;
+    int PRZELEW_MIEDZYBANKOWY = 9;
+    int PRZELEW_MIEDZYBANKOWY_ODRZUCONY = 10;
 }

@@ -23,6 +23,7 @@ public class Przelew extends OperacjaBankowa implements IOperacjaBankowa {
     public Przelew(GregorianCalendar data, ProduktBankowy kontoDocelowe, double kwota, String opis) {
         super(data, kwota, opis);
         this.kontoDocelowe = kontoDocelowe;
+        typ = TypyOperacjiBankowych.PRZELEW;
     }
 
     public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {

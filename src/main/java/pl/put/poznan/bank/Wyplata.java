@@ -18,6 +18,7 @@ public class Wyplata extends OperacjaBankowa implements IOperacjaBankowa {
 
     public Wyplata(GregorianCalendar data, double kwota, String opis) {
         super(data, kwota, opis);
+        typ = TypyOperacjiBankowych.WYPLATA;
     }
 
     public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
