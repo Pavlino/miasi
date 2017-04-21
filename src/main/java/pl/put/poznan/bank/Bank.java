@@ -11,13 +11,15 @@ public class Bank {
 	private Historia historia;
 	private HashMap<String, ProduktBankowy> listaRachunkow;
 	private HashMap<Integer, Klient> listaKlientow;
+	private KIR kir;
 
-	public Bank(String nazwa, int id){
+	public Bank(String nazwa, int id, KIR kir){
 		this.nazwa = nazwa;
 		this.id = id;
 		historia = new Historia();
 		listaRachunkow = new HashMap<>();
 		listaKlientow = new HashMap<>();
+		this.kir = kir;
 	}
 	
 	public Klient stworzKlienta(){
