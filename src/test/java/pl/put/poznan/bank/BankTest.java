@@ -13,7 +13,7 @@ public class BankTest {
 
     @Before
     public void setUp() throws Exception {
-        bank = new Bank("test bank", 1);
+        bank = new Bank("test bank", 1, new KIR());
     }
 
     @Test

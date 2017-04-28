@@ -15,7 +15,7 @@ public class RachunekBankowyTest {
 
     @Before
     public void setUp() throws Exception {
-        bank = new Bank("bank testowy", 1);
+        bank = new Bank("bank testowy", 1, new KIR());
         klient = new Klient(1, bank);
         rachunekBankowy = new RachunekBankowy(klient, "123", bank);
     }

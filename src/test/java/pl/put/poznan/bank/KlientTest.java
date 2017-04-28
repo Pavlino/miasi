@@ -14,7 +14,7 @@ public class KlientTest {
 
     @Before
     public void setUp() throws Exception {
-        bank = new Bank("Testowy", 1);
+        bank = new Bank("Testowy", 1, new KIR());
         klient = bank.stworzKlienta();
         klient.otworzRachunek();
         RachunekBankowy rachunekBankowy = (RachunekBankowy) klient.getListaProduktow().get("1");

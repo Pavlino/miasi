@@ -13,7 +13,7 @@ public class RaportDebetowyTest {
 	
 	@Before
 	public void setUp(){
-		bank = new Bank("Bank testowy", 1);
+		bank = new Bank("Bank testowy", 1, new KIR());
 		klient = new Klient(1, bank);
 	}
 	

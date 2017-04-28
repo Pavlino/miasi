@@ -17,7 +17,7 @@ public class HistoriaTest {
 	
 	@Before
 	public void setUp(){
-		bank = new Bank("a", 1);
+		bank = new Bank("a", 1, new KIR());
 		klient = new Klient(1, bank);
 	}
 	

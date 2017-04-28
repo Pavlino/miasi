@@ -13,7 +13,7 @@ public class MechanizmOdsetkowyRegresywnyTest {
 
     @Before
     public void setUp() throws Exception {
-        bank = new Bank("Bank testowy", 1);
+        bank = new Bank("Bank testowy", 1, new KIR());
         klient = new Klient(1, bank);
         konto = new RachunekBankowy(klient, "1237129371", bank);
         konto.setSrodki(100);
