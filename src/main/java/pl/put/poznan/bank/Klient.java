@@ -33,7 +33,8 @@ public class Klient {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) listaProduktow.get(numerRachunku);
         if (rachunekBankowy != null) {
             try {
-                rachunekBankowy.setDebet(debet);
+                RachunekBankowyDebetowy rachunekBankowyDebetowy = rachunekBankowy.setDebet(debet);
+                listaProduktow.put(rachunekBankowyDebetowy.getNumerRachunku(), rachunekBankowyDebetowy);
             } catch (Exception e) {
                 throw new InvalidBankOperationException("Rachunek nie istnieje.");
             }

@@ -25,6 +25,7 @@ public class Przelew extends OperacjaBankowa implements IOperacjaBankowa {
         this.kontoDocelowe = kontoDocelowe;
         typ = TypyOperacjiBankowych.PRZELEW;
     }
+    
 
     public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
         if (konto != null && kontoDocelowe != null && kwota > 0 && !konto.equals(kontoDocelowe)) {

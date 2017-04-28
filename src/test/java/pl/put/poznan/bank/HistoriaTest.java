@@ -2,13 +2,24 @@ package pl.put.poznan.bank;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import pl.put.poznan.utils.InvalidBankOperationException;
 
 public class HistoriaTest {
+	
+	Klient klient;
+	Bank bank;
+	
+	@Before
+	public void setUp(){
+		bank = new Bank("a", 1, new KIR());
+		klient = new Klient(1, bank);
+	}
 	
 	@Test
 	public void historiaSortTest() throws InvalidBankOperationException {
@@ -31,5 +42,25 @@ public class HistoriaTest {
 			}
 		}
 		assertEquals(true, sort);
+	}
+	
+	@Test
+	public void historiaKirTest() throws InvalidBankOperationException {
+		RachunekBankowy rach = new RachunekBankowy(klient, "1", bank);
+		Historia historia = new Historia();
+		PrzelewMiedzybankowy przel1 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 0, 2,1,1), rach, bank, 10, "asd");
+		PrzelewMiedzybankowy przel2 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 1, 2,1,1), rach, bank, 10, "asd");
+		PrzelewMiedzybankowy przel3 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 2, 2,1,1), rach, bank, 10, "asd");
+		PrzelewMiedzybankowy przel4 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 3, 2,1,1), rach, bank, 10, "asd");
+		PrzelewMiedzybankowy przel5 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 4, 2,1,1), rach, bank, 10, "asd");
+		historia.dodajOperacje(przel1);
+		historia.dodajOperacje(przel2);
+		historia.dodajOperacje(przel3);
+		historia.dodajOperacje(przel4);
+		historia.dodajOperacje(przel5);
+
+		ArrayList<IOperacjaBankowa> kir = historia.paczkaKir(new GregorianCalendar(2017, 1, 1,1,1), new GregorianCalendar(2017, 4, 1,1,1));
+		
+		assertEquals(3, kir.size());
 	}
 }

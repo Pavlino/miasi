@@ -26,26 +26,21 @@ public class WizytorTest {
 		bank = null;
 		kir = null;
 	}
-
-	@Test(expected = NotDebetException.class)
-    public void raportDodanieKontaNiedebetowegoTest() throws Exception {
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", bank);
-		Wizytor wizytor = new Wizytor();
-		rachunek.accept(wizytor);
-    }
 	
 	@Test(expected = NotDebetException.class)
     public void raportDodanieProduktuDebetowegoBezDebetuTest() throws Exception {
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", new Debet(100, 0), bank);
+		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", bank);
 		Wizytor wizytor = new Wizytor();
 		rachunek.accept(wizytor);
     }
     
 	@Test()
     public void raportDodanieProduktuDebetowego() throws Exception {
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", new Debet(100, 1), bank);
+		RachunekBankowy rachunekNiedebetowy = new RachunekBankowy(klient, "0001", bank);
+		RachunekBankowyDebetowy rachunek = new RachunekBankowyDebetowy(rachunekNiedebetowy, new Debet(100, 1));
 		Wizytor wizytor = new Wizytor();
 		rachunek.accept(wizytor);
+		rachunekNiedebetowy.accept(wizytor);
 		assertEquals(1, wizytor.getListaKont().size());
     }
 

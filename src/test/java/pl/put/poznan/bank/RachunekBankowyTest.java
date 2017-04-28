@@ -15,21 +15,9 @@ public class RachunekBankowyTest {
 
     @Before
     public void setUp() throws Exception {
-        bank = new Bank("bank testowy", 1);
+        bank = new Bank("bank testowy", 1, new KIR());
         klient = new Klient(1, bank);
         rachunekBankowy = new RachunekBankowy(klient, "123", bank);
-    }
-
-    @Test
-    public void czyNiePosiadaDebet() throws Exception {
-        assertFalse(rachunekBankowy.czyPosiadaDebet());
-    }
-
-    @Test
-    public void czyPosiadaDebet() throws Exception {
-        Debet debet = new Debet(100);
-        rachunekBankowy.setDebet(debet);
-        assertTrue(rachunekBankowy.czyPosiadaDebet());
     }
 
     @Test
@@ -39,11 +27,9 @@ public class RachunekBankowyTest {
     }
 
     @Test
-    public void getSrodkiDebet() throws Exception {
-        rachunekBankowy.setSrodki(100);
-        Debet debet = new Debet(100, 50);
-        rachunekBankowy.setDebet(debet);
-        assertEquals(150, rachunekBankowy.getSrodki(), 0.001);
+    public void getSrodki() throws Exception {
+        rachunekBankowy.srodki = 100;
+        assertEquals(100, rachunekBankowy.getSrodki(), 0.001);
     }
 
 }

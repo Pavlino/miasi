@@ -35,15 +35,16 @@ public class RaportDebetowyTest {
 	/*@Test()
     public void raportDodanieProduktuDebetowego() throws Exception {
 		RaportDebetowy raport = new RaportDebetowy();
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", new Debet(100, 1), bank);
-		raport.dodajProdukt(rachunek);
+		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", bank);
+		RachunekBankowyDebetowy rachunekBankowyDebetowy = rachunek.setDebet(new Debet(100, 1));
+		raport.dodajProdukt(rachunekBankowyDebetowy);
 		assertEquals(1, raport.getRaportDebetowy().size());
     }*/
 	
 	@Test()
 	public void raportGenerowanieRaportuTest() throws Exception{
 		RaportDebetowy raport = new RaportDebetowy();
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", new Debet(100, 1), bank);
+		//RachunekBankowyDebetowy rachunek = new RachunekBankowyDebetowy(klient, "0001", new Debet(100, 1), bank);
 		// todo reszta
 	}
 }

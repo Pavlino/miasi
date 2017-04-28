@@ -1,6 +1,7 @@
 package pl.put.poznan.bank;
 
 import pl.put.poznan.utils.InvalidBankOperationException;
+import pl.put.poznan.utils.NotDebetException;
 
 public abstract class ProduktBankowy {
 
@@ -13,6 +14,11 @@ public abstract class ProduktBankowy {
 
 	public ProduktBankowy() {
 		mechanizmOdsetkowy = new MechanizmOdsetkowyLiniowy(0.1);
+	}
+	
+	//accept the visitor
+	public void accept(IWizytor visitor) throws NotDebetException, InvalidBankOperationException {
+	    visitor.visit(this);
 	}
 	
 	public void dodajOperacjeDoHistorii(IOperacjaBankowa operacjaBankowa) throws InvalidBankOperationException {

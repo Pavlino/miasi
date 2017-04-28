@@ -14,7 +14,7 @@ public class KlientTest {
 
     @Before
     public void setUp() throws Exception {
-        bank = new Bank("Testowy", 1);
+        bank = new Bank("Testowy", 1, new KIR());
         klient = bank.stworzKlienta();
         klient.otworzRachunek();
         RachunekBankowy rachunekBankowy = (RachunekBankowy) klient.getListaProduktow().get("1");
@@ -33,7 +33,8 @@ public class KlientTest {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) klient.getListaProduktow().get("1");
         Debet debet = new Debet(1000);
         klient.dodajDebetDoRachunku(rachunekBankowy.getNumerRachunku(), debet);
-        assertTrue(rachunekBankowy.czyPosiadaDebet());
+        RachunekBankowyDebetowy rachunekBankowyDebetowy = (RachunekBankowyDebetowy) bank.getListaRachunkow().get(rachunekBankowy.getNumerRachunku());
+        assertEquals("Stan debetu: ", 1000, rachunekBankowyDebetowy.getMaxKwotaDebetu(), 0.001);
     }
 
     @Test

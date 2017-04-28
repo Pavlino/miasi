@@ -1,10 +1,12 @@
 package pl.put.poznan.bank;
 
 import java.util.HashMap;
+
 import pl.put.poznan.utils.InvalidBankOperationException;
 import pl.put.poznan.utils.NotDebetException;
 
 public class RaportDebetowy implements IRaport {
+	
 	public HashMap<String, ProduktBankowy> getRaportDebetowy() {
 		return raportDebetowy;
 	}
@@ -29,11 +31,7 @@ public class RaportDebetowy implements IRaport {
         }*/
 		Wizytor wizytor = new Wizytor();
 		for (ProduktBankowy produktBankowy : listaProduktow.values()) {
-			try {
-				((RachunekBankowy)produktBankowy).accept(wizytor);
-			} catch (InvalidBankOperationException ex) {
-				System.err.println(ex.getMessage());
-			}
+			((RachunekBankowy)produktBankowy).accept(wizytor);
 		}
 		this.raportDebetowy = wizytor.getListaKont();
         return this.raportDebetowy;
@@ -60,5 +58,4 @@ public class RaportDebetowy implements IRaport {
 	public void usunProdukt(String rachunek){
 		raportDebetowy.remove(rachunek);
 	}
-
 }

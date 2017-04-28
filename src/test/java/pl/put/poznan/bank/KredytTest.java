@@ -20,7 +20,7 @@ public class KredytTest {
 
     @Before
     public void setUp() throws Exception {
-        bank = new Bank("TEST", 1);
+        bank = new Bank("TEST", 1, new KIR());
         k = new Klient(1,bank);
         rb = new RachunekBankowy(k, "00 11 22",bank);
         kr = new Kredyt(k,"02369418554145545",rb,new MechanizmOdsetkowyLiniowy(0.1));

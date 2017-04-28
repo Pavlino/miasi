@@ -14,7 +14,7 @@ public class WyplataTest {
 
     @Before
     public void setUp() throws Exception {
-        bank = new Bank("Bank testowy", 1);
+        bank = new Bank("Bank testowy", 1, new KIR());
         klient = new Klient(1, bank);
         konto = new RachunekBankowy(klient, "1237129371", bank);
         konto.setSrodki(100);
@@ -42,9 +42,11 @@ public class WyplataTest {
     @Test
     public void testWyplataDebet() throws Exception {
         Debet debet = new Debet(1000, 0);
-        konto.setDebet(debet);
+        System.out.println(konto.getSrodki());
+        RachunekBankowyDebetowy rachunekBankowyDebetowy = konto.setDebet(debet);
         Wyplata wyplata = new Wyplata(200, "test wyplata");
-        konto.wykonajOperacje(wyplata);
-        assertEquals("Wynik wyplaty: ", 900, konto.getSrodki(), 0.001);
+        System.out.println(rachunekBankowyDebetowy.getSrodki());
+        rachunekBankowyDebetowy.wykonajOperacje(wyplata);
+        assertEquals("Wynik wyplaty: ", 900, rachunekBankowyDebetowy.getSrodki(), 0.001);
     }
 }
