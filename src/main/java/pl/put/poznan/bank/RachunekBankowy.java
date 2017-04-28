@@ -12,36 +12,11 @@ public class RachunekBankowy extends ProduktBankowy {
 		historia = new Historia();
 	}
 
-	@Override
-	public void setSrodki(double sumaSrodkow) {
-        double dostepneSrodki = getSrodki();
-        double saldo = sumaSrodkow - dostepneSrodki;
-        if (saldo < 0) {
-            if (czyPosiadaDebet()) {
-                if ((srodki + saldo) >= 0) {
-                    srodki += saldo;
-                } else {
-                    double dodatkowyDebet = (srodki + saldo) * -1;
-                    srodki = 0;
-                    debet.setKwotaDebetu(debet.getKwotaDebetu() + dodatkowyDebet);
-                }
-            } else {
-                srodki += saldo;
-            }
-        } else {
-            if (czyPosiadaDebet() && debet.getKwotaDebetu() > 0 ) {
-                double pozostaleSrodki = debet.getKwotaDebetu() - saldo;
-                if (pozostaleSrodki >= 0) {
-                    debet.setKwotaDebetu(pozostaleSrodki);
-                } else {
-                    debet.setKwotaDebetu(0);
-                    srodki -= pozostaleSrodki;
-                }
-            } else {
-               	srodki = sumaSrodkow;
-            }
-        }
-	}
+	public RachunekBankowyDebetowy setDebet(Debet debet) {
+        RachunekBankowyDebetowy rachunekBankowyDebetowy = new RachunekBankowyDebetowy(this, debet);
+        bank.getListaRachunkow().put(rachunekBankowyDebetowy.getNumerRachunku(), rachunekBankowyDebetowy);
+	    return new RachunekBankowyDebetowy(this, debet);
+    }
 
 	public Date getDataZalozenia() {
 		return dataZalozenia;
