@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 public class PrzelewMiedzybankowy extends OperacjaBankowa implements IOperacjaBankowa {
 
     private ProduktBankowy kontoDocelowe;
+
     private Bank bankDocelowy;
 
     public PrzelewMiedzybankowy(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis) {
@@ -17,7 +18,23 @@ public class PrzelewMiedzybankowy extends OperacjaBankowa implements IOperacjaBa
         typ = TypyOperacjiBankowych.PRZELEW_MIEDZYBANKOWY;
     }
 
-    public PrzelewMiedzybankowy(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis, int typ) {
+    public ProduktBankowy getKontoDocelowe() {
+		return kontoDocelowe;
+	}
+
+	public void setKontoDocelowe(ProduktBankowy kontoDocelowe) {
+		this.kontoDocelowe = kontoDocelowe;
+	}
+
+	public Bank getBankDocelowy() {
+		return bankDocelowy;
+	}
+
+	public void setBankDocelowy(Bank bankDocelowy) {
+		this.bankDocelowy = bankDocelowy;
+	}
+
+	public PrzelewMiedzybankowy(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis, int typ) {
         super(kwota, opis, typ);
         this.kontoDocelowe = kontoDocelowe;
         this.bankDocelowy = bankDocelowy;
@@ -45,6 +62,14 @@ public class PrzelewMiedzybankowy extends OperacjaBankowa implements IOperacjaBa
         } else {
             throw new InvalidBankOperationException("Konto nie istnieje lub podana kwota jest ujemna");
         }
+    }
+
+    public ProduktBankowy getKontoDocelowe() {
+        return kontoDocelowe;
+    }
+
+    public Bank getBankDocelowy() {
+        return bankDocelowy;
     }
 
 }
