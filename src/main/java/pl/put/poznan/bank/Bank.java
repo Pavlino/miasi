@@ -31,7 +31,11 @@ public class Bank {
         System.out.println("Stworzono klienta o id " + id);
         return new Klient(id, this);
 	}
-	
+
+	public void wyslijPaczkeDoKIR(GregorianCalendar dataPoczatkowa, GregorianCalendar dataKoncowa) {
+        ArrayList<IOperacjaBankowa> przelewyMiedzybankowe = historia.paczkaKir(dataPoczatkowa, dataKoncowa);
+    }
+
 	public RachunekBankowy stworzRachunek(Klient klient) throws InvalidBankOperationException {
 		if (listaKlientow.containsKey(klient.getId())) {
             int numer = 1;

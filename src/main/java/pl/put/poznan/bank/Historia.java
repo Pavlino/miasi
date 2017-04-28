@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import pl.put.poznan.utils.InvalidBankOperationException;
+import pl.put.poznan.utils.TypyOperacjiBankowych;
 
 public class Historia {
 	private ArrayList<IOperacjaBankowa> operacje;
@@ -41,26 +42,22 @@ public class Historia {
 		}
 	}
 	
-	public ArrayList<IOperacjaBankowa> paczkaKir(GregorianCalendar dataPoprzedniKir, GregorianCalendar dataAktualnyKir){
-		ArrayList<IOperacjaBankowa> kir = new ArrayList<IOperacjaBankowa>();
+	public ArrayList<IOperacjaBankowa> paczkaKir(GregorianCalendar dataPoczatkowa, GregorianCalendar dataKoncowa){
+		ArrayList<IOperacjaBankowa> przelewy = new ArrayList<IOperacjaBankowa>();
 		int index = operacje.size()-1;
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String poprzedniKir = format1.format(dataPoprzedniKir.getTimeInMillis());
-		String aktualnyKir = format1.format(dataAktualnyKir.getTimeInMillis());
-		while(index >= 0 && operacje.get(index).getData().after(dataPoprzedniKir)){
-			String aktualnadata = format1.format(operacje.get(index).getData().getTimeInMillis());
-			if(!operacje.get(index).getData().before(dataAktualnyKir)){
+		while(index >= 0 && operacje.get(index).getData().after(dataPoczatkowa)){
+			if(!operacje.get(index).getData().before(dataKoncowa)){
 				index--;
 				continue;
 			}
-			if(operacje.get(index).getTyp() == 9){
-				kir.add(operacje.get(index));
+			if(operacje.get(index).getTyp() == TypyOperacjiBankowych.PRZELEW_MIEDZYBANKOWY){
+				przelewy.add(operacje.get(index));
 				index--;
 			}
 			
 		}
 		
-		return kir;
+		return przelewy;
 	}
 
 	

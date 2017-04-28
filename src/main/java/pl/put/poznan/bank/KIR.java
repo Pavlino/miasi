@@ -20,7 +20,7 @@ public class KIR {
 		for (int i=0; i < przelewy.keySet().size(); i++)
 		{
 			ArrayList<PrzelewMiedzybankowy> przelewyDoBanku = przelewy.get(przelewy.keySet().toArray()[i]);
-			// wyœlij przelewy
+			// wyslij przelewy
 		}		
 	}
 
