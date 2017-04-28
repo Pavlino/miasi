@@ -33,6 +33,7 @@ public abstract class OperacjaBankowa implements IOperacjaBankowa {
         this.opis = opis;
         wykonana = false;
     }
+    
 
     public GregorianCalendar getData() {
         return data;
