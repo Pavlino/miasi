@@ -33,7 +33,8 @@ public class KlientTest {
         RachunekBankowy rachunekBankowy = (RachunekBankowy) klient.getListaProduktow().get("1");
         Debet debet = new Debet(1000);
         klient.dodajDebetDoRachunku(rachunekBankowy.getNumerRachunku(), debet);
-        assertTrue(rachunekBankowy.czyPosiadaDebet());
+        RachunekBankowyDebetowy rachunekBankowyDebetowy = (RachunekBankowyDebetowy) bank.getListaRachunkow().get(rachunekBankowy.getNumerRachunku());
+        assertEquals("Stan debetu: ", 1000, rachunekBankowyDebetowy.getMaxKwotaDebetu(), 0.001);
     }
 
     @Test

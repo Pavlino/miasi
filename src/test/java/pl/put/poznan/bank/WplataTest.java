@@ -44,10 +44,10 @@ public class WplataTest {
     public void testWykonajDebet() throws Exception {
         konto.setSrodki(0);
         Debet debet = new Debet(100, 20);
-        konto.setDebet(debet);
+        RachunekBankowyDebetowy rachunekBankowyDebetowy = konto.setDebet(debet);
         Wplata wplata = new Wplata(100, "test wplata");
-        konto.wykonajOperacje(wplata);
-        assertEquals("Wynik wplaty: ", 180, konto.getSrodki(), 0.001);
+        rachunekBankowyDebetowy.wykonajOperacje(wplata);
+        assertEquals("Wynik wplaty: ", 180, rachunekBankowyDebetowy.getSrodki(), 0.001);
     }
 
     @Test

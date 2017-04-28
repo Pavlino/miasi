@@ -16,25 +16,13 @@ public class RaportDebetowyTest {
 		bank = new Bank("Bank testowy", 1, new KIR());
 		klient = new Klient(1, bank);
 	}
-	
-	@Test(expected = NotDebetException.class)
-    public void raportDodanieKontaNiedebetowegoTest() throws Exception {
-		RaportDebetowy raport = new RaportDebetowy();
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", bank);
-		raport.dodajProdukt(rachunek);
-    }
-	
-	@Test(expected = NotDebetException.class)
-    public void raportDodanieProduktuDebetowegoBezDebetuTest() throws Exception {
-		RaportDebetowy raport = new RaportDebetowy();
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", new Debet(100, 0), bank);
-		raport.dodajProdukt(rachunek);
-    }
+
 	@Test()
     public void raportDodanieProduktuDebetowego() throws Exception {
 		RaportDebetowy raport = new RaportDebetowy();
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", new Debet(100, 1), bank);
-		raport.dodajProdukt(rachunek);
+		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", bank);
+		RachunekBankowyDebetowy rachunekBankowyDebetowy = rachunek.setDebet(new Debet(100, 1));
+		raport.dodajProdukt(rachunekBankowyDebetowy);
 		assertEquals(1, raport.getRaportDebetowy().size());
     }
 }
