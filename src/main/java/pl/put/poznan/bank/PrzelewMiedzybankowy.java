@@ -64,12 +64,4 @@ public class PrzelewMiedzybankowy extends OperacjaBankowa implements IOperacjaBa
         }
     }
 
-    public ProduktBankowy getKontoDocelowe() {
-        return kontoDocelowe;
-    }
-
-    public Bank getBankDocelowy() {
-        return bankDocelowy;
-    }
-
 }

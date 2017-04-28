@@ -20,17 +20,26 @@ public class RaportDebetowy implements IRaport {
 	}
 	
 	public HashMap<String, ProduktBankowy> generujRaport(HashMap<Long, ProduktBankowy> listaProduktow) throws NotDebetException {
-        for (ProduktBankowy produktBankowy : listaProduktow.values()) {
+        /*for (ProduktBankowy produktBankowy : listaProduktow.values()) {
             try {
-                dodajProdukt((RachunekBankowy) produktBankowy);
+                //dodajProdukt((RachunekBankowy) produktBankowy);
             } catch (InvalidBankOperationException ex) {
                 System.err.println(ex.getMessage());
             }
-        }
+        }*/
+		Wizytor wizytor = new Wizytor();
+		for (ProduktBankowy produktBankowy : listaProduktow.values()) {
+			try {
+				((RachunekBankowy)produktBankowy).accept(wizytor);
+			} catch (InvalidBankOperationException ex) {
+				System.err.println(ex.getMessage());
+			}
+		}
+		this.raportDebetowy = wizytor.getListaKont();
         return this.raportDebetowy;
 	}
 	
-	public void dodajProdukt(RachunekBankowy produkt) throws InvalidBankOperationException, NotDebetException {
+	/*public void dodajProdukt(RachunekBankowy produkt) throws InvalidBankOperationException, NotDebetException {
 		if (produkt != null) {
 			//Double stanSrodkow = produkt.getDebet().getKwotaDebetu();
 			if (produkt.czyPosiadaDebet()) {
@@ -46,7 +55,7 @@ public class RaportDebetowy implements IRaport {
 		} else {
 			throw new InvalidBankOperationException("Produkt nie istnieje");
 		}
-	}
+	}*/
 	
 	public void usunProdukt(String rachunek){
 		raportDebetowy.remove(rachunek);

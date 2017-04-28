@@ -2,6 +2,9 @@ package pl.put.poznan.bank;
 
 import java.util.Date;
 
+import pl.put.poznan.utils.InvalidBankOperationException;
+import pl.put.poznan.utils.NotDebetException;
+
 public class RachunekBankowy extends ProduktBankowy {
 	private Date dataZalozenia;
 	private Debet debet;
@@ -20,6 +23,11 @@ public class RachunekBankowy extends ProduktBankowy {
         this.bank = bank;
 		historia = new Historia();
 	}
+	
+	//accept the visitor
+	public void accept(IWizytor visitor) throws NotDebetException, InvalidBankOperationException {
+	    visitor.visit(this);
+	  }
 
 	public boolean czyPosiadaDebet() {
 		return debet != null;
