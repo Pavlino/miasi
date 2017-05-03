@@ -57,7 +57,7 @@ public class PrzelewMiedzybankowy extends OperacjaBankowa implements IOperacjaBa
     }
 
     public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
-        if (konto != null && kwota > 0 && !konto.equals(kontoDocelowe)) {
+        if (konto != null && kwota > 0) {
             if (!wykonana) {
                 this.konto = konto;
                 double stanSrodkow = konto.getSrodki();
