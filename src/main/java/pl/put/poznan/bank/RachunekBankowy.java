@@ -21,6 +21,11 @@ public class RachunekBankowy extends ProduktBankowy {
 	public Date getDataZalozenia() {
 		return dataZalozenia;
 	}
+
+	public void przyjmijWizytatora(IRaport wizytator) {
+		wizytator.odwiedz(this);
+	}
+
 	public void setDataZalozenia(Date dataZalozenia) {
 		this.dataZalozenia = dataZalozenia;
 	}

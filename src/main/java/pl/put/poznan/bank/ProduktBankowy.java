@@ -2,7 +2,7 @@ package pl.put.poznan.bank;
 
 import pl.put.poznan.utils.InvalidBankOperationException;
 
-public abstract class ProduktBankowy {
+public abstract class ProduktBankowy implements IProduktBankowy {
 
     Klient klient;
 	String numerRachunku;

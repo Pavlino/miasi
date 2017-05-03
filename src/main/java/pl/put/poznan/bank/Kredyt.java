@@ -38,6 +38,10 @@ public class Kredyt extends ProduktBankowy {
         }
     }
 
+    public void przyjmijWizytatora(IRaport wizytator) {
+        wizytator.odwiedz(this);
+    }
+
     @Override
     public void setSrodki(double srodki) {
         if (this.srodki > 0 && status != StatusKredytu.PRZETWARZANY) {

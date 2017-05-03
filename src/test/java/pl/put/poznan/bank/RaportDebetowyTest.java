@@ -1,28 +1,29 @@
 package pl.put.poznan.bank;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
-import pl.put.poznan.utils.NotDebetException;
+
+import static org.junit.Assert.*;
 
 public class RaportDebetowyTest {
-	
-	Bank bank;
-	Klient klient;
-	
-	@Before
-	public void setUp(){
-		bank = new Bank("Bank testowy", 1, new KIR());
-		klient = new Klient(1, bank);
-	}
 
-	@Test()
-    public void raportDodanieProduktuDebetowego() throws Exception {
-		RaportDebetowy raport = new RaportDebetowy();
-		RachunekBankowy rachunek = new RachunekBankowy(klient, "0001", bank);
-		RachunekBankowyDebetowy rachunekBankowyDebetowy = rachunek.setDebet(new Debet(100, 1));
-		raport.dodajProdukt(rachunekBankowyDebetowy);
-		assertEquals(1, raport.getRaportDebetowy().size());
+    private Bank bank;
+    private Klient klient;
+
+    @Before
+    public void setUp() throws Exception {
+        bank = new Bank("testowy", 1, new KIR());
+        klient = bank.stworzKlienta();
+        RachunekBankowy konto = bank.stworzRachunek(klient);
+        bank.stworzRachunek(klient);
+        bank.stworzRachunekDebetowy(klient, new Debet(100), 100);
+        bank.stworzRachunekDebetowy(klient, new Debet(100), 100);
+        bank.stworzKredyt(klient, konto, 1000, new MechanizmOdsetkowyLiniowy(0.1));
+    }
+
+    @Test
+    public void testWygenerujRaport() throws Exception {
+        int liczbaKontDebetowych = (Integer) bank.stworzRaport(new RaportDebetowy(bank));
+        assertEquals("Liczba kont debetowych:", 2, liczbaKontDebetowych);
     }
 }

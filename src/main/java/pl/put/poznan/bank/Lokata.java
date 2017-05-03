@@ -45,6 +45,10 @@ public class Lokata extends ProduktBankowy {
         odsetki = 0;
     }
 
+    public void przyjmijWizytatora(IRaport wizytator) {
+        wizytator.odwiedz(this);
+    }
+
     @Override
     public void setOdsetki(double odsetki) {
         this.odsetki += odsetki;

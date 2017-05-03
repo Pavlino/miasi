@@ -43,6 +43,10 @@ public class RachunekBankowyDebetowy extends ProduktBankowy {
         }
     }
 
+    public void przyjmijWizytatora(IRaport wizytator) {
+        wizytator.odwiedz(this);
+    }
+
     public double getKwotaDebetu() {
         return debet.getKwotaDebetu();
     }

@@ -9,7 +9,7 @@ public class Bank {
 	private int id;
 	public String nazwa;
 	private Historia historia;
-	private HashMap<String, ProduktBankowy> listaRachunkow;
+	private HashMap<String, IProduktBankowy> listaRachunkow;
 	private HashMap<Integer, Klient> listaKlientow;
 	private KIR kir;
 
@@ -70,6 +70,12 @@ public class Bank {
 		}
 	}
 
+    public RachunekBankowyDebetowy stworzRachunekDebetowy(Klient klient, Debet debet, double kwotaPoczatkowa) throws InvalidBankOperationException {
+        RachunekBankowy rachunekBankowy = stworzRachunek(klient);
+        rachunekBankowy.setSrodki(kwotaPoczatkowa);
+        return rachunekBankowy.setDebet(debet);
+    }
+
     public Lokata stworzLokate(Klient klient, RachunekBankowy rachunekBankowy, double kwota, Calendar data, IMechanizmOdsetkowy mechanizmOdsetkowy) throws InvalidBankOperationException {
         if (listaKlientow.containsKey(klient.getId())) {
             int numer = 1;
@@ -106,8 +112,8 @@ public class Bank {
         return listaRachunkow.containsKey(konto.getNumerRachunku());
     }
 
-    public Object stworzRaport(IRaport raport, HashMap<Long, ProduktBankowy> listaProduktow) throws InvalidBankOperationException, NotDebetException {
-        return raport.generujRaport(listaProduktow);
+    public Object stworzRaport(IRaport raport) throws InvalidBankOperationException, NotDebetException {
+        return raport.generuj();
     }
 
     public void dodajOperacjeDoHistorii(IOperacjaBankowa operacjaBankowa) throws InvalidBankOperationException {
@@ -118,10 +124,10 @@ public class Bank {
         return historia.getOperacje().get(indeks);
     }
 
-	public HashMap<String, ProduktBankowy> getListaRachunkow() {
+	public HashMap<String, IProduktBankowy> getListaRachunkow() {
 		return listaRachunkow;
 	}
-	public void setListaProduktow(HashMap<String, ProduktBankowy> listaRachunkow) {
+	public void setListaProduktow(HashMap<String, IProduktBankowy> listaRachunkow) {
 		this.listaRachunkow = listaRachunkow;
 	}
 	public int getId() {
