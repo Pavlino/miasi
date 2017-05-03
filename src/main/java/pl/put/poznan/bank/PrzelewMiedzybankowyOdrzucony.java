@@ -5,29 +5,37 @@ import pl.put.poznan.utils.TypyOperacjiBankowych;
 
 import java.util.GregorianCalendar;
 
-public class PrzelewMiedzybankowyOdrzucony extends PrzelewMiedzybankowy implements IOperacjaBankowa {
+public class PrzelewMiedzybankowyOdrzucony extends OperacjaBankowa implements IOperacjaBankowa {
 
+    private ProduktBankowy kontoZrodlowe;
     private ProduktBankowy kontoDocelowe;
+    private Bank bankZrodlowy;
     private Bank bankDocelowy;
 
-    public PrzelewMiedzybankowyOdrzucony(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis) {
-        super(kontoDocelowe, bankDocelowy, kwota, opis);
-        typ = TypyOperacjiBankowych.PRZELEW_MIEDZYBANKOWY_ODRZUCONY;
-    }
-
-    public PrzelewMiedzybankowyOdrzucony(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis, int typ) {
-        super(kontoDocelowe, bankDocelowy, kwota, opis, typ);
-        this.typ = TypyOperacjiBankowych.WPLATA;
-    }
-
-    public PrzelewMiedzybankowyOdrzucony(GregorianCalendar data, ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis) {
-        super(data, kontoDocelowe, bankDocelowy, kwota, opis);
+    public PrzelewMiedzybankowyOdrzucony(PrzelewMiedzybankowy przelewMiedzybankowy, String opis) {
+        super(przelewMiedzybankowy.getKwota(), opis);
+        kontoZrodlowe = przelewMiedzybankowy.getKontoDocelowe();
+        bankZrodlowy = przelewMiedzybankowy.getBankDocelowy();
+        kontoDocelowe = przelewMiedzybankowy.getKontoZrodlowe();
+        bankDocelowy = przelewMiedzybankowy.getBankZrodlowy();
         typ = TypyOperacjiBankowych.PRZELEW_MIEDZYBANKOWY_ODRZUCONY;
     }
 
     public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
-        dodajDoHistorii();
-        wykonana = true;
+        if (konto != null && kwota > 0) {
+            if (!wykonana) {
+                this.konto = konto;
+                double stanSrodkow = konto.getSrodki();
+                stanSrodkow += kwota;
+                konto.setSrodki(stanSrodkow);
+                dodajDoHistorii();
+                wykonana = true;
+            } else {
+                throw new InvalidBankOperationException("Niewystarczajace srodki.");
+            }
+        } else {
+            throw new InvalidBankOperationException("Konto nie istnieje lub podana kwota jest ujemna");
+        }
     }
 
     public ProduktBankowy getKontoDocelowe() {

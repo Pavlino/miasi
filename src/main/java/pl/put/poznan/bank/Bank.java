@@ -32,8 +32,27 @@ public class Bank {
         return new Klient(id, this);
 	}
 
-	public void wyslijPaczkeDoKIR(GregorianCalendar dataPoczatkowa, GregorianCalendar dataKoncowa) {
-        ArrayList<IOperacjaBankowa> przelewyMiedzybankowe = historia.paczkaKir(dataPoczatkowa, dataKoncowa);
+    public ArrayList<PrzelewMiedzybankowyOdrzucony> odbierzPaczkeOdKIR(ArrayList<PrzelewMiedzybankowy> odebranePrzelewyMiedzybankowe) {
+        ArrayList<PrzelewMiedzybankowyOdrzucony> przelewyOdrzucone = new ArrayList<>();
+        for (PrzelewMiedzybankowy przelewMiedzybankowy : odebranePrzelewyMiedzybankowe) {
+            ProduktBankowy kontoDocelowe = przelewMiedzybankowy.getKontoDocelowe();
+            try {
+                kontoDocelowe.wykonajOperacje(przelewMiedzybankowy);
+            } catch (InvalidBankOperationException e) {
+                PrzelewMiedzybankowyOdrzucony przelewMiedzybankowyOdrzucony = new PrzelewMiedzybankowyOdrzucony(przelewMiedzybankowy, "Odrzucony z powodu braku konta");
+                przelewyOdrzucone.add(przelewMiedzybankowyOdrzucony);
+            }
+        }
+        return przelewyOdrzucone;
+    }
+
+	public void wyslijPaczkeDoKIR(GregorianCalendar dataPoczatkowa, GregorianCalendar dataKoncowa) throws InvalidBankOperationException {
+        ArrayList<IOperacjaBankowa> przelewyMiedzybankowe = historia.stworzPaczkeDoKir(dataPoczatkowa, dataKoncowa);
+        ArrayList<PrzelewMiedzybankowyOdrzucony> przelewyMiedzybankoweOdrzucone = kir.rozliczPrzelewy(przelewyMiedzybankowe);
+        for (PrzelewMiedzybankowyOdrzucony przelewMiedzybankowyOdrzucony : przelewyMiedzybankoweOdrzucone) {
+            ProduktBankowy kontoDocelowe = przelewMiedzybankowyOdrzucony.getKontoDocelowe();
+            kontoDocelowe.wykonajOperacje(przelewMiedzybankowyOdrzucony);
+        }
     }
 
 	public RachunekBankowy stworzRachunek(Klient klient) throws InvalidBankOperationException {
@@ -83,7 +102,9 @@ public class Bank {
         }
     }
 
-
+    public boolean czyZawieraKonto(ProduktBankowy konto) {
+        return listaRachunkow.containsKey(konto.getNumerRachunku());
+    }
 
     public Object stworzRaport(IRaport raport, HashMap<Long, ProduktBankowy> listaProduktow) throws InvalidBankOperationException, NotDebetException {
         return raport.generujRaport(listaProduktow);

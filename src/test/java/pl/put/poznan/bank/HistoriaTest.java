@@ -48,18 +48,19 @@ public class HistoriaTest {
 	public void historiaKirTest() throws InvalidBankOperationException {
 		RachunekBankowy rach = new RachunekBankowy(klient, "1", bank);
 		Historia historia = new Historia();
-		PrzelewMiedzybankowy przel1 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 0, 2,1,1), rach, bank, 10, "asd");
-		PrzelewMiedzybankowy przel2 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 1, 2,1,1), rach, bank, 10, "asd");
-		PrzelewMiedzybankowy przel3 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 2, 2,1,1), rach, bank, 10, "asd");
-		PrzelewMiedzybankowy przel4 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 3, 2,1,1), rach, bank, 10, "asd");
-		PrzelewMiedzybankowy przel5 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 4, 2,1,1), rach, bank, 10, "asd");
+		PrzelewMiedzybankowy przel1 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 0, 2,1,1), rach, bank, 10, "testowy przelew miedzybankowy");
+		PrzelewMiedzybankowy przel2 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 1, 2,1,1), rach, bank, 10, "testowy przelew miedzybankowy");
+		PrzelewMiedzybankowy przel3 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 2, 2,1,1), rach, bank, 10, "testowy przelew miedzybankowy");
+		PrzelewMiedzybankowy przel4 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 3, 2,1,1), rach, bank, 10, "testowy przelew miedzybankowy");
+		PrzelewMiedzybankowy przel5 = new PrzelewMiedzybankowy(new GregorianCalendar(2017, 4, 2,1,1), rach, bank, 10, "testowy przelew miedzybankowy");
+		Przelew przel6 = new Przelew(rach, 100, "testowy przelew");
 		historia.dodajOperacje(przel1);
 		historia.dodajOperacje(przel2);
 		historia.dodajOperacje(przel3);
 		historia.dodajOperacje(przel4);
 		historia.dodajOperacje(przel5);
-
-		ArrayList<IOperacjaBankowa> kir = historia.paczkaKir(new GregorianCalendar(2017, 1, 1,1,1), new GregorianCalendar(2017, 4, 1,1,1));
+		historia.dodajOperacje(przel6);
+		ArrayList<IOperacjaBankowa> kir = historia.stworzPaczkeDoKir(new GregorianCalendar(2017, 1, 1,1,1), new GregorianCalendar(2017, 4, 1,1,1));
 		
 		assertEquals(3, kir.size());
 	}

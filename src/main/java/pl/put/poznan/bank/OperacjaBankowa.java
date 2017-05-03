@@ -48,4 +48,8 @@ public abstract class OperacjaBankowa implements IOperacjaBankowa {
         konto.dodajOperacjeDoHistoriiBanku(this);
     }
 
+    public double getKwota() {
+        return kwota;
+    }
+
 }

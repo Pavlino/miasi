@@ -1,7 +1,5 @@
 package pl.put.poznan.bank;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -20,15 +18,15 @@ public class KIRTest {
         docelowy1 = new Bank("test docelowy2", 1, testowy);
     }
 
-	@Test
-	public void testRozliczPrzelewy() {
-		ArrayList<PrzelewMiedzybankowy> testowe = new ArrayList<PrzelewMiedzybankowy>();
-		PrzelewMiedzybankowy pmb1 = new PrzelewMiedzybankowy(null,docelowy0,100.0,"test1");
-		PrzelewMiedzybankowy pmb2 = new PrzelewMiedzybankowy(null,docelowy1,50.0,"test2");
-		testowe.add(pmb1);
-		testowe.add(pmb2);
-		testowy.RozliczPrzelewy(testowe);
-		//testowy.RozliczPrzelewy(testowe);
-	}
+//	@Test
+//	public void testRozliczPrzelewy() {
+//		ArrayList<PrzelewMiedzybankowy> testowe = new ArrayList<PrzelewMiedzybankowy>();
+//		PrzelewMiedzybankowy pmb1 = new PrzelewMiedzybankowy(null,docelowy0,100.0,"test1");
+//		PrzelewMiedzybankowy pmb2 = new PrzelewMiedzybankowy(null,docelowy1,50.0,"test2");
+//		testowe.add(pmb1);
+//		testowe.add(pmb2);
+//		testowy.rozliczPrzelewy(testowe);
+//		//testowy.rozliczPrzelewy(testowe);
+//	}
 
 }

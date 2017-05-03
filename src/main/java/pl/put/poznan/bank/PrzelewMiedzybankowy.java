@@ -7,8 +7,9 @@ import java.util.GregorianCalendar;
 
 public class PrzelewMiedzybankowy extends OperacjaBankowa implements IOperacjaBankowa {
 
+    private ProduktBankowy kontoZrodlowe;
     private ProduktBankowy kontoDocelowe;
-
+    private Bank bankZrodlowy;
     private Bank bankDocelowy;
 
     public PrzelewMiedzybankowy(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis) {
@@ -34,6 +35,14 @@ public class PrzelewMiedzybankowy extends OperacjaBankowa implements IOperacjaBa
 		this.bankDocelowy = bankDocelowy;
 	}
 
+    public Bank getBankZrodlowy() {
+        return bankZrodlowy;
+    }
+
+    public ProduktBankowy getKontoZrodlowe() {
+        return kontoZrodlowe;
+    }
+
 	public PrzelewMiedzybankowy(ProduktBankowy kontoDocelowe, Bank bankDocelowy, double kwota, String opis, int typ) {
         super(kwota, opis, typ);
         this.kontoDocelowe = kontoDocelowe;
@@ -49,15 +58,29 @@ public class PrzelewMiedzybankowy extends OperacjaBankowa implements IOperacjaBa
 
     public void wykonaj(ProduktBankowy konto) throws InvalidBankOperationException {
         if (konto != null && kwota > 0 && !konto.equals(kontoDocelowe)) {
-            this.konto = konto;
-            double stanSrodkow = konto.getSrodki();
-            if (stanSrodkow >= kwota) {
-                stanSrodkow -= kwota;
-                konto.setSrodki(stanSrodkow);
-                dodajDoHistorii();
-                wykonana = true;
+            if (!wykonana) {
+                this.konto = konto;
+                double stanSrodkow = konto.getSrodki();
+                if (stanSrodkow >= kwota) {
+                    stanSrodkow -= kwota;
+                    konto.setSrodki(stanSrodkow);
+                    dodajDoHistorii();
+                    kontoZrodlowe = konto;
+                    bankZrodlowy = konto.getBank();
+                    wykonana = true;
+                } else {
+                    throw new InvalidBankOperationException("Niewystarczajace srodki.");
+                }
             } else {
-                throw new InvalidBankOperationException("Niewystarczajace srodki.");
+                if (bankDocelowy.czyZawieraKonto(kontoDocelowe)) {
+                    konto = kontoDocelowe;
+                    double stanSrodkow = konto.getSrodki();
+                    stanSrodkow += kwota;
+                    konto.setSrodki(stanSrodkow);
+                    dodajDoHistorii();
+                } else {
+                    throw new InvalidBankOperationException("Konto nie istnieje");
+                }
             }
         } else {
             throw new InvalidBankOperationException("Konto nie istnieje lub podana kwota jest ujemna");
